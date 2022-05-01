@@ -4,17 +4,31 @@ import random
 import pygame
 from pygame import *
 
-
+'''
+setting.py : 게임 구성의 기본 기능(게임창크기,사운드,폰트,RGB값 등 설정)
+'''
+#게이밍 사운드 믹서 초기화(주파수,크기,채널,버퍼,장치이름)
 pygame.mixer.pre_init(44100, -16, 2, 2048)
+
+#1.게임 초기화
 pygame.init()
+
 gamername=''
+
+#2.게임창 옵션 설정
+
+#2-1.게임창 크기 설정
 scr_size = (width, height) = (800, 400)
+#FPS 설정(반복문에서 1초에 몇번 이미지를 업데이트를 하는지, 높을수록 화면 부드럽지만 연산 많아짐)
 FPS = 60
 gravity = 0.65
+# 폰트 타입 및 크기 설정
 font = pygame.font.Font('DungGeunMo.ttf', 32)
 full_screen=False
+# 현재 그래픽 너비, 높이 환경 정보 받아와 모니터 사이즈 설정
 monitor_size = (monitor_width, monitor_height) = (pygame.display.Info().current_w, pygame.display.Info().current_h)
 
+# 화면 RGB값 설정
 black = (0,0,0)
 white = (255,255,255)
 background_col = (235,235,235)
@@ -26,15 +40,25 @@ bright_green = (0,255,0)
 bright_orange = (255,215,0)
 
 high_score = 0
+
+#위 2-1 로 게임창 크기 적용
 resized_screen = pygame.display.set_mode((scr_size), RESIZABLE)
+# screen 변수에 크기옵션 집어넣어 앞으로 그릴 내용 담음
 screen = resized_screen.copy()
+
+
 resized_screen_centerpos = (0,0)
 rwidth = resized_screen.get_width()
 rheight = resized_screen.get_height()
 button_offset = 0.18
 
-clock = pygame.time.Clock()
+#2-2.게임 제목 설정
 pygame.display.set_caption("Milk Dragon's Adventure by_MilkDragon")
+
+# 3. 게임 내 필요한 설정
+# 3-1. 시계 생성(향후 FPS 생성시 활용)
+clock = pygame.time.Clock()
+
 
 bgm_on=True
 on_pushtime=0
@@ -76,6 +100,7 @@ def load_image(
     ):
 
     fullname = os.path.join('sprites', name)
+    # 이미지 불러옴
     image = pygame.image.load(fullname)
     image = image.convert()
     if colorkey is not None:
@@ -112,6 +137,7 @@ def load_sprite_sheet(
             rect = pygame.Rect((j*sizex,i*sizey,sizex,sizey))
             image = pygame.Surface(rect.size)
             image = image.convert()
+            #이미지 어느 위치에 넣을지
             image.blit(sheet,(0,0),rect)
 
             if colorkey is not None:
