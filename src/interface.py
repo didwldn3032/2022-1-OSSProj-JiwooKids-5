@@ -1,5 +1,49 @@
 from src.setting import *
 
+'''
+interface.py : 게임 내 각종 환경 요소 객체
+
+Ground(땅) class
+< 변수 >
+- image, rect : 그라운드의 이미지와 프레임 (기본, 장애물용)
+- speed : 그라운드 이동 속도
+< 함수 >
+- draw() : 화면에 그라운드를 그려넣음
+- update() : 화면 내 그라운드의 상태 업데이트
+
+Cloud(구름) class
+< 변수 >
+- image, rect(left, top) : 구름의 이미지와 프레임(왼쪽끝, 최상단)
+- speed : 구름 이동 속도
+- movement : 구름의 이동
+< 함수 >
+- draw() : 화면에 구름을 그려넣음
+- update() : 화면 내 구름의 상태 업데이트
+
+Heart(체력량) class
+< 변수 >
+- image, rect(left, top) : 체력량의 이미지와 프레임(왼쪽끝, 최상단)
+< 함수 >
+- draw() : 화면에 체력량을 그려넣음
+
+HeartIndicator(체력 개수) class
+< 변수 >
+- life : 잔여 체력 개수
+- life_set : 잔여 체력 개수 시각화를 위한 리스트
+< 함수 >
+- draw() : 체력 개수만큼 그려넣음
+- update() : 잔여 체력 개수 업데이트
+
+Scoreboard(스코어보드) class
+< 변수 >
+- score : 시각화할 스코어
+- tempimages, self.temprect : 스코어 이미지와 프레임 저장을 위한 변수
+- image : 스코어보드 이미지
+- rect(left, top) : 스코어의 프레임(왼쪽끝, 최상단)
+< 함수 >
+- draw() : 화면에 스코어보드를 그려넣음
+- update() : 스코어값에 따라 스코어 이미지를 만들어서 그려넣음
+'''
 
 class Ground:
     def __init__(self, speed=-5):
@@ -39,7 +83,7 @@ class Cloud(pygame.sprite.Sprite):
 
     def update(self):
         self.rect = self.rect.move(self.movement)
-        if self.rect.right < 0:
+        if self.rect.right < 0: # 구름이 화면 밖을 벗어나면 객체를 없애버림
             self.kill()
 
 
