@@ -1,16 +1,79 @@
 from src.setting import *
 
+'''
+Cactus class/fire_Cactus : 선인장 장애물
 
-class Cactus(pygame.sprite.Sprite):
+<변수>
+- image,rect : 이미지, 위치, 크기 지정
+- movement : 움직임(역방향)
+
+<함수>
+- draw() : 화면에 선인장 이미지 삽입
+- update() : 선인장 상태 업데이트(계속 왼쪽으로 이동하다 화면 밖 벗어나면 삭제)
+
+PteraKing class : 보스
+
+<변수>
+- image,rect : 이미지, 위치, 크기 지정
+- movement : 움직임(역방향)
+- pattern0/1/2_time : 지속 시간
+- pattern2_bottommost_time : 보스가 내려가서 머무는 시간
+- isAlive : 보스가 살아있는가
+- pattern_idx : 보스 행동 패턴
+- hp : 보스 생명 15
+
+<함수>
+- draw() : 화면에 보스 이미지 삽입
+- pattern0() : 
+	count 10주기로 보스가 위아래로 움직임
+	count가 200이 되면 pattern 종료
+	pattern0이 끝나면 pattern_idx =1 통해 다음번 보스는 pattern1
+- pattern1():
+	count 10주기로 보스가 위아래로 움직임
+	left,right로 계속 이동하다 끝에 걸리면 반대로
+	count가 200되면 pattern 종료
+- pattern2(): 
+	count 10주기로 보스가 위아래로 움직임
+	보스가 내려가다 지정된 위치에서 stop
+	stop상태에서 200이 지나면 goup
+	보스가 올라가다 지정된 위치가 되면 pattern0
+	
+- update() : pattern_idx에 맞게 패턴 진행, 10번에 한번씩 보스 출현
+
+Ptera class : 작은 보스
+
+<변수>
+- image,rect : 이미지, 위치, 크기 지정
+- movement : 움직임(역방향)
+- index : item 위치 설정
+- counter : 
+
+<함수>
+- draw() : 화면에 작은 보스 이미지 삽입
+- update() : 작은 보스 상태 업데이트(계속 왼쪽으로 이동하다 화면 밖 벗어나면 삭제)
+
+Stone class : 돌 장애물
+
+<변수>
+- image,rect : 이미지, 위치, 크기 지정
+- movement : 움직임(역방향)
+
+<함수>
+- draw() : 화면에 돌 이미지 삽입
+- update() : 돌 상태 업데이트(계속 왼쪽으로 이동하다 화면 밖 벗어나면 삭제)
+
+'''
+
+class Cactus(pygame.sprite.Sprite): #장애물 1.선인장
     def __init__(self, speed=5, sizex=-1, sizey=-1):
-        pygame.sprite.Sprite.__init__(self,self.containers)
+        pygame.sprite.Sprite.__init__(self,self.containers) #Sprite를 사용하면 이미지, 위치, 충돌 처리를 통합해서 처리
         self.images, self.rect = load_sprite_sheet('cacti-small.png', 3, 1, sizex, sizey, -1)
         self.rect.bottom = int(0.98*height)
         self.rect.left = width + self.rect.width
-        self.image = self.images[random.randrange(0,3)]
-        self.movement = [-1*speed, 0]
+        self.image = self.images[random.randrange(0,3)] #0과 3 사이의 난수를 반환
+        self.movement = [-1*speed, 0] #캐릭터에게 speed의 속도로 다가옴
 
-    def draw(self):
+    def draw(self): #self.image와 rect를 screen에 삽입
         screen.blit(self.image, self.rect)
 
     def update(self):
