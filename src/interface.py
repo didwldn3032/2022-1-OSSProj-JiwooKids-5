@@ -85,8 +85,8 @@ class Cloud(pygame.sprite.Sprite):
 class Heart:
 
     def __init__(self, sizex=-1, sizey=-1, x=-1, y=-1):
-        self.images, self.rect = load_sprite_sheet("hpbar.png", 2, 1, sizex, sizey, -1)
-        self.image = self.images[1]
+        self.images, self.rect = load_sprite_sheet("heart_life.png", 1, 1, sizex, sizey, -1)
+        self.image = self.images[0]
         if x == -1:
             self.rect.left = width * 0.01
         else:
