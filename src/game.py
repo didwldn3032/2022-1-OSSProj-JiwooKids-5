@@ -337,10 +337,7 @@ def gameplay_easy():
     scb = Scoreboard()
     highsc = Scoreboard(width * 0.78)
     heart = HeartIndicator(life)
-    speed_indicator = Scoreboard(width * 0.12, height * 0.15)
     counter = 0
-
-    speed_text = font.render("SPEED", True, black)
 
     cacti = pygame.sprite.Group()
     fire_cacti = pygame.sprite.Group()
@@ -573,7 +570,6 @@ def gameplay_easy():
                 new_ground.update()
                 scb.update(playerDino.score)
                 highsc.update(high_score)
-                speed_indicator.update(gamespeed - 3)
                 heart.update(life)
                 slow_items.update()
 
@@ -584,8 +580,6 @@ def gameplay_easy():
                     new_ground.draw()
                     clouds.draw(screen)
                     scb.draw()
-                    speed_indicator.draw()
-                    screen.blit(speed_text, (width * 0.01, height * 0.13))
                     heart.draw()
                     if high_score != 0:
                         highsc.draw()
@@ -705,10 +699,8 @@ def gameplay_hard():
     scb = Scoreboard()
     highsc = Scoreboard(width * 0.78)
     heart = HeartIndicator(life)
-    speed_indicator = Scoreboard(width * 0.12, height * 0.15)
     counter = 0
 
-    speed_text = font.render("SPEED", True, black)
 
     cacti = pygame.sprite.Group()
     fire_cacti = pygame.sprite.Group()
@@ -1248,7 +1240,6 @@ def gameplay_hard():
                 new_ground.update()
                 scb.update(playerDino.score)
                 highsc.update(high_score)
-                speed_indicator.update(gamespeed - 3)
                 heart.update(life)
                 slow_items.update()
 
@@ -1262,8 +1253,6 @@ def gameplay_hard():
                     new_ground.draw()
                     clouds.draw(screen)
                     scb.draw()
-                    speed_indicator.draw()
-                    screen.blit(speed_text, (width * 0.01, height * 0.13))
                     heart.draw()
                     if high_score != 0:
                         highsc.draw()
