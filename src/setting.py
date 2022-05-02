@@ -4,6 +4,19 @@ import random
 import pygame
 from pygame import *
 
+<<<<<<< HEAD
+
+pygame.mixer.pre_init(44100, -16, 2, 2048)
+pygame.init()
+gamername=''
+scr_size = (width, height) = (800, 400)
+FPS = 60
+gravity = 0.65
+font = pygame.font.Font('DungGeunMo.ttf', 32)
+full_screen=False
+monitor_size = (monitor_width, monitor_height) = (pygame.display.Info().current_w, pygame.display.Info().current_h)
+
+=======
 '''
 setting.py : 게임 구성의 기본 기능(게임창크기,사운드,폰트,RGB값 등 설정)
 '''
@@ -29,6 +42,7 @@ full_screen=False
 monitor_size = (monitor_width, monitor_height) = (pygame.display.Info().current_w, pygame.display.Info().current_h)
 
 # 화면 RGB값 설정
+>>>>>>> 1d9426c22a7052fc0a7068d59df50a110d67d841
 black = (0,0,0)
 white = (255,255,255)
 background_col = (235,235,235)
@@ -40,6 +54,10 @@ bright_green = (0,255,0)
 bright_orange = (255,215,0)
 
 high_score = 0
+<<<<<<< HEAD
+resized_screen = pygame.display.set_mode((scr_size), RESIZABLE)
+screen = resized_screen.copy()
+=======
 
 #위 2-1 로 게임창 크기 적용
 resized_screen = pygame.display.set_mode((scr_size), RESIZABLE)
@@ -47,11 +65,17 @@ resized_screen = pygame.display.set_mode((scr_size), RESIZABLE)
 screen = resized_screen.copy()
 
 
+>>>>>>> 1d9426c22a7052fc0a7068d59df50a110d67d841
 resized_screen_centerpos = (0,0)
 rwidth = resized_screen.get_width()
 rheight = resized_screen.get_height()
 button_offset = 0.18
 
+<<<<<<< HEAD
+clock = pygame.time.Clock()
+pygame.display.set_caption("Milk Dragon's Adventure by_MilkDragon")
+
+=======
 #2-2.게임 제목 설정
 pygame.display.set_caption("Milk Dragon's Adventure by_MilkDragon")
 
@@ -60,6 +84,7 @@ pygame.display.set_caption("Milk Dragon's Adventure by_MilkDragon")
 clock = pygame.time.Clock()
 
 
+>>>>>>> 1d9426c22a7052fc0a7068d59df50a110d67d841
 bgm_on=True
 on_pushtime=0
 off_pushtime=0
@@ -100,7 +125,10 @@ def load_image(
     ):
 
     fullname = os.path.join('sprites', name)
+<<<<<<< HEAD
+=======
     # 이미지 불러옴
+>>>>>>> 1d9426c22a7052fc0a7068d59df50a110d67d841
     image = pygame.image.load(fullname)
     image = image.convert()
     if colorkey is not None:
@@ -137,7 +165,10 @@ def load_sprite_sheet(
             rect = pygame.Rect((j*sizex,i*sizey,sizex,sizey))
             image = pygame.Surface(rect.size)
             image = image.convert()
+<<<<<<< HEAD
+=======
             #이미지 어느 위치에 넣을지
+>>>>>>> 1d9426c22a7052fc0a7068d59df50a110d67d841
             image.blit(sheet,(0,0),rect)
 
             if colorkey is not None:

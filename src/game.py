@@ -4,6 +4,8 @@ from src.item import *
 from src.interface import *
 from db.db_interface import InterfDB
 
+<<<<<<< HEAD
+=======
 '''
 game.py : src 하위 모듈에서 생성한 클래스를 가져와 화면과 게임 기능 구현
 
@@ -20,6 +22,7 @@ game.py : src 하위 모듈에서 생성한 클래스를 가져와 화면과 게
 * while 문을 돌며 입력에 따른 기능 수행시키고 반복문을 빠져나오면 게임 종료
 
 '''
+>>>>>>> 1d9426c22a7052fc0a7068d59df50a110d67d841
 
 db = InterfDB("db/score.db")
 
@@ -58,7 +61,10 @@ def introscreen():
             print("Couldn't load display surface")
             return True
         else:
+<<<<<<< HEAD
+=======
             #for 문으로 동시에 일어나는 여러 이벤트를 event.get()통해 이벤트 감지, 이를 리스트에 저장하고 차례로 반환하며 처리
+>>>>>>> 1d9426c22a7052fc0a7068d59df50a110d67d841
             for event in pygame.event.get():
                 # 이두용이 작성1 시작:
                 if event.type == pygame.VIDEORESIZE and not full_screen:
@@ -74,7 +80,10 @@ def introscreen():
                     Background_rect.bottomleft = (width*0, height)
                     #이두용이 작성1 끝.
 
+<<<<<<< HEAD
+=======
                 #이벤트 타입이 quit이면 while문 빠져나가며 게임종료
+>>>>>>> 1d9426c22a7052fc0a7068d59df50a110d67d841
                 if event.type == pygame.QUIT:
                     return True
 
@@ -119,14 +128,20 @@ def introscreen():
 
             pygame.display.update()
 
+<<<<<<< HEAD
+=======
         #tick 통해 FPS 설정
+>>>>>>> 1d9426c22a7052fc0a7068d59df50a110d67d841
         clock.tick(FPS)
 
         if temp_dino.isJumping == False and temp_dino.isBlinking == False:
             gameStart = True
             selectMode()
 
+<<<<<<< HEAD
+=======
     #while문 빠져나가면 게임 종료
+>>>>>>> 1d9426c22a7052fc0a7068d59df50a110d67d841
     pygame.quit()
     quit()
 
@@ -224,7 +239,10 @@ def option():
         r_btn_home_rect.centerx, r_btn_home_rect.centery = resized_screen.get_width() * 0.9, resized_screen.get_height() * 0.15
         r_btn_credit_rect.centerx, r_btn_credit_rect.centery = resized_screen.get_width() * 0.9, resized_screen.get_height() * 0.85
 
+<<<<<<< HEAD
+=======
         #스크린에 색 채움
+>>>>>>> 1d9426c22a7052fc0a7068d59df50a110d67d841
         screen.fill(background_col)
         screen.blit(TextSurf, TextRect)
         screen.blit(init_btn_image, init_btn_rect)
@@ -874,7 +892,11 @@ def gameplay_hard():
                 #
 
                 # 4. space_go가 True이고, 일정 시간이 지나면, 미사일을 만들고, 이를 미사일 배열에 넣습니다.
+<<<<<<< HEAD
+                if (space_go==True) and (int(bk%15)==0):
+=======
                 if (space_go==True) and (int(bk%100)==0):
+>>>>>>> 1d9426c22a7052fc0a7068d59df50a110d67d841
                     # print(bk)
                     mm=obj()
 
@@ -890,7 +912,11 @@ def gameplay_hard():
                         mm.change_size(10,10)
                     elif playerDino.type == 'PURPLE':
                         mm.put_img("./sprites/pink_bullet.png")
+<<<<<<< HEAD
+                        mm.change_size(15,5)
+=======
                         mm.change_size(10,10)
+>>>>>>> 1d9426c22a7052fc0a7068d59df50a110d67d841
                     elif playerDino.type == 'PINK':
                         mm.put_img("./sprites/heart_bullet.png")
                         mm.change_size(10,10)
@@ -910,7 +936,10 @@ def gameplay_hard():
                 bk=bk+1
                 d_list=[]
 
+<<<<<<< HEAD
+=======
                 #미사일 하나씩 꺼내옴
+>>>>>>> 1d9426c22a7052fc0a7068d59df50a110d67d841
                 for i in range(len(m_list)):
                     m=m_list[i]
                     m.x +=m.move
@@ -1608,7 +1637,10 @@ def typescore(score):
             pygame.transform.scale(screen, (resized_screen.get_width(), resized_screen.get_height())),
             resized_screen_centerpos)
 
+<<<<<<< HEAD
+=======
         #화면 업데이트 코드
+>>>>>>> 1d9426c22a7052fc0a7068d59df50a110d67d841
         pygame.display.flip()
         clock.tick(FPS)
 
@@ -1639,6 +1671,9 @@ def credit():
 
         clock.tick(FPS)
 
+<<<<<<< HEAD
+=======
     #게임 종료
+>>>>>>> 1d9426c22a7052fc0a7068d59df50a110d67d841
     pygame.quit()
     quit()

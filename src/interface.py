@@ -1,5 +1,7 @@
 from src.setting import *
 
+<<<<<<< HEAD
+=======
 '''
 interface.py : 게임 내 각종 환경 요소 객체
 
@@ -44,6 +46,7 @@ Scoreboard(스코어보드) class
 - draw() : 화면에 스코어보드를 그려넣음
 - update() : 스코어값에 따라 스코어 이미지를 만들어서 그려넣음
 '''
+>>>>>>> 1d9426c22a7052fc0a7068d59df50a110d67d841
 
 class Ground:
     def __init__(self, speed=-5):
@@ -83,7 +86,11 @@ class Cloud(pygame.sprite.Sprite):
 
     def update(self):
         self.rect = self.rect.move(self.movement)
+<<<<<<< HEAD
+        if self.rect.right < 0:
+=======
         if self.rect.right < 0: # 구름이 화면 밖을 벗어나면 객체를 없애버림
+>>>>>>> 1d9426c22a7052fc0a7068d59df50a110d67d841
             self.kill()
 
 
