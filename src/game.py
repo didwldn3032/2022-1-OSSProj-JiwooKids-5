@@ -862,12 +862,18 @@ def gameplay_hard():
 
             if not paused:
 
-                # 방향키 추가 (현재 여기 근데 수정더):
+                # [05.01 안도현] 하드 모드에서 화면 밖으로 이탈하는 프레임 아웃 문제 해결 
                 if goLeft:
-                    playerDino.rect.left= playerDino.rect.left -(gamespeed)
+                    if playerDino.rect.left < 0:
+                        playerDino.rect.left = 0
+                    else:
+                        playerDino.rect.left = playerDino.rect.left - gamespeed
 
                 if goRight:
-                    playerDino.rect.left = playerDino.rect.left + gamespeed
+                    if playerDino.rect.right > width:
+                        playerDino.rect.right = width
+                    else:
+                        playerDino.rect.left = playerDino.rect.left + gamespeed
                 #
 
                 # 4. space_go가 True이고, 일정 시간이 지나면, 미사일을 만들고, 이를 미사일 배열에 넣습니다.
