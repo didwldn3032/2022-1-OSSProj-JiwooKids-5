@@ -876,22 +876,22 @@ def gameplay_hard():
                     # 디노의 종류에 따라 다른 총알이 나가도록 합니다.
                     if playerDino.type == 'RED':
                         mm.put_img("./sprites/black_bullet.png")
-                        mm.change_size(10,10)
+                        mm.change_size(15,15)
                     elif playerDino.type == 'YELLOW':
                         mm.put_img("./sprites/blue_bullet.png")
-                        mm.change_size(10,10)
+                        mm.change_size(15,15)
                     elif playerDino.type == 'ORANGE':
                         mm.put_img("./sprites/blue_bullet.png")
-                        mm.change_size(10,10)
+                        mm.change_size(15,15)
                     elif playerDino.type == 'PURPLE':
                         mm.put_img("./sprites/pink_bullet.png")
-                        mm.change_size(10,10)
+                        mm.change_size(15,15)
                     elif playerDino.type == 'PINK':
                         mm.put_img("./sprites/heart_bullet.png")
-                        mm.change_size(10,10)
+                        mm.change_size(15,15)
                     else:                    
                         mm.put_img("./sprites/red_bullet.png")
-                        mm.change_size(10,10)
+                        mm.change_size(15,15)
                     # 
                     
                     if playerDino.isDucking ==False:
