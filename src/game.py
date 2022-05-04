@@ -335,7 +335,6 @@ def gameplay_easy():
 
     new_ground = Ground(-1 * gamespeed)
     scb = Scoreboard()
-    highsc = Scoreboard(width * 0.78)
     heart = HeartIndicator(life)
     counter = 0
 
@@ -367,15 +366,6 @@ def gameplay_easy():
     # retbutton_image, retbutton_rect = load_image('replay_button.png', 70, 62, -1)
     gameover_image, gameover_rect = load_image('game_over.png', 380, 22, -1)
 
-    temp_images, temp_rect = load_sprite_sheet('numbers.png', 12, 1, 11, int(15 * 6 / 5), -1)
-    HI_image = pygame.Surface((30, int(15 * 6 / 5)))
-    HI_rect = HI_image.get_rect()
-    HI_image.fill(background_col)
-    HI_image.blit(temp_images[10], temp_rect)
-    temp_rect.left += temp_rect.width
-    HI_image.blit(temp_images[11], temp_rect)
-    HI_rect.top = height * 0.05
-    HI_rect.left = width * 0.73
 
     while not gameQuit:
         while startMenu:
@@ -568,8 +558,7 @@ def gameplay_easy():
                 life_items.update()
                 # highjump_items.update()
                 new_ground.update()
-                scb.update(playerDino.score)
-                highsc.update(high_score)
+                scb.update(playerDino.score,high_score)
                 heart.update(life)
                 slow_items.update()
 
@@ -581,9 +570,6 @@ def gameplay_easy():
                     clouds.draw(screen)
                     scb.draw()
                     heart.draw()
-                    if high_score != 0:
-                        highsc.draw()
-                        screen.blit(HI_image, HI_rect)
                     cacti.draw(screen)
                     stones.draw(screen)
                     fire_cacti.draw(screen)
@@ -656,12 +642,10 @@ def gameplay_easy():
                     if event.type == pygame.VIDEORESIZE:
                         checkscrsize(event.w, event.h)
 
-            highsc.update(high_score)
+            scb.update(playerDino.score,high_score)
             if pygame.display.get_surface() != None:
                 disp_gameOver_msg(gameover_image)
-                if high_score != 0:
-                    highsc.draw()
-                    screen.blit(HI_image, HI_rect)
+                scb.draw()
                 resized_screen.blit(
                     pygame.transform.scale(screen, (resized_screen.get_width(), resized_screen.get_height())),
                     resized_screen_centerpos)
@@ -697,7 +681,6 @@ def gameplay_hard():
 
     new_ground = Ground(-1 * gamespeed)
     scb = Scoreboard()
-    highsc = Scoreboard(width * 0.78)
     heart = HeartIndicator(life)
     counter = 0
 
@@ -725,16 +708,6 @@ def gameplay_hard():
     # BUTTON IMG LOAD
     # retbutton_image, retbutton_rect = load_image('replay_button.png', 70, 62, -1)
     gameover_image, gameover_rect = load_image('game_over.png', 380, 22, -1)
-
-    temp_images, temp_rect = load_sprite_sheet('numbers.png', 12, 1, 11, int(15 * 6 / 5), -1)
-    HI_image = pygame.Surface((30, int(15 * 6 / 5)))
-    HI_rect = HI_image.get_rect()
-    HI_image.fill(background_col)
-    HI_image.blit(temp_images[10], temp_rect)
-    temp_rect.left += temp_rect.width
-    HI_image.blit(temp_images[11], temp_rect)
-    HI_rect.top = height * 0.05
-    HI_rect.left = width * 0.73
 
     # 1. 미사일 발사.
     space_go=False
@@ -1244,8 +1217,7 @@ def gameplay_hard():
                 life_items.update()
 
                 new_ground.update()
-                scb.update(playerDino.score)
-                highsc.update(high_score)
+                scb.update(playerDino.score,high_score)
                 heart.update(life)
                 slow_items.update()
 
@@ -1260,9 +1232,6 @@ def gameplay_hard():
                     clouds.draw(screen)
                     scb.draw()
                     heart.draw()
-                    if high_score != 0:
-                        highsc.draw()
-                        screen.blit(HI_image, HI_rect)
                     cacti.draw(screen)
                     fire_cacti.draw(screen)
                     stones.draw(screen)
@@ -1357,12 +1326,10 @@ def gameplay_hard():
                     if event.type == pygame.VIDEORESIZE:
                         checkscrsize(event.w, event.h)
 
-            highsc.update(high_score)
+            scb.update(playerDino.score,high_score)
             if pygame.display.get_surface() != None:
                 disp_gameOver_msg(gameover_image)
-                if high_score != 0:
-                    highsc.draw()
-                    screen.blit(HI_image, HI_rect)
+                scb.draw()
                 resized_screen.blit(
                     pygame.transform.scale(screen, (resized_screen.get_width(), resized_screen.get_height())),
                     resized_screen_centerpos)

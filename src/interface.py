@@ -118,29 +118,29 @@ class HeartIndicator:
         self.life_set = [Heart(object_size[0], object_size[1], width * 0.01 + i * (object_size[0]-i)) for i in range(self.life)]
 
 
-class Scoreboard:
 
+class Scoreboard:
     def __init__(self, x=-1, y=-1):
         self.score = 0
-        self.tempimages, self.temprect = load_sprite_sheet('numbers.png', 12, 1, 15, int(15*6/5), -1)
-        self.image = pygame.Surface((80, int(15*6/5)))
-        self.rect = self.image.get_rect()
+        self.pos_x = 0
+        self.pos_y = 0
         if x == -1:
-            self.rect.left = width*0.89
+            self.pos_x = width * 0.59
         else:
-            self.rect.left = x
+            self.pos_x = x
         if y == -1:
-            self.rect.top = height*0.05
+            self.pos_y = height * 0.05
         else:
-            self.rect.top = y
+            self.pos_y = y
 
     def draw(self):
-        screen.blit(self.image, self.rect)
+        screen.blit(self.sc, self.sc_rect)
 
-    def update(self,score):
+    def update(self, score, high_score):
         score_digits = extractDigits(score)
-        self.image.fill(background_col)
-        for s in score_digits:
-            self.image.blit(self.tempimages[s], self.temprect)
-            self.temprect.left += self.temprect.width
-        self.temprect.left = 0
+
+        # self.image.fill(background_col)
+        self.sc = font.render(f'HIGH : {high_score} NOW : {score}'.zfill(5), True, black)
+        self.sc_rect = self.sc.get_rect()
+        self.sc_rect.left = self.pos_x
+        self.sc_rect.top = self.pos_y
