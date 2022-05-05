@@ -658,6 +658,7 @@ def gameplay_easy():
 def gameplay_hard():
     global resized_screen
     global high_score
+    
     result = db.query_db("select score from user order by score desc;", one=True)
     if result is not None:
         high_score = result['score']
@@ -682,6 +683,7 @@ def gameplay_hard():
     new_ground = Ground(-1 * gamespeed)
     scb = Scoreboard()
     heart = HeartIndicator(life)
+    boss = boss_heart()
     counter = 0
 
 
@@ -708,7 +710,7 @@ def gameplay_hard():
     # BUTTON IMG LOAD
     # retbutton_image, retbutton_rect = load_image('replay_button.png', 70, 62, -1)
     gameover_image, gameover_rect = load_image('game_over.png', 380, 22, -1)
-
+    
     # 1. 미사일 발사.
     space_go=False
     m_list=[]
@@ -1218,6 +1220,7 @@ def gameplay_hard():
 
                 new_ground.update()
                 scb.update(playerDino.score,high_score)
+                boss.update(pking.hp)
                 heart.update(life)
                 slow_items.update()
 
@@ -1231,6 +1234,7 @@ def gameplay_hard():
                     new_ground.draw()
                     clouds.draw(screen)
                     scb.draw()
+                    boss.draw()
                     heart.draw()
                     cacti.draw(screen)
                     fire_cacti.draw(screen)
@@ -1327,9 +1331,11 @@ def gameplay_hard():
                         checkscrsize(event.w, event.h)
 
             scb.update(playerDino.score,high_score)
+            boss.update(pking.hp)
             if pygame.display.get_surface() != None:
                 disp_gameOver_msg(gameover_image)
                 scb.draw()
+                boss.draw()
                 resized_screen.blit(
                     pygame.transform.scale(screen, (resized_screen.get_width(), resized_screen.get_height())),
                     resized_screen_centerpos)

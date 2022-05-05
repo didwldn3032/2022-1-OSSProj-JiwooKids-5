@@ -118,6 +118,28 @@ class HeartIndicator:
         self.life_set = [Heart(object_size[0], object_size[1], width * 0.01 + i * (object_size[0]-i)) for i in range(self.life)]
 
 
+class boss_heart:
+    def __init__(self, x=-1, y=-1):
+        self.pos_x = 0
+        self.pos_y = 0
+        if x == -1:
+            self.pos_x = width * 0.03
+        else:
+            self.pos_x = x
+        if y == -1:
+            self.pos_y = height * 0.15
+        else:
+            self.pos_y = y
+    def draw(self):
+        screen.blit(self.sc, self.sc_rect)
+
+    def update(self, hp):
+        self.sc = font.render(f'Boss X {hp}'.zfill(2), True, black)
+        self.sc_rect = self.sc.get_rect()
+        self.sc_rect.left = self.pos_x
+        self.sc_rect.top = self.pos_y
+
+
 
 class Scoreboard:
     def __init__(self, x=-1, y=-1):
