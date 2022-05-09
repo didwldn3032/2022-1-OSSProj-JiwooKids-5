@@ -21,6 +21,10 @@ game.py : src 하위 모듈에서 생성한 클래스를 가져와 화면과 게
 db = InterfDB("db/score.db")
 
 
+
+
+
+
 ## 시작 화면 ##
 def introscreen():
     global resized_screen
@@ -346,6 +350,7 @@ def gameplay_hard():
     heart = HeartIndicator(life)
     boss = boss_heart()
     counter = 0
+    
 
 
     cacti = pygame.sprite.Group()
@@ -587,7 +592,7 @@ def gameplay_hard():
 
                 # 보스 몬스터 패턴1(좌우로 왔다갔다 하는 패턴): 보스 익룡이 쏘는 미사일.
                 if (isPkingTime) and (pking.pattern_idx == 1) and (int(pm_pattern1_count % 20) == 0):
-                    # print(pm_list)
+                    print(pm_list)
                     pm=obj()
                     pm.put_img("./sprites/pking bullet.png")
                     pm.change_size(15,15)
@@ -1059,6 +1064,24 @@ def gameplay_story3():
     # retbutton_image, retbutton_rect = load_image('replay_button.png', 70, 62, -1)
     gameover_image, gameover_rect = load_image('game_over.png', 380, 22, -1)
 
+    #1. 미사일 발사.
+    space_go=False
+    m_list=[]
+    a_list=[]
+    bk=0
+
+    #익룡이 격추되었을때
+    isDown=False
+    boomCount=0
+
+    #방향키 구현
+    goLeft=False
+    goRight=False
+
+    pm_list = []
+    pm_pattern1_count=0
+    #2단 점프
+    jumpingx2=False
 
     while not gameQuit:
         while startMenu:
@@ -1087,14 +1110,40 @@ def gameplay_story3():
                         if event.key == pygame.K_DOWN:  # 아래방향키를 누르는 시점에 공룡이 점프중이지 않으면 숙인다.
                             if not (playerDino.isJumping and playerDino.isDead):
                                 playerDino.isDucking = True
+                        
+                        if event.key == pygame.K_LEFT:
+                            goLeft=True
+                        
+                        if event.key == pygame.K_RIGHT:
+                            goRight=True
 
                         if event.key == pygame.K_ESCAPE:
                             paused = not paused
                             paused = pausing()
 
+                        if event.key == pygame.K_s:
+                            jumpingx2=True
+                        
+                        if event.key == pygame.K_a:
+                            space_go=True
+                            bk=0
+
                     if event.type == pygame.KEYUP:
                         if event.key == pygame.K_DOWN:
                             playerDino.isDucking = False
+
+                        if event.key == pygame.K_a:
+                            space_go=False
+
+                        if event.key == pygame.K_LEFT:
+                            goLeft=False
+                        
+                        if event.key == pygame.K_RIGHT:
+                            goRight=False
+
+                        if event.key == pygame.K_s:
+                            jumpingx2=False
+                        
 
                     if event.type == pygame.MOUSEBUTTONDOWN:
                         if pygame.mouse.get_pressed() == (1, 0, 0) and playerDino.rect.bottom == int(0.98 * height):
@@ -1116,6 +1165,118 @@ def gameplay_story3():
                         checkscrsize(event.w, event.h)
 
             if not paused:
+
+                if goLeft:
+                    if playerDino.rect.left < 0:
+                        playerDino.rect.left = 0
+                    else:
+                        playerDino.rect.left = playerDino.rect.left - gamespeed
+
+                if goRight:
+                    if playerDino.rect.right > width:
+                        playerDino.rect.right = width
+                    else:
+                        playerDino.rect.left = playerDino.rect.left + gamespeed
+
+                if (space_go==True) and (int(bk%100)==0):
+                    # print(bk)
+                    mm=obj()
+
+                    # 디노의 종류에 따라 다른 총알이 나가도록 합니다.
+                    if playerDino.type == 'RED':
+                        mm.put_img("./sprites/black_bullet.png")
+                        mm.change_size(15,15)
+                    elif playerDino.type == 'YELLOW':
+                        mm.put_img("./sprites/blue_bullet.png")
+                        mm.change_size(15,15)
+                    elif playerDino.type == 'ORANGE':
+                        mm.put_img("./sprites/blue_bullet.png")
+                        mm.change_size(15,15)
+                    elif playerDino.type == 'PURPLE':
+                        mm.put_img("./sprites/pink_bullet.png")
+                        mm.change_size(15,15)
+                    elif playerDino.type == 'PINK':
+                        mm.put_img("./sprites/heart_bullet.png")
+                        mm.change_size(15,15)
+                    else:                    
+                        mm.put_img("./sprites/red_bullet.png")
+                        mm.change_size(15,15)
+                    # 
+                    
+                    if playerDino.isDucking ==False:
+                        mm.x = round(playerDino.rect.centerx)
+                        mm.y = round(playerDino.rect.top*1.035)
+                    if playerDino.isDucking ==True:
+                        mm.x = round(playerDino.rect.centerx)
+                        mm.y = round(playerDino.rect.centery*1.01)
+                    mm.move = 15
+                    m_list.append(mm)
+                bk=bk+1
+                d_list=[]
+
+                #미사일 하나씩 꺼내옴
+                for i in range(len(m_list)):
+                    m=m_list[i]
+                    m.x +=m.move
+                    if m.x>width:
+                        d_list.append(i)
+
+                d_list.reverse()
+                for d in d_list:
+                    del m_list[d]
+                #
+
+                if jumpingx2 :
+                    if  playerDino.rect.bottom == int(height * 0.98):
+                        playerDino.isJumping = True
+                        playerDino.movement[1] = -1 * playerDino.superJumpSpeed
+
+                if goLeft:
+                    if playerDino.rect.left < 0:
+                        playerDino.rect.left = 0
+                    else:
+                        playerDino.rect.left = playerDino.rect.left - gamespeed
+
+                if goRight:
+                    if playerDino.rect.right > width:
+                        playerDino.rect.right = width
+                    else:
+                        playerDino.rect.left = playerDino.rect.left + gamespeed
+
+                
+                
+                if  (int(pm_pattern1_count % 20) == 0):
+                    print(pm_list)
+                    pm=obj()
+                    pm.put_img("./sprites/water_drop.png")
+                    pm.change_size(40,40)
+                    pm.x = 100
+                    pm.y = 10
+                    pm.move = 3
+                    pm_list.append(pm)
+                pm_pattern1_count += 1
+                pd_list = []
+
+                for i in range(len(pm_list)):
+                    pm=pm_list[i]
+                    pm.y +=pm.move
+                    if pm.y>height or pm.x < 0:
+                        pd_list.append(i)
+
+                pd_list.reverse()
+                for d in pd_list:
+                    del pm_list[d]
+                #
+
+                
+
+
+
+
+
+
+
+
 
                 for s in stones:
                     s.movement[0] = -1 * gamespeed
@@ -1165,6 +1326,27 @@ def gameplay_story3():
 
                 for p in pteras:
                     p.movement[0] = -1 * gamespeed
+
+                    # 7. 익룡이 미사일에 맞으면 익룡과 미사일 모두 사라집니다.
+
+                    if (len(m_list)==0):
+                        pass
+                    else:
+                        if (m.x>=p.rect.left)and(m.x<=p.rect.right)and(m.y>p.rect.top)and(m.y<p.rect.bottom):
+                            print("격추 성공")
+                            isDown=True
+                            boom=obj()
+                            boom.put_img("./sprites/boom.png")
+                            boom.change_size(200,100)
+                            boom.x=p.rect.centerx-round(p.rect.width)*2.5
+                            boom.y=p.rect.centery-round(p.rect.height)*1.5
+                            playerDino.score+=30
+                            p.kill()
+                            # 여기만 바꿈
+                            m_list.remove(m)
+                            #
+                    #
+
                     if not playerDino.collision_immune:
                         if pygame.sprite.collide_mask(playerDino, p):
                             playerDino.collision_immune = True
@@ -1180,11 +1362,6 @@ def gameplay_story3():
                         if immune_time - collision_time > collision_immune_time:
                             playerDino.collision_immune = False
 
-
-                    elif not playerDino.isSuper:
-                        immune_time = pygame.time.get_ticks()
-                        if immune_time - collision_time > collision_immune_time:
-                            playerDino.collision_immune = False
 
                 if not playerDino.isSuper:
                     for s in shield_items:
@@ -1210,6 +1387,21 @@ def gameplay_story3():
                 HIGHJUMP_INTERVAL = 300
                 OBJECT_REFRESH_LINE = width * 0.8
                 MAGIC_NUM = 10
+
+                if (len(pm_list)==0):
+                    pass
+                else:
+                    # print("x: ",pm.x,"y: ",pm.y)
+                    for pm in pm_list:
+                        if (pm.x>=playerDino.rect.left)and(pm.x<=playerDino.rect.right)and(pm.y>playerDino.rect.top)and(pm.y<playerDino.rect.bottom):
+                            print("공격에 맞음.")
+                            # if pygame.sprite.collide_mask(playerDino, pm):
+                            playerDino.collision_immune = True
+                            life -= 1
+                            collision_time = pygame.time.get_ticks()
+                            if life == 0:
+                                playerDino.isDead = True
+                            pm_list.remove(pm)
 
                 if len(cacti) < 2:
                     if len(cacti) == 0:
@@ -1256,6 +1448,10 @@ def gameplay_story3():
                 slow_items.update()
 
                 stones.update()
+                for a in a_list:
+                    a.show()
+
+
 
                 if pygame.display.get_surface() != None:
                     screen.fill(background_col)
@@ -1271,6 +1467,11 @@ def gameplay_story3():
                     life_items.draw(screen)
                     slow_items.draw(screen)
                     # highjump_items.draw(screen)
+
+                    for pm in pm_list:
+                        pm.show()
+
+
                     playerDino.draw()
                     resized_screen.blit(
                         pygame.transform.scale(screen, (resized_screen.get_width(), resized_screen.get_height())),
