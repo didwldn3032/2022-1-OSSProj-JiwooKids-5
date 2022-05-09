@@ -166,3 +166,5 @@ class Scoreboard:
         self.sc_rect = self.sc.get_rect()
         self.sc_rect.left = self.pos_x
         self.sc_rect.top = self.pos_y
+
+
