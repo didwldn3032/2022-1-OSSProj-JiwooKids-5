@@ -1246,11 +1246,10 @@ def gameplay_story3():
                 
                 
                 if  (int(pm_pattern1_count % 20) == 0):
-                    print(pm_list)
                     pm=obj()
                     pm.put_img("./sprites/water_drop.png")
                     pm.change_size(40,40)
-                    pm.x = 100
+                    pm.x = random.randrange(40, 800-40)
                     pm.y = 10
                     pm.move = 3
                     pm_list.append(pm)
