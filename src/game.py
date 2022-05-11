@@ -1083,6 +1083,9 @@ def gameplay_story3():
     #2단 점프
     jumpingx2=False
 
+    back_image, back_rect = load_image("story3_background.png", 800, 400, -1)
+
+
     while not gameQuit:
         while startMenu:
             pass
@@ -1094,6 +1097,8 @@ def gameplay_story3():
 
 
             else:
+                screen.fill(background_col)
+                screen.blit(back_image, back_rect)
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:  # 종료
                         gameQuit = True
@@ -1453,7 +1458,6 @@ def gameplay_story3():
 
 
                 if pygame.display.get_surface() != None:
-                    screen.fill(background_col)
                     new_ground.draw()
                     clouds.draw(screen)
                     scb.draw()
