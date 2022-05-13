@@ -133,6 +133,7 @@ class obj(pygame.sprite.Sprite):
         self.move = 0
         self.xmove = 0
         self.ymove = 0
+        self.movement = [0, 0]
         self.rect=None
     def put_img(self, address):
         if address[-3:] == "png":
@@ -147,29 +148,3 @@ class obj(pygame.sprite.Sprite):
     def show(self):
         screen.blit(self.img, (self.x,self.y))
 
-
-
-class mask(pygame.sprite.Sprite):
-    def __init__(self, speed=5, sizex=-1, sizey=-1):
-        pygame.sprite.Sprite.__init__(self,self.containers) #Sprite를 사용하면 이미지, 위치, 충돌 처리를 통합해서 처리
-        self.images, self.rect = load_sprite_sheet('mask_bubble.png', 1, 1, sizex, sizey, -1)
-        self.rect.bottom = random.randrange(int(0.98*height),200)
-        self.rect.left = width + self.rect.width
-        self.image = self.images[0] #0과 3 사이의 난수를 반환
-        self.movement = [-1*speed, 0] #캐릭터에게 speed의 속도로 다가옴
-        
-    def put_img(self, address):
-        if address[-3:] == "png":
-            self.img = pygame.image.load(address).convert_alpha()
-            self.rect = self.img.get_rect
-        else :
-            self.img = pygame.image.load(address)
-        self.sx, self.sy = self.img.get_size() #이미지 크기를 튜플 형태로 반환
-    def draw(self): #self.image와 rect를 screen에 삽입
-        screen.blit(self.image, self.rect)
-
-    def update(self):
-        self.rect = self.rect.move(self.movement)
-
-        if self.rect.right < 0:
-            self.kill()
