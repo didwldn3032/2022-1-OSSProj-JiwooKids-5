@@ -1579,6 +1579,7 @@ def gameplay_story4():
     new_ground = Ground(-1 * gamespeed)
     scb = Scoreboard()
     heart = HeartIndicator(life)
+    m_time = Mask_time()
     counter = 0
 
     cacti = pygame.sprite.Group()
@@ -1984,6 +1985,7 @@ def gameplay_story4():
                 fire_cacti.update()
                 #masks.update()
                 mask_items.update()
+                m_time.update(playerDino.score2)
                 pteras.update()
                 clouds.update()
                 shield_items.update()
@@ -2010,6 +2012,7 @@ def gameplay_story4():
                     fire_cacti.draw(screen)
                     #masks.draw(screen)
                     mask_items.draw(screen)
+                    m_time.draw()
                     pteras.draw(screen)
                     shield_items.draw(screen)
                     life_items.draw(screen)
@@ -2097,9 +2100,11 @@ def gameplay_story4():
                         checkscrsize(event.w, event.h)
 
             scb.update(playerDino.score,high_score)
+            m_time.update(playerDino.score2)
             if pygame.display.get_surface() != None:
                 disp_gameOver_msg(gameover_image)
                 scb.draw()
+                m_time.draw()
                 resized_screen.blit(
                     pygame.transform.scale(screen, (resized_screen.get_width(), resized_screen.get_height())),
                     resized_screen_centerpos)
