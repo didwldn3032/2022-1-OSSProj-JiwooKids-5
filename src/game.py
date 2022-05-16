@@ -288,7 +288,7 @@ def selectMode():
                 if pygame.mouse.get_pressed() == (1, 0, 0):
                     x, y = event.pos
                     if r_easy_btn_rect.collidepoint(x, y):
-                        gameplay_story3()
+                        gameplay_story4()
 
                     if r_btn_hardmode_rect.collidepoint(x, y):
                         gameplay_hard()
@@ -1845,6 +1845,7 @@ def gameplay_story4():
                         if immune_time - collision_time > collision_immune_time:
                             playerDino.collision_immune = False
                 
+                
                 for m in mask_items:
                     m.movement[0] = -1 * gamespeed
                     if not playerDino.collision_immune:
@@ -1852,6 +1853,7 @@ def gameplay_story4():
                             playerDino.collision_immune = True
                             collision_time = pygame.time.get_ticks()
                             playerDino.score2 = 0
+                            m.image.set_alpha(0)
                             
                             if pygame.mixer.get_init() is not None:
                                 checkPoint_sound.play()
