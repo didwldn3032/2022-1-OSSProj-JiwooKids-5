@@ -288,7 +288,7 @@ def selectMode():
                 if pygame.mouse.get_pressed() == (1, 0, 0):
                     x, y = event.pos
                     if r_easy_btn_rect.collidepoint(x, y):
-                        gameplay_story4()
+                        gameplay_story3()
 
                     if r_btn_hardmode_rect.collidepoint(x, y):
                         gameplay_hard()
@@ -1087,12 +1087,13 @@ def gameplay_story3():
     jumpingx2=False
 
     back_image, back_rect = load_image("story3_background.png", 800, 400, -1)
+    
 
 
     while not gameQuit:
         while startMenu:
             pass
-        while not gameOver and playerDino.score>=500:
+        while not gameOver and playerDino.score<=500:
             if pygame.display.get_surface() == None:
                 print("Couldn't load display surface")
                 gameQuit = True
@@ -1250,9 +1251,7 @@ def gameplay_story3():
                         playerDino.rect.right = width
                     else:
                         playerDino.rect.left = playerDino.rect.left + gamespeed
-
-                
-                
+               
                 if  (int(pm_pattern1_count % 20) == 0):
                     pm=obj()
                     pm.put_img("./sprites/water_drop.png")
@@ -1274,7 +1273,6 @@ def gameplay_story3():
                 for d in pd_list:
                     del pm_list[d]
                 #
-
 
 
                 for s in stones:
@@ -1322,7 +1320,7 @@ def gameplay_story3():
                         immune_time = pygame.time.get_ticks()
                         if immune_time - collision_time > collision_immune_time:
                             playerDino.collision_immune = False
-
+                
                 for p in pteras:
                     p.movement[0] = -1 * gamespeed
 
@@ -1403,7 +1401,7 @@ def gameplay_story3():
                             pm_list.remove(pm)
 
                 if len(cacti) < 2:
-                    if len(cacti) == 0:
+                    if len(cacti) == 0 and playerDino.score <= 1:
                         last_obstacle.empty()
                         last_obstacle.add(Cactus(gamespeed, object_size[0], object_size[1]))
                     else:
@@ -1423,6 +1421,8 @@ def gameplay_story3():
                         if l.rect.right < OBJECT_REFRESH_LINE and random.randrange(STONE_INTERVAL * 3) == MAGIC_NUM:
                             last_obstacle.empty()
                             last_obstacle.add(Stone(gamespeed, object_size[0], object_size[1]))
+
+                
 
                 if len(pteras) == 0 and random.randrange(PTERA_INTERVAL) == MAGIC_NUM and counter > PTERA_INTERVAL:
                     for l in last_obstacle:
@@ -1476,6 +1476,7 @@ def gameplay_story3():
                         resized_screen_centerpos)
                     pygame.display.update()
                 clock.tick(FPS)
+
 
                 if playerDino.isDead:
                     gameOver = True
@@ -1554,7 +1555,6 @@ def gameplay_story3():
 
     pygame.quit()
     quit()
-
 
 
 def gameplay_story4():
@@ -2382,3 +2382,15 @@ def credit():
     #게임 종료
     pygame.quit()
     quit()
+
+
+
+
+
+
+
+
+
+
+
+
