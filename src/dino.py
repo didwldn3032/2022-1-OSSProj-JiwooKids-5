@@ -71,6 +71,7 @@ class Dino():
         self.index = 0
         self.counter = 0
         self.score = 0
+        self.score2 = 0
         self.isJumping = False
         self.isDead = False
         self.isDucking = False
@@ -137,6 +138,7 @@ class Dino():
 
         if not self.isDead and self.counter % 7 == 6 and self.isBlinking == False:
             self.score += 1
+            self.score2 += 1
             if self.score % 100 == 0 and self.score != 0:
                 if pygame.mixer.get_init() != None:
                     checkPoint_sound.play()

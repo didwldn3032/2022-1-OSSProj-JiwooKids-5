@@ -133,6 +133,7 @@ class obj(pygame.sprite.Sprite):
         self.move = 0
         self.xmove = 0
         self.ymove = 0
+        self.movement = [0, 0]
         self.rect=None
     def put_img(self, address):
         if address[-3:] == "png":
@@ -146,3 +147,4 @@ class obj(pygame.sprite.Sprite):
         self.sx, self.sy = self.img.get_size() 
     def show(self):
         screen.blit(self.img, (self.x,self.y))
+
