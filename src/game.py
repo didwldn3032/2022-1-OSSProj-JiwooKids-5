@@ -1045,7 +1045,7 @@ def gameplay_story1():
     playerDino = Dino(dino_size[0], dino_size[1], type=dino_type[type_idx])
 
     new_ground = Ground(-1 * gamespeed)
-    scb = Scoreboard()
+    s_scb = Story_Scoreboard()
     heart = HeartIndicator(life)
     counter = 0
 
@@ -1451,7 +1451,7 @@ def gameplay_story1():
                 life_items.update()
                 # highjump_items.update()
                 new_ground.update()
-                scb.update(playerDino.score,high_score)
+                s_scb.update(playerDino.score)
                 heart.update(life)
                 slow_items.update()
 
@@ -1460,7 +1460,7 @@ def gameplay_story1():
                 if pygame.display.get_surface() != None:
                     new_ground.draw()
                     clouds.draw(screen)
-                    scb.draw()
+                    s_scb.draw()
                     heart.draw()
                     cacti.draw(screen)
                     stones.draw(screen)
@@ -1564,10 +1564,10 @@ def gameplay_story1():
                     if event.type == pygame.VIDEORESIZE:
                         checkscrsize(event.w, event.h)
 
-            scb.update(playerDino.score,high_score)
+            s_scb.update(playerDino.score)
             if pygame.display.get_surface() != None:
                 disp_gameOver_msg(gameover_image)
-                scb.draw()
+                s_scb.draw()
                 resized_screen.blit(
                     pygame.transform.scale(screen, (resized_screen.get_width(), resized_screen.get_height())),
                     resized_screen_centerpos)
@@ -1598,7 +1598,7 @@ def gameplay_story2(): # 지진모드
     Background, Background_rect = load_image('new_rock_2.png', 800, 400, -1)
     
     new_ground = Ground(-1 * gamespeed)
-    scb = Scoreboard()
+    s_scb = Story_Scoreboard()
     heart = HeartIndicator(life)
     counter = 0
 
@@ -1866,7 +1866,7 @@ def gameplay_story2(): # 지진모드
                 pteras.update()
                 clouds.update()
                 new_ground.update()
-                scb.update(playerDino.score,high_score)
+                s_scb.update(playerDino.score)
                 heart.update(life)
 
                 stones.update()
@@ -1875,7 +1875,7 @@ def gameplay_story2(): # 지진모드
                 if pygame.display.get_surface() != None:
                     new_ground.draw()
                     clouds.draw(screen)
-                    scb.draw()
+                    s_scb.draw()
                     heart.draw()
                     cacti.draw(screen)
                     stones.draw(screen)
@@ -1954,10 +1954,10 @@ def gameplay_story2(): # 지진모드
                     if event.type == pygame.VIDEORESIZE:
                         checkscrsize(event.w, event.h)
 
-            scb.update(playerDino.score,high_score)
+            s_scb.update(playerDino.score)
             if pygame.display.get_surface() != None:
                 disp_gameOver_msg(gameover_image)
-                scb.draw()
+                s_scb.draw()
                 resized_screen.blit(
                     pygame.transform.scale(screen, (resized_screen.get_width(), resized_screen.get_height())),
                     resized_screen_centerpos)
@@ -1988,7 +1988,7 @@ def gameplay_story3():
     playerDino = Dino(dino_size[0], dino_size[1], type=dino_type[type_idx])
 
     new_ground = Ground(-1 * gamespeed)
-    scb = Scoreboard()
+    s_scb = Story_Scoreboard()
     heart = HeartIndicator(life)
     counter = 0
 
@@ -2395,7 +2395,7 @@ def gameplay_story3():
                 life_items.update()
                 # highjump_items.update()
                 new_ground.update()
-                scb.update(playerDino.score,high_score)
+                s_scb.update(playerDino.score)
                 heart.update(life)
                 slow_items.update()
 
@@ -2408,7 +2408,7 @@ def gameplay_story3():
                 if pygame.display.get_surface() != None:
                     new_ground.draw()
                     clouds.draw(screen)
-                    scb.draw()
+                    s_scb.draw()
                     heart.draw()
                     cacti.draw(screen)
                     stones.draw(screen)
@@ -2512,10 +2512,10 @@ def gameplay_story3():
                     if event.type == pygame.VIDEORESIZE:
                         checkscrsize(event.w, event.h)
 
-            scb.update(playerDino.score,high_score)
+            s_scb.update(playerDino.score)
             if pygame.display.get_surface() != None:
                 disp_gameOver_msg(_image)
-                scb.draw()
+                s_scb.draw()
                 resized_screen.blit(
                     pygame.transform.scale(screen, (resized_screen.get_width(), resized_screen.get_height())),
                     resized_screen_centerpos)
@@ -2546,7 +2546,7 @@ def gameplay_story4():
     playerDino = Dino(dino_size[0], dino_size[1], type=dino_type[type_idx])
 
     new_ground = Ground(-1 * gamespeed)
-    scb = Scoreboard()
+    s_scb = Story_Scoreboard()
     heart = HeartIndicator(life)
     m_time = Mask_time()
     counter = 0
@@ -2961,7 +2961,7 @@ def gameplay_story4():
                 shield_items.update()
                 life_items.update()
                 new_ground.update()
-                scb.update(playerDino.score,high_score)
+                s_scb.update(playerDino.score)
                 heart.update(life)
                 slow_items.update()
 
@@ -2974,7 +2974,7 @@ def gameplay_story4():
                 if pygame.display.get_surface() != None:
                     new_ground.draw()
                     clouds.draw(screen)
-                    scb.draw()
+                    s_scb.draw()
                     heart.draw()
                     cacti.draw(screen)
                     stones.draw(screen)
@@ -3067,11 +3067,11 @@ def gameplay_story4():
                     if event.type == pygame.VIDEORESIZE:
                         checkscrsize(event.w, event.h)
 
-            scb.update(playerDino.score,high_score)
+            s_scb.update(playerDino.score)
             m_time.update(playerDino.score2)
             if pygame.display.get_surface() != None:
                 disp_gameOver_msg(gameover_image)
-                scb.draw()
+                s_scb.draw()
                 m_time.draw()
                 resized_screen.blit(
                     pygame.transform.scale(screen, (resized_screen.get_width(), resized_screen.get_height())),

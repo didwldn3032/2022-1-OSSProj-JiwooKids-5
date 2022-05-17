@@ -168,6 +168,33 @@ class Scoreboard:
         self.sc_rect.top = self.pos_y
 
 
+class Story_Scoreboard:
+    def __init__(self, x=-1, y=-1):
+        self.score = 0
+        self.pos_x = 0
+        self.pos_y = 0
+        if x == -1:
+            self.pos_x = width * 0.75
+        else:
+            self.pos_x = x
+        if y == -1:
+            self.pos_y = height * 0.05
+        else:
+            self.pos_y = y
+
+    def draw(self):
+        screen.blit(self.sc, self.sc_rect)
+
+    def update(self, score):
+        score_digits = extractDigits(score)
+
+        # self.image.fill(background_col)
+        self.sc = font.render(f'NOW : {score}'.zfill(5), True, black)
+        self.sc_rect = self.sc.get_rect()
+        self.sc_rect.left = self.pos_x
+        self.sc_rect.top = self.pos_y
+
+
 
 class Mask_time:
     def __init__(self, x=-1, y=-1):
