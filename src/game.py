@@ -1527,8 +1527,8 @@ def gameplay_story1():
                 print("Couldn't load display surface")
                 gameQuit = True
                 gameOver = False
-            else:
-                for event in pygame.event.get():
+
+            for event in pygame.event.get():
                     if event.type == pygame.QUIT:
                         gameQuit = True
                         gameOver = False
@@ -1540,34 +1540,19 @@ def gameplay_story1():
                         if event.key == pygame.K_RETURN or event.key == pygame.K_SPACE:
                             gameOver = False
                             gameQuit = True
-                            typescore(playerDino.score)
-                            if not db.is_limit_data(playerDino.score):
-                                db.query_db(
-                                    f"insert into user(username, score) values ('{gamername}', '{playerDino.score}');")
-                                db.commit()
-                                board()
-                            else:
-                                board()
+                            introscreen()
 
                     if event.type == pygame.MOUSEBUTTONDOWN:
                         gameOver = False
                         gameQuit = True
-                        typescore(playerDino.score)
-                        if not db.is_limit_data(playerDino.score):
-                            db.query_db(
-                                f"insert into user(username, score) values ('{gamername}', '{playerDino.score}');")
-                            db.commit()
-                            board()
-                        else:
-                            board()
+                        introscreen()
 
                     if event.type == pygame.VIDEORESIZE:
                         checkscrsize(event.w, event.h)
 
-            s_scb.update(playerDino.score)
+
             if pygame.display.get_surface() != None:
                 disp_gameOver_msg(gameover_image)
-                s_scb.draw()
                 resized_screen.blit(
                     pygame.transform.scale(screen, (resized_screen.get_width(), resized_screen.get_height())),
                     resized_screen_centerpos)
@@ -1935,8 +1920,8 @@ def gameplay_story2(): # 지진모드
                 print("Couldn't load display surface")
                 gameQuit = True
                 gameOver = False
-            else:
-                for event in pygame.event.get():
+
+            for event in pygame.event.get():
                     if event.type == pygame.QUIT:
                         gameQuit = True
                         gameOver = False
@@ -1945,24 +1930,28 @@ def gameplay_story2(): # 지진모드
                             gameQuit = True
                             gameOver = False
 
-                        if event.key == pygame.K_RETURN or event.key == pygame.K_n:
-                            gameplay_story3()
+                        if event.key == pygame.K_RETURN or event.key == pygame.K_SPACE:
+                            gameOver = False
+                            gameQuit = True
+                            introscreen()
 
                     if event.type == pygame.MOUSEBUTTONDOWN:
-                        gameplay_story3()
+                        gameOver = False
+                        gameQuit = True
+                        introscreen()
 
                     if event.type == pygame.VIDEORESIZE:
                         checkscrsize(event.w, event.h)
 
-            s_scb.update(playerDino.score)
+
             if pygame.display.get_surface() != None:
                 disp_gameOver_msg(gameover_image)
-                s_scb.draw()
                 resized_screen.blit(
                     pygame.transform.scale(screen, (resized_screen.get_width(), resized_screen.get_height())),
                     resized_screen_centerpos)
                 pygame.display.update()
             clock.tick(FPS)
+
 
     pygame.quit()
     quit()
@@ -2475,8 +2464,8 @@ def gameplay_story3():
                 print("Couldn't load display surface")
                 gameQuit = True
                 gameOver = False
-            else:
-                for event in pygame.event.get():
+
+            for event in pygame.event.get():
                     if event.type == pygame.QUIT:
                         gameQuit = True
                         gameOver = False
@@ -2488,34 +2477,19 @@ def gameplay_story3():
                         if event.key == pygame.K_RETURN or event.key == pygame.K_SPACE:
                             gameOver = False
                             gameQuit = True
-                            typescore(playerDino.score)
-                            if not db.is_limit_data(playerDino.score):
-                                db.query_db(
-                                    f"insert into user(username, score) values ('{gamername}', '{playerDino.score}');")
-                                db.commit()
-                                board()
-                            else:
-                                board()
+                            introscreen()
 
                     if event.type == pygame.MOUSEBUTTONDOWN:
                         gameOver = False
                         gameQuit = True
-                        typescore(playerDino.score)
-                        if not db.is_limit_data(playerDino.score):
-                            db.query_db(
-                                f"insert into user(username, score) values ('{gamername}', '{playerDino.score}');")
-                            db.commit()
-                            board()
-                        else:
-                            board()
+                        introscreen()
 
                     if event.type == pygame.VIDEORESIZE:
                         checkscrsize(event.w, event.h)
 
-            s_scb.update(playerDino.score)
+
             if pygame.display.get_surface() != None:
-                disp_gameOver_msg(_image)
-                s_scb.draw()
+                disp_gameOver_msg(gameover_image)
                 resized_screen.blit(
                     pygame.transform.scale(screen, (resized_screen.get_width(), resized_screen.get_height())),
                     resized_screen_centerpos)
@@ -3030,8 +3004,8 @@ def gameplay_story4():
                 print("Couldn't load display surface")
                 gameQuit = True
                 gameOver = False
-            else:
-                for event in pygame.event.get():
+
+            for event in pygame.event.get():
                     if event.type == pygame.QUIT:
                         gameQuit = True
                         gameOver = False
@@ -3043,36 +3017,19 @@ def gameplay_story4():
                         if event.key == pygame.K_RETURN or event.key == pygame.K_SPACE:
                             gameOver = False
                             gameQuit = True
-                            typescore(playerDino.score)
-                            if not db.is_limit_data(playerDino.score):
-                                db.query_db(
-                                    f"insert into user(username, score) values ('{gamername}', '{playerDino.score}');")
-                                db.commit()
-                                board()
-                            else:
-                                board()
+                            introscreen()
 
                     if event.type == pygame.MOUSEBUTTONDOWN:
                         gameOver = False
                         gameQuit = True
-                        typescore(playerDino.score)
-                        if not db.is_limit_data(playerDino.score):
-                            db.query_db(
-                                f"insert into user(username, score) values ('{gamername}', '{playerDino.score}');")
-                            db.commit()
-                            board()
-                        else:
-                            board()
+                        introscreen()
 
                     if event.type == pygame.VIDEORESIZE:
                         checkscrsize(event.w, event.h)
 
-            s_scb.update(playerDino.score)
-            m_time.update(playerDino.score2)
+
             if pygame.display.get_surface() != None:
                 disp_gameOver_msg(gameover_image)
-                s_scb.draw()
-                m_time.draw()
                 resized_screen.blit(
                     pygame.transform.scale(screen, (resized_screen.get_width(), resized_screen.get_height())),
                     resized_screen_centerpos)
