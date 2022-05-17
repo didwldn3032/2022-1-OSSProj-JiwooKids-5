@@ -288,10 +288,10 @@ def selectMode():
                 if pygame.mouse.get_pressed() == (1, 0, 0):
                     x, y = event.pos
                     if r_easy_btn_rect.collidepoint(x, y):
-                        gameplay_story4()
+                        gameplay_story1()
 
                     if r_btn_hardmode_rect.collidepoint(x, y):
-                        gameplay_story1()
+                        gameplay_hard()
 
             if event.type == pygame.VIDEORESIZE:
                 checkscrsize(event.w, event.h)
@@ -340,7 +340,7 @@ def gameplay_hard():
     gameOver = False
     gameQuit = False
     ###
-    life = 50
+    life = 5
     ###
     paused = False
     
@@ -1026,6 +1026,7 @@ def gameplay_story1():
     gamespeed = 4
     startMenu = False
     gameOver = False
+    gameClear = False
     gameQuit = False
     ###
     life = 5
@@ -1085,7 +1086,7 @@ def gameplay_story1():
     while not gameQuit:
         while startMenu:
             pass
-        while not gameOver:
+        while not gameOver and not gameClear:
             if pygame.display.get_surface() == None:
                 print("Couldn't load display surface")
                 gameQuit = True
@@ -1492,10 +1493,34 @@ def gameplay_story1():
 
                 counter = (counter + 1)
 
+                if playerDino.score >= 50:
+                    gameClear = True
+                    break
                 
 
         if gameQuit:
             break
+
+        while gameClear:
+            if pygame.display.get_surface() == None:
+                print("Couldn't load display surface")
+            else:
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        gameQuit = True
+                        gameOver = False
+                    if event.type == pygame.KEYDOWN:
+                        if event.key == pygame.K_ESCAPE:
+                            gameQuit = True
+                            gameOver = False
+
+                        if event.key == pygame.K_RETURN or event.key == pygame.K_n:
+                            gameplay_story2()
+
+                    if event.type == pygame.MOUSEBUTTONDOWN:
+                        gameplay_story2()
+            break
+
 
         while gameOver:
             if pygame.display.get_surface() == None:
@@ -1563,6 +1588,7 @@ def gameplay_story2(): # 지진모드
     gamespeed = 4
     startMenu = False
     gameOver = False
+    gameClear = False
     gameQuit = False
     life = 5
 
@@ -1608,7 +1634,7 @@ def gameplay_story2(): # 지진모드
     while not gameQuit:
         while startMenu:
             pass
-        while not gameOver and playerDino.score <= 500:
+        while not gameOver and not gameClear:
             
             if pygame.display.get_surface() == None:
                 print("Couldn't load display surface")
@@ -1875,19 +1901,33 @@ def gameplay_story2(): # 지진모드
 
                 counter = (counter + 1)
 
+                if playerDino.score >= 50:
+                    gameClear = True
+                    break
+
         if gameQuit:
             break
 
-        if playerDino.score >= 500:
+        
+
+        while gameClear:
             if pygame.display.get_surface() == None:
                 print("Couldn't load display surface")
-            if pygame.display.get_surface() != None:
-                screen.blit(clear_image, clear_rect)
-                resized_screen.blit(
-                    pygame.transform.scale(screen, (resized_screen.get_width(), resized_screen.get_height())),
-                    resized_screen_centerpos)
-                pygame.display.update()
-            time.sleep(10)
+            else:
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        gameQuit = True
+                        gameOver = False
+                    if event.type == pygame.KEYDOWN:
+                        if event.key == pygame.K_ESCAPE:
+                            gameQuit = True
+                            gameOver = False
+
+                        if event.key == pygame.K_RETURN or event.key == pygame.K_n:
+                            gameplay_story3()
+
+                    if event.type == pygame.MOUSEBUTTONDOWN:
+                        gameplay_story3()
             break
 
         while gameOver:
@@ -1905,29 +1945,11 @@ def gameplay_story2(): # 지진모드
                             gameQuit = True
                             gameOver = False
 
-                        if event.key == pygame.K_RETURN or event.key == pygame.K_SPACE:
-                            gameOver = False
-                            gameQuit = True
-                            typescore(playerDino.score)
-                            if not db.is_limit_data(playerDino.score):
-                                db.query_db(
-                                    f"insert into user(username, score) values ('{gamername}', '{playerDino.score}');")
-                                db.commit()
-                                board()
-                            else:
-                                board()
+                        if event.key == pygame.K_RETURN or event.key == pygame.K_n:
+                            gameplay_story3()
 
                     if event.type == pygame.MOUSEBUTTONDOWN:
-                        gameOver = False
-                        gameQuit = True
-                        typescore(playerDino.score)
-                        if not db.is_limit_data(playerDino.score):
-                            db.query_db(
-                                f"insert into user(username, score) values ('{gamername}', '{playerDino.score}');")
-                            db.commit()
-                            board()
-                        else:
-                            board()
+                        gameplay_story3()
 
                     if event.type == pygame.VIDEORESIZE:
                         checkscrsize(event.w, event.h)
@@ -1956,6 +1978,7 @@ def gameplay_story3():
     gamespeed = 4
     startMenu = False
     gameOver = False
+    gameClear = False
     gameQuit = False
     ###
     life = 5
@@ -2023,7 +2046,7 @@ def gameplay_story3():
     while not gameQuit:
         while startMenu:
             pass
-        while not gameOver and playerDino.score<=500:
+        while not gameOver and not gameClear:
             if pygame.display.get_surface() == None:
                 print("Couldn't load display surface")
                 gameQuit = True
@@ -2420,15 +2443,31 @@ def gameplay_story3():
 
                 counter = (counter + 1)
 
+                if playerDino.score >= 50:
+                    gameClear = True
+                    break
+
         if gameQuit:
             break
         
-        if playerDino.score>=500:
+        while gameClear:
             if pygame.display.get_surface() == None:
                 print("Couldn't load display surface")
             else:
-                print("Couldn't load display surface")
-            time.sleep(10)
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        gameQuit = True
+                        gameOver = False
+                    if event.type == pygame.KEYDOWN:
+                        if event.key == pygame.K_ESCAPE:
+                            gameQuit = True
+                            gameOver = False
+
+                        if event.key == pygame.K_RETURN or event.key == pygame.K_n:
+                            gameplay_story4()
+
+                    if event.type == pygame.MOUSEBUTTONDOWN:
+                        gameplay_story4()
             break
 
         while gameOver:
@@ -2475,7 +2514,7 @@ def gameplay_story3():
 
             scb.update(playerDino.score,high_score)
             if pygame.display.get_surface() != None:
-                disp_gameOver_msg(gameover_image)
+                disp_gameOver_msg(_image)
                 scb.draw()
                 resized_screen.blit(
                     pygame.transform.scale(screen, (resized_screen.get_width(), resized_screen.get_height())),
@@ -2915,14 +2954,12 @@ def gameplay_story4():
                 playerDino.update()
                 cacti.update()
                 fire_cacti.update()
-                #masks.update()
                 mask_items.update()
                 m_time.update(playerDino.score2)
                 pteras.update()
                 clouds.update()
                 shield_items.update()
                 life_items.update()
-                # highjump_items.update()
                 new_ground.update()
                 scb.update(playerDino.score,high_score)
                 heart.update(life)
@@ -2942,7 +2979,6 @@ def gameplay_story4():
                     cacti.draw(screen)
                     stones.draw(screen)
                     fire_cacti.draw(screen)
-                    #masks.draw(screen)
                     mask_items.draw(screen)
                     m_time.draw()
                     pteras.draw(screen)
