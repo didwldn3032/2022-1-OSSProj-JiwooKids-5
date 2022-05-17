@@ -2,17 +2,13 @@ from src.setting import *
 
 '''
 Cactus class/fire_Cactus : 선인장 장애물
-
 <변수>
 - image,rect : 이미지, 위치, 크기 지정
 - movement : 움직임(역방향)
-
 <함수>
 - draw() : 화면에 선인장 이미지 삽입
 - update() : 선인장 상태 업데이트(계속 왼쪽으로 이동하다 화면 밖 벗어나면 삭제)
-
 PteraKing class : 보스
-
 <변수>
 - image,rect : 이미지, 위치, 크기 지정
 - movement : 움직임(역방향)
@@ -21,7 +17,6 @@ PteraKing class : 보스
 - isAlive : 보스가 살아있는가
 - pattern_idx : 보스 행동 패턴
 - hp : 보스 생명 15
-
 <함수>
 - draw() : 화면에 보스 이미지 삽입
 - pattern0() : 
@@ -39,36 +34,49 @@ PteraKing class : 보스
 	보스가 올라가다 지정된 위치가 되면 pattern0
 	
 - update() : pattern_idx에 맞게 패턴 진행, 10번에 한번씩 보스 출현
-
 Ptera class : 작은 보스
-
 <변수>
 - image,rect : 이미지, 위치, 크기 지정
 - movement : 움직임(역방향)
 - index : item 위치 설정
 - counter : 
-
 <함수>
 - draw() : 화면에 작은 보스 이미지 삽입
 - update() : 작은 보스 상태 업데이트(계속 왼쪽으로 이동하다 화면 밖 벗어나면 삭제)
-
 Stone class : 돌 장애물
-
 <변수>
 - image,rect : 이미지, 위치, 크기 지정
 - movement : 움직임(역방향)
-
 <함수>
 - draw() : 화면에 돌 이미지 삽입
 - update() : 돌 상태 업데이트(계속 왼쪽으로 이동하다 화면 밖 벗어나면 삭제)
-
 '''
+
+class Hole(pygame.sprite.Sprite):
+    def __init__(self, speed=5, sizex=-1, sizey=-1):
+        pygame.sprite.Sprite.__init__(self,self.containers)
+        rand_width = random.randrange(80, 150)
+        self.images, self.rect = load_sprite_sheet('holes3.png', 1, 1, rand_width, 47, -1)
+        self.rect.top = height *0.993
+        self.rect.bottom = int(0.995*height)
+        self.rect.left = width + self.rect.width
+        self.image = self.images[0]
+        self.movement = [-1*speed, 0]
+
+    def draw(self):
+        screen.blit(self.image, self.rect)
+
+    def update(self):
+        self.rect = self.rect.move(self.movement)
+
+        if self.rect.right < 0:
+            self.kill()
 
 class Cactus(pygame.sprite.Sprite): #장애물 1.선인장
     def __init__(self, speed=5, sizex=-1, sizey=-1):
         pygame.sprite.Sprite.__init__(self,self.containers) #Sprite를 사용하면 이미지, 위치, 충돌 처리를 통합해서 처리
         self.images, self.rect = load_sprite_sheet('cacti-small.png', 3, 1, sizex, sizey, -1)
-        self.rect.bottom = int(0.98*height)
+        self.rect.bottom = int(0.9*height)
         self.rect.left = width + self.rect.width
         self.image = self.images[random.randrange(0,3)] #0과 3 사이의 난수를 반환
         self.movement = [-1*speed, 0] #캐릭터에게 speed의 속도로 다가옴
@@ -87,7 +95,7 @@ class fire_Cactus(pygame.sprite.Sprite):
     def __init__(self, speed=5, sizex=-1, sizey=-1):
         pygame.sprite.Sprite.__init__(self,self.containers)
         self.images, self.rect = load_sprite_sheet('fire_cacti6.png', 3, 1, sizex, sizey, -1)
-        self.rect.bottom = int(0.98*height)
+        self.rect.bottom = int(0.9*height)
         self.rect.left = width + self.rect.width
         self.image = self.images[random.randrange(0,3)]
         self.movement = [-1*speed, 0]
@@ -266,7 +274,7 @@ class Ptera(pygame.sprite.Sprite):
     def __init__(self, speed=5, sizex=-1, sizey=-1):
         pygame.sprite.Sprite.__init__(self, self.containers)
         self.images, self.rect = load_sprite_sheet('ptera.png', 2, 1, sizex, sizey, -1)
-        self.ptera_height = [height*0.82, height*0.75, height*0.60]
+        self.ptera_height = [height*0.75, height*0.68, height*0.53]
         self.rect.centery = self.ptera_height[random.randrange(0, 3)]
         self.rect.left = width + self.rect.width
         self.image = self.images[0]
@@ -290,8 +298,8 @@ class Stone(pygame.sprite.Sprite):
     def __init__(self, speed=5, sizex=-1, sizey=-1):
         pygame.sprite.Sprite.__init__(self,self.containers)
         self.images, self.rect = load_sprite_sheet('stone.png', 1, 1, sizex, sizey, -1)
-        self.rect.top = height *0.9
-        self.rect.bottom = int(0.98*height)
+        self.rect.top = height *0.87
+        self.rect.bottom = int(0.9*height)
         self.rect.left = width + self.rect.width
 
         #self.ptera_height = height * 0.3
@@ -331,4 +339,3 @@ class Mask_item(pygame.sprite.Sprite):
 
         if self.rect.right < 0:
             self.kill()
-

@@ -65,7 +65,7 @@ class Dino():
             self.images, self.rect = load_sprite_sheet('dino.png', 6, 1, sizex, sizey, -1)
             self.images1, self.rect1 = load_sprite_sheet('dino_ducking.png', 2, 1, 59, sizey, -1)
 
-        self.rect.bottom = int(0.98*height)
+        self.rect.bottom = int(0.9*height)
         self.rect.left = width/15
         self.image = self.images[0]
         self.index = 0
@@ -89,8 +89,8 @@ class Dino():
         screen.blit(self.image, self.rect)
 
     def checkbounds(self):
-        if self.rect.bottom > int(0.98*height):
-            self.rect.bottom = int(0.98*height)
+        if self.rect.bottom > int(0.9*height):
+            self.rect.bottom = int(0.9*height)
             self.isJumping = False
 
     def update(self):

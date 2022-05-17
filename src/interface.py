@@ -42,10 +42,10 @@ Scoreboard(스코어보드) class
 
 class Ground:
     def __init__(self, speed=-5):
-        self.image, self.rect = load_image('ground.png', -1, -1, -1)
-        self.image1, self.rect1 = load_image('ground.png', -1, -1, -1)
-        self.rect.bottom = height
-        self.rect1.bottom = height
+        self.image, self.rect = load_image('Ground_extend.png', -1, -1, -1)
+        self.image1, self.rect1 = load_image('Ground_extend.png', -1, -1, -1)
+        self.rect.top = height - 50
+        self.rect1.top = height - 50
         self.rect1.left = self.rect.right
         self.speed = speed
 
