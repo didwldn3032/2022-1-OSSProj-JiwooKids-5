@@ -1571,7 +1571,6 @@ def gameplay_story2(): # 지진모드
     playerDino = Dino(dino_size[0], dino_size[1], type=dino_type[type_idx])
     Background, Background_rect = load_image('new_rock_2.png', 800, 400, -1)
     
-
     new_ground = Ground(-1 * gamespeed)
     scb = Scoreboard()
     heart = HeartIndicator(life)
@@ -3315,11 +3314,6 @@ def credit():
     #게임 종료
     pygame.quit()
     quit()
-
-
-
-
-
 
 
 

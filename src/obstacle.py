@@ -2,17 +2,13 @@ from src.setting import *
 
 '''
 Cactus class/fire_Cactus : 선인장 장애물
-
 <변수>
 - image,rect : 이미지, 위치, 크기 지정
 - movement : 움직임(역방향)
-
 <함수>
 - draw() : 화면에 선인장 이미지 삽입
 - update() : 선인장 상태 업데이트(계속 왼쪽으로 이동하다 화면 밖 벗어나면 삭제)
-
 PteraKing class : 보스
-
 <변수>
 - image,rect : 이미지, 위치, 크기 지정
 - movement : 움직임(역방향)
@@ -21,7 +17,6 @@ PteraKing class : 보스
 - isAlive : 보스가 살아있는가
 - pattern_idx : 보스 행동 패턴
 - hp : 보스 생명 15
-
 <함수>
 - draw() : 화면에 보스 이미지 삽입
 - pattern0() : 
@@ -39,29 +34,22 @@ PteraKing class : 보스
 	보스가 올라가다 지정된 위치가 되면 pattern0
 	
 - update() : pattern_idx에 맞게 패턴 진행, 10번에 한번씩 보스 출현
-
 Ptera class : 작은 보스
-
 <변수>
 - image,rect : 이미지, 위치, 크기 지정
 - movement : 움직임(역방향)
 - index : item 위치 설정
 - counter : 
-
 <함수>
 - draw() : 화면에 작은 보스 이미지 삽입
 - update() : 작은 보스 상태 업데이트(계속 왼쪽으로 이동하다 화면 밖 벗어나면 삭제)
-
 Stone class : 돌 장애물
-
 <변수>
 - image,rect : 이미지, 위치, 크기 지정
 - movement : 움직임(역방향)
-
 <함수>
 - draw() : 화면에 돌 이미지 삽입
 - update() : 돌 상태 업데이트(계속 왼쪽으로 이동하다 화면 밖 벗어나면 삭제)
-
 '''
 
 class Hole(pygame.sprite.Sprite):
@@ -351,4 +339,3 @@ class Mask_item(pygame.sprite.Sprite):
 
         if self.rect.right < 0:
             self.kill()
-
