@@ -1045,7 +1045,7 @@ def gameplay_story1():
     playerDino = Dino(dino_size[0], dino_size[1], type=dino_type[type_idx])
 
     new_ground = Ground(-1 * gamespeed)
-    scb = Scoreboard()
+    s_scb = Story_Scoreboard()
     heart = HeartIndicator(life)
     counter = 0
 
@@ -1238,23 +1238,23 @@ def gameplay_story1():
                     if playerDino.score<50:
                         s.image.set_alpha(255)
                     elif 50<=playerDino.score<100:
-                        s.image.set_alpha(30)
+                        s.image.set_alpha(70)
                     elif 100<=playerDino.score<150:
                         s.image.set_alpha(255)
                     elif 150<=playerDino.score<200:
-                        s.image.set_alpha(30)
+                        s.image.set_alpha(70)
                     elif 200<=playerDino.score<250:
                         s.image.set_alpha(255)
                     elif 250<=playerDino.score<300:
-                        s.image.set_alpha(30)
+                        s.image.set_alpha(70)
                     elif 300<=playerDino.score<350:
                         s.image.set_alpha(255)
                     elif 350<=playerDino.score<400:
-                        s.image.set_alpha(30)
+                        s.image.set_alpha(70)
                     elif 400<=playerDino.score<450:
                         s.image.set_alpha(255)
                     else:
-                        s.image.set_alpha(30)
+                        s.image.set_alpha(70)
                     
                     s.movement[0] = -1 * gamespeed
                     if not playerDino.collision_immune:
@@ -1271,23 +1271,23 @@ def gameplay_story1():
                     if playerDino.score<50:
                         c.image.set_alpha(255)
                     elif 50<=playerDino.score<100:
-                        c.image.set_alpha(30)
+                        c.image.set_alpha(70)
                     elif 100<=playerDino.score<150:
                         c.image.set_alpha(255)
                     elif 150<=playerDino.score<200:
-                        c.image.set_alpha(30)
+                        c.image.set_alpha(70)
                     elif 200<=playerDino.score<250:
                         c.image.set_alpha(255)
                     elif 250<=playerDino.score<300:
-                        c.image.set_alpha(30)
+                        c.image.set_alpha(70)
                     elif 300<=playerDino.score<350:
                         c.image.set_alpha(255)
                     elif 350<=playerDino.score<400:
-                        c.image.set_alpha(30)
+                        c.image.set_alpha(70)
                     elif 400<=playerDino.score<450:
                         c.image.set_alpha(255)
                     else:
-                        c.image.set_alpha(30)
+                        c.image.set_alpha(70)
                     c.movement[0] = -1 * gamespeed
                     if not playerDino.collision_immune:
                         if pygame.sprite.collide_mask(playerDino, c):
@@ -1308,23 +1308,23 @@ def gameplay_story1():
                     if playerDino.score<50:
                         f.image.set_alpha(255)
                     elif 50<=playerDino.score<100:
-                        f.image.set_alpha(30)
+                        f.image.set_alpha(70)
                     elif 100<=playerDino.score<150:
                         f.image.set_alpha(255)
                     elif 150<=playerDino.score<200:
-                        f.image.set_alpha(30)
+                        f.image.set_alpha(70)
                     elif 200<=playerDino.score<250:
                         f.image.set_alpha(255)
                     elif 250<=playerDino.score<300:
-                        f.image.set_alpha(30)
+                        f.image.set_alpha(70)
                     elif 300<=playerDino.score<350:
                         f.image.set_alpha(255)
                     elif 350<=playerDino.score<400:
-                        f.image.set_alpha(30)
+                        f.image.set_alpha(70)
                     elif 400<=playerDino.score<450:
                         f.image.set_alpha(255)
                     else:
-                        f.image.set_alpha(30)
+                        f.image.set_alpha(70)
                     f.movement[0] = -1 * gamespeed
                     if not playerDino.collision_immune:
                         if pygame.sprite.collide_mask(playerDino, f):
@@ -1345,23 +1345,23 @@ def gameplay_story1():
                     if playerDino.score<50:
                         p.image.set_alpha(255)
                     elif 50<=playerDino.score<100:
-                        p.image.set_alpha(30)
+                        p.image.set_alpha(70)
                     elif 100<=playerDino.score<150:
                         p.image.set_alpha(255)
                     elif 150<=playerDino.score<200:
-                        p.image.set_alpha(30)
+                        p.image.set_alpha(70)
                     elif 200<=playerDino.score<250:
                         p.image.set_alpha(255)
                     elif 250<=playerDino.score<300:
-                        p.image.set_alpha(30)
+                        p.image.set_alpha(70)
                     elif 300<=playerDino.score<350:
                         p.image.set_alpha(255)
                     elif 350<=playerDino.score<400:
-                        p.image.set_alpha(30)
+                        p.image.set_alpha(70)
                     elif 400<=playerDino.score<450:
                         p.image.set_alpha(255)
                     else:
-                        p.image.set_alpha(30)
+                        p.image.set_alpha(70)
                     p.movement[0] = -1 * gamespeed
                     if not playerDino.collision_immune:
                         if pygame.sprite.collide_mask(playerDino, p):
@@ -1451,7 +1451,7 @@ def gameplay_story1():
                 life_items.update()
                 # highjump_items.update()
                 new_ground.update()
-                scb.update(playerDino.score,high_score)
+                s_scb.update(playerDino.score)
                 heart.update(life)
                 slow_items.update()
 
@@ -1460,7 +1460,7 @@ def gameplay_story1():
                 if pygame.display.get_surface() != None:
                     new_ground.draw()
                     clouds.draw(screen)
-                    scb.draw()
+                    s_scb.draw()
                     heart.draw()
                     cacti.draw(screen)
                     stones.draw(screen)
@@ -1527,8 +1527,8 @@ def gameplay_story1():
                 print("Couldn't load display surface")
                 gameQuit = True
                 gameOver = False
-            else:
-                for event in pygame.event.get():
+
+            for event in pygame.event.get():
                     if event.type == pygame.QUIT:
                         gameQuit = True
                         gameOver = False
@@ -1540,34 +1540,19 @@ def gameplay_story1():
                         if event.key == pygame.K_RETURN or event.key == pygame.K_SPACE:
                             gameOver = False
                             gameQuit = True
-                            typescore(playerDino.score)
-                            if not db.is_limit_data(playerDino.score):
-                                db.query_db(
-                                    f"insert into user(username, score) values ('{gamername}', '{playerDino.score}');")
-                                db.commit()
-                                board()
-                            else:
-                                board()
+                            introscreen()
 
                     if event.type == pygame.MOUSEBUTTONDOWN:
                         gameOver = False
                         gameQuit = True
-                        typescore(playerDino.score)
-                        if not db.is_limit_data(playerDino.score):
-                            db.query_db(
-                                f"insert into user(username, score) values ('{gamername}', '{playerDino.score}');")
-                            db.commit()
-                            board()
-                        else:
-                            board()
+                        introscreen()
 
                     if event.type == pygame.VIDEORESIZE:
                         checkscrsize(event.w, event.h)
 
-            scb.update(playerDino.score,high_score)
+
             if pygame.display.get_surface() != None:
                 disp_gameOver_msg(gameover_image)
-                scb.draw()
                 resized_screen.blit(
                     pygame.transform.scale(screen, (resized_screen.get_width(), resized_screen.get_height())),
                     resized_screen_centerpos)
@@ -1598,7 +1583,7 @@ def gameplay_story2(): # 지진모드
     Background, Background_rect = load_image('new_rock_2.png', 800, 400, -1)
     
     new_ground = Ground(-1 * gamespeed)
-    scb = Scoreboard()
+    s_scb = Story_Scoreboard()
     heart = HeartIndicator(life)
     counter = 0
 
@@ -1866,7 +1851,7 @@ def gameplay_story2(): # 지진모드
                 pteras.update()
                 clouds.update()
                 new_ground.update()
-                scb.update(playerDino.score,high_score)
+                s_scb.update(playerDino.score)
                 heart.update(life)
 
                 stones.update()
@@ -1875,7 +1860,7 @@ def gameplay_story2(): # 지진모드
                 if pygame.display.get_surface() != None:
                     new_ground.draw()
                     clouds.draw(screen)
-                    scb.draw()
+                    s_scb.draw()
                     heart.draw()
                     cacti.draw(screen)
                     stones.draw(screen)
@@ -1935,8 +1920,8 @@ def gameplay_story2(): # 지진모드
                 print("Couldn't load display surface")
                 gameQuit = True
                 gameOver = False
-            else:
-                for event in pygame.event.get():
+
+            for event in pygame.event.get():
                     if event.type == pygame.QUIT:
                         gameQuit = True
                         gameOver = False
@@ -1945,24 +1930,28 @@ def gameplay_story2(): # 지진모드
                             gameQuit = True
                             gameOver = False
 
-                        if event.key == pygame.K_RETURN or event.key == pygame.K_n:
-                            gameplay_story3()
+                        if event.key == pygame.K_RETURN or event.key == pygame.K_SPACE:
+                            gameOver = False
+                            gameQuit = True
+                            introscreen()
 
                     if event.type == pygame.MOUSEBUTTONDOWN:
-                        gameplay_story3()
+                        gameOver = False
+                        gameQuit = True
+                        introscreen()
 
                     if event.type == pygame.VIDEORESIZE:
                         checkscrsize(event.w, event.h)
 
-            scb.update(playerDino.score,high_score)
+
             if pygame.display.get_surface() != None:
                 disp_gameOver_msg(gameover_image)
-                scb.draw()
                 resized_screen.blit(
                     pygame.transform.scale(screen, (resized_screen.get_width(), resized_screen.get_height())),
                     resized_screen_centerpos)
                 pygame.display.update()
             clock.tick(FPS)
+
 
     pygame.quit()
     quit()
@@ -1988,7 +1977,7 @@ def gameplay_story3():
     playerDino = Dino(dino_size[0], dino_size[1], type=dino_type[type_idx])
 
     new_ground = Ground(-1 * gamespeed)
-    scb = Scoreboard()
+    s_scb = Story_Scoreboard()
     heart = HeartIndicator(life)
     counter = 0
 
@@ -2395,7 +2384,7 @@ def gameplay_story3():
                 life_items.update()
                 # highjump_items.update()
                 new_ground.update()
-                scb.update(playerDino.score,high_score)
+                s_scb.update(playerDino.score)
                 heart.update(life)
                 slow_items.update()
 
@@ -2408,7 +2397,7 @@ def gameplay_story3():
                 if pygame.display.get_surface() != None:
                     new_ground.draw()
                     clouds.draw(screen)
-                    scb.draw()
+                    s_scb.draw()
                     heart.draw()
                     cacti.draw(screen)
                     stones.draw(screen)
@@ -2475,8 +2464,8 @@ def gameplay_story3():
                 print("Couldn't load display surface")
                 gameQuit = True
                 gameOver = False
-            else:
-                for event in pygame.event.get():
+
+            for event in pygame.event.get():
                     if event.type == pygame.QUIT:
                         gameQuit = True
                         gameOver = False
@@ -2488,34 +2477,19 @@ def gameplay_story3():
                         if event.key == pygame.K_RETURN or event.key == pygame.K_SPACE:
                             gameOver = False
                             gameQuit = True
-                            typescore(playerDino.score)
-                            if not db.is_limit_data(playerDino.score):
-                                db.query_db(
-                                    f"insert into user(username, score) values ('{gamername}', '{playerDino.score}');")
-                                db.commit()
-                                board()
-                            else:
-                                board()
+                            introscreen()
 
                     if event.type == pygame.MOUSEBUTTONDOWN:
                         gameOver = False
                         gameQuit = True
-                        typescore(playerDino.score)
-                        if not db.is_limit_data(playerDino.score):
-                            db.query_db(
-                                f"insert into user(username, score) values ('{gamername}', '{playerDino.score}');")
-                            db.commit()
-                            board()
-                        else:
-                            board()
+                        introscreen()
 
                     if event.type == pygame.VIDEORESIZE:
                         checkscrsize(event.w, event.h)
 
-            scb.update(playerDino.score,high_score)
+
             if pygame.display.get_surface() != None:
-                disp_gameOver_msg(_image)
-                scb.draw()
+                disp_gameOver_msg(gameover_image)
                 resized_screen.blit(
                     pygame.transform.scale(screen, (resized_screen.get_width(), resized_screen.get_height())),
                     resized_screen_centerpos)
@@ -2546,7 +2520,7 @@ def gameplay_story4():
     playerDino = Dino(dino_size[0], dino_size[1], type=dino_type[type_idx])
 
     new_ground = Ground(-1 * gamespeed)
-    scb = Scoreboard()
+    s_scb = Story_Scoreboard()
     heart = HeartIndicator(life)
     m_time = Mask_time()
     counter = 0
@@ -2961,7 +2935,7 @@ def gameplay_story4():
                 shield_items.update()
                 life_items.update()
                 new_ground.update()
-                scb.update(playerDino.score,high_score)
+                s_scb.update(playerDino.score)
                 heart.update(life)
                 slow_items.update()
 
@@ -2974,7 +2948,7 @@ def gameplay_story4():
                 if pygame.display.get_surface() != None:
                     new_ground.draw()
                     clouds.draw(screen)
-                    scb.draw()
+                    s_scb.draw()
                     heart.draw()
                     cacti.draw(screen)
                     stones.draw(screen)
@@ -3030,8 +3004,8 @@ def gameplay_story4():
                 print("Couldn't load display surface")
                 gameQuit = True
                 gameOver = False
-            else:
-                for event in pygame.event.get():
+
+            for event in pygame.event.get():
                     if event.type == pygame.QUIT:
                         gameQuit = True
                         gameOver = False
@@ -3043,36 +3017,19 @@ def gameplay_story4():
                         if event.key == pygame.K_RETURN or event.key == pygame.K_SPACE:
                             gameOver = False
                             gameQuit = True
-                            typescore(playerDino.score)
-                            if not db.is_limit_data(playerDino.score):
-                                db.query_db(
-                                    f"insert into user(username, score) values ('{gamername}', '{playerDino.score}');")
-                                db.commit()
-                                board()
-                            else:
-                                board()
+                            introscreen()
 
                     if event.type == pygame.MOUSEBUTTONDOWN:
                         gameOver = False
                         gameQuit = True
-                        typescore(playerDino.score)
-                        if not db.is_limit_data(playerDino.score):
-                            db.query_db(
-                                f"insert into user(username, score) values ('{gamername}', '{playerDino.score}');")
-                            db.commit()
-                            board()
-                        else:
-                            board()
+                        introscreen()
 
                     if event.type == pygame.VIDEORESIZE:
                         checkscrsize(event.w, event.h)
 
-            scb.update(playerDino.score,high_score)
-            m_time.update(playerDino.score2)
+
             if pygame.display.get_surface() != None:
                 disp_gameOver_msg(gameover_image)
-                scb.draw()
-                m_time.draw()
                 resized_screen.blit(
                     pygame.transform.scale(screen, (resized_screen.get_width(), resized_screen.get_height())),
                     resized_screen_centerpos)
