@@ -288,7 +288,7 @@ def selectMode():
                 if pygame.mouse.get_pressed() == (1, 0, 0):
                     x, y = event.pos
                     if r_easy_btn_rect.collidepoint(x, y):
-                        gameplay_story53()
+                        gameplay_story5()
 
                     if r_btn_hardmode_rect.collidepoint(x, y):
                         gameplay_hard()
@@ -3059,6 +3059,8 @@ def gameplay_story4():
     quit()
 
 
+
+
 def gameplay_story5():
     global resized_screen
     global high_score
@@ -3066,54 +3068,37 @@ def gameplay_story5():
     result = db.query_db("select score from user order by score desc;", one=True)
     if result is not None:
         high_score = result['score']
-
-    # HERE: REMOVE SOUND!!    
-    # if bgm_on:
-    #     pygame.mixer.music.play(-1)  # 배경음악 실행
     
+    dust_image, dust_rect = load_image('dust.png',800,400,-1)
+    Background, Background_rect = load_image('new_rock_2.png', 800, 400, -1)
+
+    dustnum=0
+    dust_image.set_alpha(dustnum)
+
     gamespeed = 4
     startMenu = False
     gameOver = False
     gameQuit = False
-    ###
     life = 5
-    ###
     paused = False
-    
-    # 디노 타입 때문에 변경된 부분
     playerDino = Dino(dino_size[0], dino_size[1], type = dino_type[type_idx])
-    # 
-
     new_ground = Ground(-1 * gamespeed)
     scb = Scoreboard()
     heart = HeartIndicator(life)
     boss = boss_heart()
     counter = 0
-    
-
 
     cacti = pygame.sprite.Group()
     fire_cacti = pygame.sprite.Group()
-    pteras = pygame.sprite.Group()
-    stones = pygame.sprite.Group() #add stones
     clouds = pygame.sprite.Group()
     last_obstacle = pygame.sprite.Group()
-    shield_items = pygame.sprite.Group()
-    life_items = pygame.sprite.Group()
-    slow_items = pygame.sprite.Group()
-
+    holes = pygame.sprite.Group()
 
     Cactus.containers = cacti
+    Hole.containers = holes
     fire_Cactus.containers = fire_cacti
-    Ptera.containers = pteras
     Cloud.containers = clouds
-    ShieldItem.containers = shield_items
-    LifeItem.containers = life_items
-    SlowItem.containers = slow_items
-    Stone.containers = stones # add stone containers
 
-    # BUTTON IMG LOAD
-    # retbutton_image, retbutton_rect = load_image('replay_button.png', 70, 62, -1)
     gameover_image, gameover_rect = load_image('game_over.png', 380, 22, -1)
     
     # 1. 미사일 발사.
@@ -3123,37 +3108,33 @@ def gameplay_story5():
     # 익룡이 격추되었을때
     isDown=False
     boomCount=0
-    #
 
     # 방향키 구현
     goLeft=False
     goRight=False
-    #
 
     # 보스몬스터 변수설정
-    isPkingTime=False
-    isPkingAlive=True
-    pking=PteraKing()
-    pm_list = []
-    pm_vector = []
-    rain_list = []
-    pm_pattern0_count = 0
-    pm_pattern1_count = 0
-    pking_appearance_score = 100
-    #
+    isHumanTime=False
+    isHumanAlive=True
+    human=Human()
+    pm_list = [] # 보스의 총알 개수
+    pm_pattern0_count = 0 # 패턴 1 시간
+    pm_pattern1_count = 0 # 패턴 2 시간
+    human_appearance_score = 100
 
-    #
     jumpingx2 = False
 
     while not gameQuit:
         while startMenu:
             pass
         while not gameOver:
+
             if pygame.display.get_surface() == None:
                 print("Couldn't load display surface")
                 gameQuit = True
                 gameOver = True
             else:
+                screen.blit(Background, Background_rect)
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
                         gameQuit = True
@@ -3166,51 +3147,31 @@ def gameplay_story5():
                                 if pygame.mixer.get_init() != None:
                                     jump_sound.play()
                                 playerDino.movement[1] = -1 * playerDino.jumpSpeed
-
                         if event.key == pygame.K_DOWN:  # 아래방향키를 누르는 시점에 공룡이 점프중이지 않으면 숙인다.
                             if not (playerDino.isJumping and playerDino.isDead):
                                 playerDino.isDucking = True
-
                         if event.key == pygame.K_LEFT:
-                            # print("left")
                             goLeft=True
-
                         if event.key == pygame.K_RIGHT:
-                            # print("right")
                             goRight=True
-
                         if event.key == pygame.K_ESCAPE:
                             paused = not paused
                             paused = pausing()
-
-                        # jumping x2 ( press key s)
                         if event.key == pygame.K_s:
                             jumpingx2=True
-
-                        # 2. a키를 누르면, 미사일이 나갑니다.
                         if event.key == pygame.K_a:
                             space_go=True
                             bk=0
-                        #
 
                     if event.type == pygame.KEYUP:
                         if event.key == pygame.K_DOWN:
                             playerDino.isDucking = False
-
-                        # 3.a키에서 손을 떼면, 미사일이 발사 되지 않습니다.
                         if event.key == pygame.K_a:
                             space_go = False
-                        #
-
-                        # 방향키 추가
                         if event.key == pygame.K_LEFT:
                             goLeft=False
-
                         if event.key == pygame.K_RIGHT:
                             goRight=False
-                        #
-
-                        ## jumgpingx2
                         if event.key == pygame.K_s:
                             jumpingx2 = False
 
@@ -3221,7 +3182,6 @@ def gameplay_story5():
                             if pygame.mixer.get_init() != None:
                                 jump_sound.play()
                             playerDino.movement[1] = -1 * playerDino.jumpSpeed
-
                         if pygame.mouse.get_pressed() == (0, 0, 1):
                             # (mouse left button, wheel button, mouse right button)
                             if not (playerDino.isJumping and playerDino.isDead):
@@ -3234,27 +3194,21 @@ def gameplay_story5():
                         checkscrsize(event.w, event.h)
 
             if not paused:
-
-                # [05.01 안도현] 하드 모드에서 화면 밖으로 이탈하는 프레임 아웃 문제 해결 
                 if goLeft:
                     if playerDino.rect.left < 0:
                         playerDino.rect.left = 0
                     else:
                         playerDino.rect.left = playerDino.rect.left - gamespeed
-
                 if goRight:
                     if playerDino.rect.right > width:
                         playerDino.rect.right = width
                     else:
                         playerDino.rect.left = playerDino.rect.left + gamespeed
-                #
 
-                # 4. space_go가 True이고, 일정 시간이 지나면, 미사일을 만들고, 이를 미사일 배열에 넣습니다.
+                #### space_go가 True이고, 일정 시간이 지나면, 미사일을 만들고, 이를 미사일 배열에 넣습니다.
                 if (space_go==True) and (int(bk%100)==0):
-                    # print(bk)
                     mm=obj()
 
-                    # 디노의 종류에 따라 다른 총알이 나가도록 합니다.
                     if playerDino.type == 'RED':
                         mm.put_img("./sprites/black_bullet.png")
                         mm.change_size(15,15)
@@ -3273,7 +3227,6 @@ def gameplay_story5():
                     else:                    
                         mm.put_img("./sprites/red_bullet.png")
                         mm.change_size(15,15)
-                    # 
                     
                     if playerDino.isDucking ==False:
                         mm.x = round(playerDino.rect.centerx)
@@ -3283,100 +3236,119 @@ def gameplay_story5():
                         mm.y = round(playerDino.rect.centery*1.01)
                     mm.move = 15
                     m_list.append(mm)
-                bk=bk+1
-                d_list=[]
+                bk = bk + 1
+                d_list = []
 
-                #미사일 하나씩 꺼내옴
+                #### 다이노의 미사일 하나씩 꺼내옴
                 for i in range(len(m_list)):
-                    m=m_list[i]
-                    m.x +=m.move
-                    if m.x>width:
+                    m = m_list[i]
+                    m.x += m.move
+                    if m.x > width:
                         d_list.append(i)
-
                 d_list.reverse()
                 for d in d_list:
                     del m_list[d]
-                #
 
                 if jumpingx2 :
                     if  playerDino.rect.bottom == int(height * 0.9):
                         playerDino.isJumping = True
                         playerDino.movement[1] = -1 * playerDino.superJumpSpeed
 
-                # 보스 몬스터 패턴0(위에서 가만히 있는 패턴): 보스 익룡이 쏘는 미사일.
-                if (isPkingTime) and (pking.pattern_idx == 0) and (int(pm_pattern0_count % 20) == 0):
-                    pm=obj()
-                    pm.put_img("./sprites/pking bullet.png")
-                    pm.change_size(15,15)
-                    pm.x = round(pking.rect.centerx)
-                    pm.y = round(pking.rect.centery)
-                    pm.xmove = random.randint(0,15)
-                    pm.ymove = random.randint(1,3)
-                    rain=obj()
-                    rain.put_img("./sprites/water_drop.png")
-                    rain.change_size(40,40)
-                    rain.x = random.randrange(playerDino.rect.left, playerDino.rect.right)
-                    rain.y = 10
-                    rain.move = 3
-                    rain_list.append(rain)
 
-                    pm_list.append(pm)
+                #### 보스 몬스터 패턴 0 - 미세먼지 모드
+                if (isHumanTime) and (human.pattern_idx == 0):          
+                    # 1. 배경 이미지 처리
+                    # if (playerDino.score%100) < 50:
+                    #     dust_image.set_alpha(dustnum)
+                    #     screen.blit(dust_image, dust_rect)
+                    #     pygame.display.update()
+                    # elif 50 <= (playerDino.score%100) < 100:
+                    #     dustnum=255
+                    #     dust_image.set_alpha(dustnum)
+                    #     screen.blit(dust_image, dust_rect)
+                    #     pygame.display.update()
+
+                    # 2. 장애물 이미지 처리 
+                    for c in cacti:
+                        if (playerDino.score%100) <50:
+                            c.image.set_alpha(255)
+                        elif 50<=(playerDino.score%100) < 100:
+                            c.image.set_alpha(30)
+                        c.movement[0] = -1 * gamespeed
+
+                    for f in fire_cacti:
+                        if (playerDino.score%100) <50:
+                            c.image.set_alpha(255)
+                        elif 50<=(playerDino.score%100) < 100:
+                            f.image.set_alpha(30)
+                        f.movement[0] = -1 * gamespeed
+                    
+                    # 3. 보스의 공격
+                    if (int(pm_pattern0_count % 80) == 0):
+                        pm = obj()
+                        pm.put_img("./sprites/pking bullet.png")
+                        pm.change_size(15, 15)
+                        pm.x = round(human.rect.centerx)
+                        pm.y = round(human.rect.bottom - 45)
+                        pm.xmove = random.randint(10, 15)
+                        pm_list.append(pm)
+
                 pm_pattern0_count += 1
                 pd_list = []
-                raind_list = []
-
 
                 for i in range(len(pm_list)):
                     pm = pm_list[i]
                     pm.x -= pm.xmove
-                    pm.y += pm.ymove
-                    if pm.y > height or pm.x < 0:
+                    if pm.x < 0:
                         pd_list.append(i)
-
-                for i in range(len(rain_list)):
-                    rain=rain_list[i]
-                    rain.y +=rain.move
-                    if rain.y>height or rain.x < 0:
-                        raind_list.append(i)
 
                 pd_list.reverse()
                 for d in pd_list:
                     del pm_list[d]
 
-                raind_list.reverse()
-                for d in raind_list:
-                    del rain_list[d]
 
+                #### 보스 몬스터 패턴 1 - 지진 모드
+                if (isHumanTime) and (human.pattern_idx == 1):
+                    # 1. 보스의 임의 점프
+                    JUMP_MAGIC = 50
+                    print(str(human.rect.bottom) + " vs "+str(int(0.9 * height)))
+                    if (random.randrange(0, 100) == JUMP_MAGIC):
+                        print("구덩이 활성화")
+                        if (human.rect.bottom == int(0.9 * height)):
+                            
+                            human.isJumping = True
+                            human.movement[1] = -1 * human.jumpSpeed
 
-                #
+                            new_hole_right = human.rect.left - width
+                            last_obstacle.add(Hole(gamespeed, object_size[0], object_size[1], new_hole_right))
 
-                # 보스 몬스터 패턴1(좌우로 왔다갔다 하는 패턴): 보스 익룡이 쏘는 미사일.
-                if (isPkingTime) and (pking.pattern_idx == 1) and (int(pm_pattern1_count % 20) == 0):
-                    print(pm_list)
-                    pm=obj()
-                    pm.put_img("./sprites/pking bullet.png")
-                    pm.change_size(15,15)
-                    pm.x = round(pking.rect.centerx)
-                    pm.y = round(pking.rect.centery)
-                    pm.move = 3
-                    pm_list.append(pm)
+                    
+                    # 3. 보스의 공격
+
+                    if (int(pm_pattern1_count % 80) == 0):
+                        pm=obj()
+                        pm.put_img("./sprites/pking bullet.png")
+                        pm.change_size(15,15)
+                        pm.x = round(human.rect.centerx)
+                        pm.y = round(human.rect.bottom - 45)
+                        pm.xmove = random.randint(10, 15)
+                        pm_list.append(pm)
+                    
                 pm_pattern1_count += 1
                 pd_list = []
 
                 for i in range(len(pm_list)):
                     pm=pm_list[i]
-                    pm.y +=pm.move
-                    if pm.y>height or pm.x < 0:
+                    pm.x -= pm.move
+                    if pm.x < 0:
                         pd_list.append(i)
 
                 pd_list.reverse()
                 for d in pd_list:
                     del pm_list[d]
-                
-                
 
 
-
+                #### 장애물 충돌처리
                 for c in cacti:
                     c.movement[0] = -1 * gamespeed
                     if not playerDino.collision_immune:
@@ -3410,138 +3382,40 @@ def gameplay_story5():
                         immune_time = pygame.time.get_ticks()
                         if immune_time - collision_time > collision_immune_time:
                             playerDino.collision_immune = False
-
-                for p in pteras:
-                    p.movement[0] = -1 * gamespeed
-
-                    # 7. 익룡이 미사일에 맞으면 익룡과 미사일 모두 사라집니다.
-
-                    if (len(m_list)==0):
-                        pass
-                    else:
-                        if (m.x>=p.rect.left)and(m.x<=p.rect.right)and(m.y>p.rect.top)and(m.y<p.rect.bottom):
-                            print("격추 성공")
-                            isDown=True
-                            boom=obj()
-                            boom.put_img("./sprites/boom.png")
-                            boom.change_size(200,100)
-                            boom.x=p.rect.centerx-round(p.rect.width)*2.5
-                            boom.y=p.rect.centery-round(p.rect.height)*1.5
-                            playerDino.score+=30
-                            p.kill()
-                            # 여기만 바꿈
-                            m_list.remove(m)
-                            #
-
-                    #
-
+                
+                for h in holes:
+                    h.movement[0] = -1 * gamespeed
                     if not playerDino.collision_immune:
-                        if pygame.sprite.collide_mask(playerDino, p):
+                        if pygame.sprite.collide_mask(playerDino, h):
                             playerDino.collision_immune = True
-                            life -= 1
+                            life -= 5
                             collision_time = pygame.time.get_ticks()
-                            if life == 0:
+                            if life <= 0:
                                 playerDino.isDead = True
                             if pygame.mixer.get_init() is not None:
                                 die_sound.play()
 
-                    elif not playerDino.isSuper:
-                        immune_time = pygame.time.get_ticks()
-                        if immune_time - collision_time > collision_immune_time:
-                            playerDino.collision_immune = False
-
-                for s in stones:
-                    s.movement[0] = -1 * gamespeed
-                    if not playerDino.collision_immune:
-                        if pygame.sprite.collide_mask(playerDino, s):
-                            playerDino.collision_immune = True
-                            life -= 1
-                            collision_time = pygame.time.get_ticks()
-                            if life == 0:
-                                playerDino.isDead = True
-                            if pygame.mixer.get_init() is not None:
-                                die_sound.play()
-
-                if not playerDino.isSuper:
-                    for s in shield_items:
-                        s.movement[0] = -1 * gamespeed
-                        if pygame.sprite.collide_mask(playerDino, s):
-                            if pygame.mixer.get_init() is not None:
-                                checkPoint_sound.play()
-                            playerDino.collision_immune = True
-                            playerDino.isSuper = True
-                            s.kill()
-                            item_time = pygame.time.get_ticks()
-                        elif s.rect.right < 0:
-                            s.kill()
-                else:
-                    for s in shield_items:
-                        s.movement[0] = -1 * gamespeed
-                        if pygame.sprite.collide_mask(playerDino, s):
-                            if pygame.mixer.get_init() is not None:
-                                checkPoint_sound.play()
-                            playerDino.collision_immune = True
-                            playerDino.isSuper = True
-                            s.kill()
-                            item_time = pygame.time.get_ticks()
-                        elif s.rect.right < 0:
-                            s.kill()
-
-                    if pygame.time.get_ticks() - item_time > shield_time:
-                        playerDino.collision_immune = False
-                        playerDino.isSuper = False
-
-                for l in life_items:
-                    l.movement[0] = -1 * gamespeed
-                    if pygame.sprite.collide_mask(playerDino, l):
-                        if pygame.mixer.get_init() is not None:
-                            checkPoint_sound.play()
-                        life += 1
-                        l.kill()
-                    elif l.rect.right < 0:
-                        l.kill()
-
-                for k in slow_items:
-                    k.movement[0] = -1 * gamespeed
-                    if pygame.sprite.collide_mask(playerDino, k):
-                        if pygame.mixer.get_init() is not None:
-                            checkPoint_sound.play()
-                        gamespeed -= 1
-                        new_ground.speed += 1
-                        k.kill()
-                    elif k.rect.right < 0:
-                        k.kill()
-
-
-                STONE_INTERVAL = 100
                 CACTUS_INTERVAL = 50
-                # 익룡을 더 자주 등장시키기 위해 12로 수정했습니다. (원래값은 300)
-                PTERA_INTERVAL = 12
-                #
                 CLOUD_INTERVAL = 300
-                SHIELD_INTERVAL = 500
-                LIFE_INTERVAL = 1000
-                SLOW_INTERVAL = 1000
-
                 OBJECT_REFRESH_LINE = width * 0.8
                 MAGIC_NUM = 10
 
-                # print(pking.hp)
-                if (isPkingAlive)and(playerDino.score>pking_appearance_score):
-                    isPkingTime=True
+                if (isHumanAlive) and (playerDino.score> human_appearance_score):
+                    isHumanTime = True
                 else:
-                    isPkingTime = False
+                    isHumanTime = False
 
-                if isPkingTime:
+                # 보스몬스터 타임 - 선인장, 불선인장만 나오도록
+                if isHumanTime:
                     if len(cacti) < 2:
-                        if len(cacti) == 0:
+                        if len(cacti) == 0 and playerDino.score <= 1:
                             last_obstacle.empty()
                             last_obstacle.add(Cactus(gamespeed, object_size[0], object_size[1]))
-                    else:
-                        for l in last_obstacle:
-                            if l.rect.right < OBJECT_REFRESH_LINE and random.randrange(CACTUS_INTERVAL) == MAGIC_NUM:
-                                last_obstacle.empty()
-                                last_obstacle.add(Cactus(gamespeed, object_size[0], object_size[1]))
+                        else:
+                            for l in last_obstacle:
+                                if l.rect.right < OBJECT_REFRESH_LINE and random.randrange(CACTUS_INTERVAL) == MAGIC_NUM:
+                                    last_obstacle.empty()
+                                    last_obstacle.add(Cactus(gamespeed, object_size[0], object_size[1]))
 
                     if len(fire_cacti) < 2:
                         for l in last_obstacle:
@@ -3552,54 +3426,35 @@ def gameplay_story5():
                     if len(clouds) < 5 and random.randrange(CLOUD_INTERVAL) == MAGIC_NUM:
                         Cloud(width, random.randrange(height / 5, height / 2))
 
-                    if (len(m_list)==0):
-                        pass
+                    if (len(m_list)==0): pass # 다이노 공격 모션
                     else:
-                        if (m.x>=pking.rect.left)and(m.x<=pking.rect.right)and(m.y>pking.rect.top)and(m.y<pking.rect.bottom):
+                        if (m.x>=human.rect.left)and(m.x<=human.rect.right)and(m.y>human.rect.top)and(m.y<human.rect.bottom):
                             isDown=True
                             boom=obj()
                             boom.put_img("./sprites/boom.png")
                             boom.change_size(200,100)
-                            boom.x=pking.rect.centerx-round(pking.rect.width)
-                            boom.y=pking.rect.centery-round(pking.rect.height/2)
-                            pking.hp -= 1
+                            boom.x=human.rect.centerx-round(human.rect.width)
+                            boom.y=human.rect.centery-round(human.rect.height/2)
+                            human.hp -= 1
                             m_list.remove(m)
 
-                            if pking.hp <= 0:
-                                pking.kill()
-                                isPkingAlive=False
+                            if human.hp <= 0:
+                                human.kill()
+                                isHumanAlive=False
 
-                    #
-                    if (len(pm_list)==0):
-                        pass
+                    if (len(pm_list)==0): pass # 보스 공격 모션
                     else:
-                        # print("x: ",pm.x,"y: ",pm.y)
                         for pm in pm_list:
                             if (pm.x>=playerDino.rect.left)and(pm.x<=playerDino.rect.right)and(pm.y>playerDino.rect.top)and(pm.y<playerDino.rect.bottom):
                                 print("공격에 맞음.")
-                                # if pygame.sprite.collide_mask(playerDino, pm):
                                 playerDino.collision_immune = True
                                 life -= 1
                                 collision_time = pygame.time.get_ticks()
                                 if life == 0:
                                     playerDino.isDead = True
                                 pm_list.remove(pm)
-
-                    if (len(rain_list)==0):
-                        pass
-                    else:
-                        # print("x: ",rain.x,"y: ",rain.y)
-                        for rain in rain_list:
-                            if (rain.x>=playerDino.rect.left)and(rain.x<=playerDino.rect.right)and(pm.y>playerDino.rect.top)and(pm.y<playerDino.rect.bottom):
-                                print("공격에 맞음.")
-                                # if pygame.sprite.collide_mask(playerDino, rain):
-                                playerDino.collision_immune = True
-                                life -= 1
-                                collision_time = pygame.time.get_ticks()
-                                if life == 0:
-                                    playerDino.isDead = True
-                                rain_list.remove(rain)
-                    #
+                
+                # 다이노 공격 타임 - 선인장만 나오도록
                 else:
                     if len(cacti) < 2:
                         if len(cacti) == 0:
@@ -3611,91 +3466,39 @@ def gameplay_story5():
                                     last_obstacle.empty()
                                     last_obstacle.add(Cactus(gamespeed, object_size[0], object_size[1]))
 
-                    if len(fire_cacti) < 2:
-                        for l in last_obstacle:
-                            if l.rect.right < OBJECT_REFRESH_LINE and random.randrange(CACTUS_INTERVAL * 5) == MAGIC_NUM:
-                                last_obstacle.empty()
-                                last_obstacle.add(fire_Cactus(gamespeed, object_size[0], object_size[1]))
-
-                    if len(stones) < 2:
-                        for l in last_obstacle:
-                            if l.rect.right < OBJECT_REFRESH_LINE and random.randrange(STONE_INTERVAL * 5) == MAGIC_NUM:
-                                last_obstacle.empty()
-                                last_obstacle.add(Stone(gamespeed, object_size[0], object_size[1]))
-
-
-                    if len(pteras) == 0 and random.randrange(PTERA_INTERVAL) == MAGIC_NUM and counter > PTERA_INTERVAL:
-                        for l in last_obstacle:
-                            if l.rect.right < OBJECT_REFRESH_LINE:
-                                last_obstacle.empty()
-                                last_obstacle.add(Ptera(gamespeed, ptera_size[0], ptera_size[1]))
-
                     if len(clouds) < 5 and random.randrange(CLOUD_INTERVAL) == MAGIC_NUM:
                         Cloud(width, random.randrange(height / 5, height / 2))
-
-                    if len(shield_items) == 0 and random.randrange(
-                            SHIELD_INTERVAL) == MAGIC_NUM and counter > SHIELD_INTERVAL:
-                        for l in last_obstacle:
-                            if l.rect.right < OBJECT_REFRESH_LINE:
-                                last_obstacle.empty()
-                                last_obstacle.add(ShieldItem(gamespeed, object_size[0], object_size[1]))
-
-                    if len(life_items) == 0 and random.randrange(
-                            LIFE_INTERVAL) == MAGIC_NUM and counter > LIFE_INTERVAL * 2:
-                        for l in last_obstacle:
-                            if l.rect.right < OBJECT_REFRESH_LINE:
-                                last_obstacle.empty()
-                                last_obstacle.add(LifeItem(gamespeed, object_size[0], object_size[1]))
-
-                    if len(slow_items) == 0 and random.randrange(SLOW_INTERVAL) == MAGIC_NUM and counter > SLOW_INTERVAL:
-                        for l in last_obstacle:
-                            if l.rect.right < OBJECT_REFRESH_LINE:
-                                last_obstacle.empty()
-                                last_obstacle.add(SlowItem(gamespeed, object_size[0], object_size[1]))
 
                 playerDino.update()
                 cacti.update()
                 fire_cacti.update()
-                stones.update()
-                pteras.update()
                 clouds.update()
-                shield_items.update()
-                life_items.update()
-
+                holes.update()
                 new_ground.update()
-                scb.update(playerDino.score,high_score)
-                boss.update(pking.hp)
+                scb.update(playerDino.score, high_score)
+                boss.update(human.hp)
                 heart.update(life)
-                slow_items.update()
 
                 # 보스몬스터 타임이면,
-                if isPkingTime:
-                    pking.update()
-                #
+                if isHumanTime:
+                    human.update()
 
                 if pygame.display.get_surface() != None:
                     screen.fill(background_col)
+                    screen.blit(Background, Background_rect)
                     new_ground.draw()
                     clouds.draw(screen)
                     scb.draw()
                     boss.draw()
                     heart.draw()
                     cacti.draw(screen)
+                    holes.draw(screen)
                     fire_cacti.draw(screen)
-                    stones.draw(screen)
-                    pteras.draw(screen)
-                    shield_items.draw(screen)
-                    life_items.draw(screen)
-                    slow_items.draw(screen)
 
                     # pkingtime이면, 보스몬스터를 보여줘라.
-                    if isPkingTime:
-                        # print(pking.pattern_idx)
-                        pking.draw()
-                        # 보스 익룡이 쏘는 미사일을 보여준다.
-                        for pm in pm_list:
-                            pm.show()
-                    #
+                    if isHumanTime:
+                        human.draw()
+                        for pm in pm_list: pm.show()
 
                    # 5. 미사일 배열에 저장된 미사일들을 게임 스크린에 그려줍니다.
                     for m in m_list:
@@ -3775,7 +3578,7 @@ def gameplay_story5():
                         checkscrsize(event.w, event.h)
 
             scb.update(playerDino.score,high_score)
-            boss.update(pking.hp)
+            boss.update(human.hp)
             if pygame.display.get_surface() != None:
                 disp_gameOver_msg(gameover_image)
                 scb.draw()
