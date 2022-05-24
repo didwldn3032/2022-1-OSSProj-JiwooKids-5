@@ -53,13 +53,13 @@ Stone class : 돌 장애물
 '''
 
 class Hole(pygame.sprite.Sprite):
-    def __init__(self, speed=5, sizex=-1, sizey=-1):
+    def __init__(self, speed=5, sizex=-1, sizey=-1, left=0):
         pygame.sprite.Sprite.__init__(self,self.containers)
         rand_width = random.randrange(80, 150)
         self.images, self.rect = load_sprite_sheet('holes3.png', 1, 1, rand_width, 47, -1)
         self.rect.top = height *0.993
         self.rect.bottom = int(0.995*height)
-        self.rect.left = width + self.rect.width
+        self.rect.left = width + self.rect.width + left
         self.image = self.images[0]
         self.movement = [-1*speed, 0]
 
@@ -313,6 +313,65 @@ class PteraKing(pygame.sprite.Sprite):
 
 # 
 
+class Human(pygame.sprite.Sprite):
+    
+    def __init__(self, speed=0, sizex=-1, sizey=-1):
+        pygame.sprite.Sprite.__init__(self)
+        self.images, self.rect = load_sprite_sheet('pteraking.png', 2, 1, sizex, sizey, -1)
+        self.rect.bottom = int(0.9 * height)
+        self.rect.left = width - 150
+
+        self.image = self.images[0]
+        self.movement = [0, 0]
+        self.stop_movement = [0,0]
+
+        self.index = 0
+        self.counter = 1
+        self.isAlive=True
+        self.pattern_idx=0
+
+        self.pattern0_time=200
+        self.pattern0_counter=0
+        self.pattern1_time=200
+        self.pattern1_counter = 0
+
+        self.isJumping=False
+        self.jumpSpeed = 11.5
+        self.hp = 15
+
+    def draw(self):
+        screen.blit(self.image, self.rect)
+
+    def checkbounds(self):
+        if self.rect.bottom > int(0.9*height):
+            self.rect.bottom = int(0.9*height)
+            self.isJumping = False
+
+    def pattern0(self):
+        self.pattern0_counter += 1
+        self.movement[0] = 0
+        self.image = self.images[1]
+        if self.pattern0_counter % self.pattern0_time == 0: # 200초가 넘어간 경우
+            self.pattern_idx = 1
+
+    def pattern1(self):
+        self.pattern1_counter += 1
+        self.movement[0] = 0
+        self.image = self.images[1]
+        if self.isJumping: 
+            self.movement[1] = self.movement[1] + gravity # 움직임의 y값에 gravity값을 더해 점프 높이를 적용
+        
+        if self.pattern1_counter % self.pattern1_time == 0: # 200초가 넘어간 경우
+            self.pattern_idx = 0
+
+    def update(self):
+        self.counter=self.counter+1
+        self.rect = self.rect.move(self.movement)
+        self.checkbounds()
+
+
+        if self.pattern_idx==0: self.pattern0()
+        elif self.pattern_idx==1: self.pattern1()
 
 
 
