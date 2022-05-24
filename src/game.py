@@ -3952,7 +3952,6 @@ def gameplay_story5():
                     
 
 
-
                 #### 장애물 충돌처리
                 for c in cacti:
                     c.movement[0] = -1 * gamespeed
