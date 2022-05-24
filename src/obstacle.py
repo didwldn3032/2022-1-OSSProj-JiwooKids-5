@@ -469,6 +469,9 @@ class Human(pygame.sprite.Sprite):
         self.pattern0_counter=0
         self.pattern1_time=200
         self.pattern1_counter = 0
+        self.pattern2_time=200
+        self.pattern2_counter = 0
+
 
         self.isJumping=False
         self.jumpSpeed = 11.5
@@ -497,6 +500,13 @@ class Human(pygame.sprite.Sprite):
             self.movement[1] = self.movement[1] + gravity # 움직임의 y값에 gravity값을 더해 점프 높이를 적용
         
         if self.pattern1_counter % self.pattern1_time == 0: # 200초가 넘어간 경우
+            self.pattern_idx = 2
+
+    def pattern2(self):
+        self.pattern2_counter += 1
+        self.movement[0] = 0
+        self.image = self.images[1]
+        if self.pattern2_counter % self.pattern2_time == 0: # 200초가 넘어간 경우
             self.pattern_idx = 0
 
     def update(self):
