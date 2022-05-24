@@ -153,6 +153,11 @@ class PteraKing(pygame.sprite.Sprite):
         # 보스가 내려가서 머무르는 시간
         self.pattern2_bottommost_time = 200
 
+        self.pattern3_time=200
+        self.pattern3_counter=0
+        self.pattern3_speed=15
+        self.pattern3_lastmove=False
+
         self.stop=False
 
         self.goup=False
@@ -243,6 +248,49 @@ class PteraKing(pygame.sprite.Sprite):
                 self.goup = False
                 self.stop = False
                 self.pattern_idx = 0
+
+
+    def pattern3(self):
+
+        self.pattern3_counter+=1
+
+        if self.counter % 10 == 0:
+            self.index = (self.index+1) % 2
+        self.image = self.images[self.index]
+
+        if (self.goleft == True) and (self.reached_leftmost == False):
+            self.movement[0] = -1 * self.pattern1_speed
+            self.rect = self.rect.move(self.movement)
+
+            if self.rect.left < 0:
+                self.goleft = False
+                self.reached_leftmost = True
+                self.reached_rightmost = False
+        
+        else:
+            self.movement[0] = self.pattern1_speed
+            self.rect = self.rect.move(self.movement)
+
+            if self.pattern1_lastmove:
+                if self.rect.left > width - self.rect.width -50:
+                        self.goleft = True
+                        self.reached_rightmost = True
+                        self.reached_leftmost = False
+
+                        self.pattern_idx = 2
+            else:
+                if self.rect.left > width - self.rect.width -50:
+                        self.goleft = True
+                        self.reached_rightmost = True
+                        self.reached_leftmost = False
+            
+            if self.pattern1_counter % self.pattern1_time == 0:
+                self.pattern1_lastmove=True
+
+    
+
+
+    
 
     def update(self):
 
