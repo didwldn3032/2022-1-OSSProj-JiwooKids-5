@@ -3888,7 +3888,6 @@ def gameplay_story5():
                 for d in pd_list:
                     del pm_list[d]
 
-
                 #### 보스 몬스터 패턴 2 - 산성비 모드
                 if (isHumanTime) and (human.pattern_idx == 2):
                     
@@ -3952,6 +3951,7 @@ def gameplay_story5():
                     
 
 
+                
                 #### 장애물 충돌처리
                 for c in cacti:
                     c.movement[0] = -1 * gamespeed
