@@ -148,3 +148,6 @@ class obj(pygame.sprite.Sprite):
     def show(self):
         screen.blit(self.img, (self.x,self.y))
 
+
+
+
