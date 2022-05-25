@@ -288,7 +288,7 @@ def selectMode():
                 if pygame.mouse.get_pressed() == (1, 0, 0):
                     x, y = event.pos
                     if r_easy_btn_rect.collidepoint(x, y):
-                        gameplay_story1()
+                        gameplay_story3()
 
                     if r_btn_hardmode_rect.collidepoint(x, y):
                         gameplay_hard()
@@ -1017,9 +1017,8 @@ def gameplay_hard():
 #아이템 관련 변수 설정
 Sunglass = False #선글라스
 Shovel = False #삽
-Umbrella = True #우산
 
-Items=[Sunglass,Shovel,Umbrella]
+Items=[Sunglass,Shovel]
 
 ## 미세먼지 ##
 def gameplay_story1():
@@ -2064,6 +2063,7 @@ def gameplay_story3():
     gameOver = False
     gameClear = False
     gameQuit = False
+    Umbrella = False
     ###
     life = 5
     ###
@@ -2173,6 +2173,9 @@ def gameplay_story3():
                         if event.key == pygame.K_a:
                             space_go=True
                             bk=0
+
+                        if event.key == pygame.K_d:
+                            Umbrella = True
 
                     if event.type == pygame.KEYUP:
                         if event.key == pygame.K_DOWN:
@@ -2423,7 +2426,28 @@ def gameplay_story3():
                 MAGIC_NUM = 10
 
                 if Umbrella == True:
-                    pass
+                    um=obj()
+                    um.put_img("./sprites/umbrella_item.png")
+                    um.change_size(70,70)
+                    um.x = (playerDino.rect.left+playerDino.rect.right)/2-40
+                    um.y = playerDino.rect.bottom - 70
+                    um.move = 5
+
+                    if (len(pm_list)==0):
+                        pass
+                    else:
+                        # print("x: ",pm.x,"y: ",pm.y)
+                        for pm in pm_list:
+                            if (pm.y>=um.y)and(pm.x<=um.x+35)and(pm.x>=um.x-35):
+                                print("공격에 맞음.")
+                                # if pygame.sprite.collide_mask(playerDino, pm):
+                                playerDino.collision_immune = True
+                                collision_time = pygame.time.get_ticks()
+                                if life == 0:
+                                    playerDino.isDead = True
+                                pm_list.remove(pm)
+
+
                 else:
                     if (len(pm_list)==0):
                         pass
@@ -2509,6 +2533,8 @@ def gameplay_story3():
                     for pm in pm_list:
                         pm.show()
 
+                    if Umbrella == True:
+                        um.show()
 
                     playerDino.draw()
                     resized_screen.blit(
