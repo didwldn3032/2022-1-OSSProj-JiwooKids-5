@@ -288,7 +288,7 @@ def selectMode():
                 if pygame.mouse.get_pressed() == (1, 0, 0):
                     x, y = event.pos
                     if r_easy_btn_rect.collidepoint(x, y):
-                        gameplay_story3()
+                        gameplay_story5()
 
                     if r_btn_hardmode_rect.collidepoint(x, y):
                         gameplay_hard()
@@ -3442,6 +3442,9 @@ def gameplay_story5():
                             
                             human.isJumping = True
                             human.movement[1] = -1 * human.jumpSpeed
+
+                            for l in last_obstacle:
+                                if l.rect.right > OBJECT_REFRESH_LINE: l.kill()
 
                             new_hole_right = human.rect.left - width
                             last_obstacle.add(Hole(gamespeed, object_size[0], object_size[1], new_hole_right))
