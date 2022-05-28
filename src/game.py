@@ -288,7 +288,7 @@ def selectMode():
                 if pygame.mouse.get_pressed() == (1, 0, 0):
                     x, y = event.pos
                     if r_easy_btn_rect.collidepoint(x, y):
-                        gameplay_story5()
+                        gameplay_story4()
 
                     if r_btn_hardmode_rect.collidepoint(x, y):
                         gameplay_hard()
@@ -2631,6 +2631,7 @@ def gameplay_story4():
     gameOver = False
     gameClear = False
     gameQuit = False
+    Maskplus = False
     ###
     life = 5
     ###
@@ -2700,7 +2701,7 @@ def gameplay_story4():
     while not gameQuit:
         while startMenu:
             pass
-        while not gameOver and gameClear:
+        while not gameOver and playerDino.score <= 50:
             if pygame.display.get_surface() == None:
                 print("Couldn't load display surface")
                 gameQuit = True
@@ -2743,6 +2744,9 @@ def gameplay_story4():
                         if event.key == pygame.K_a:
                             space_go=True
                             bk=0
+
+                        if event.key == pygame.K_d:
+                            Maskplus = True
 
                     if event.type == pygame.KEYUP:
                         if event.key == pygame.K_DOWN:
@@ -2989,6 +2993,12 @@ def gameplay_story4():
                 HIGHJUMP_INTERVAL = 300
                 OBJECT_REFRESH_LINE = width * 0.8
                 MAGIC_NUM = 10
+
+                
+                if Maskplus == True: 
+                    playerDino.score2 = 0
+                    Maskplus = False
+
 
                 if (len(pm_list)==0):
                     pass
