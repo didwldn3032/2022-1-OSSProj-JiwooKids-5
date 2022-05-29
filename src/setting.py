@@ -210,3 +210,43 @@ def resize(name, w, h, color):
 def textsize(size):
     font = pygame.font.Font('DungGeunMo.ttf', size)
     return font
+
+# 투명한 이미지 불러오기
+def alpha_image(name, sizex=-1, sizey=-1,color_key=None):
+    full_name = os.path.join('sprites', name)
+    img = pygame.image.load(full_name)
+    if color_key is not None:
+        if color_key == -1:
+            color_key = img.get_at((0, 0))
+        img.set_colorkey(color_key, RLEACCEL)
+    if sizex != -1 or sizey != -1:
+        img = transform.scale(img, (sizex, sizey))
+    img.convert_alpha()
+    return (img, img.get_rect())
+
+def disp_store_buttons(btn_restart, btn_save, btn_exit, btn_back):
+    width_offset=0.3
+    resized_screen_center = (0, 0)
+    btn_restart_rect = btn_restart.get_rect()
+    btn_save_rect = btn_save.get_rect()
+    btn_exit_rect = btn_exit.get_rect()
+    btn_back_rect = btn_back.get_rect()
+    # btn_start_rect = btn_start.get_rect()
+
+    btn_restart_rect.centerx = width * 0.2
+    btn_save_rect.centerx = width * (0.2 + width_offset)
+    btn_exit_rect.centerx = width * (0.2 + 2 * width_offset)
+    btn_back_rect.centerx = width * 0.1
+    # btn_start_rect.centerx = width * 0.9
+
+    btn_restart_rect.centery = height * 0.6
+    btn_save_rect.centery = height * 0.6
+    btn_exit_rect.centery = height * 0.6
+    btn_back_rect.centery = height * 0.1
+    # btn_start_rect.centery = height * 0.1
+
+    screen.blit(btn_restart, btn_restart_rect)
+    screen.blit(btn_save, btn_save_rect)
+    screen.blit(btn_exit, btn_exit_rect)
+    screen.blit(btn_back, btn_back_rect)
+    # screen.blit(btn_start, btn_start_rect)
