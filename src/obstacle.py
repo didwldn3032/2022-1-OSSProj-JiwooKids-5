@@ -313,76 +313,6 @@ class PteraKing(pygame.sprite.Sprite):
 
 # 
 
-class Human(pygame.sprite.Sprite):
-    
-    def __init__(self, speed=0, sizex=-1, sizey=-1):
-        pygame.sprite.Sprite.__init__(self)
-        self.images, self.rect = load_sprite_sheet('pteraking.png', 2, 1, sizex, sizey, -1)
-        self.rect.bottom = int(0.9 * height)
-        self.rect.left = width - 150
-
-        self.image = self.images[0]
-        self.movement = [0, 0]
-        self.stop_movement = [0,0]
-
-        self.index = 0
-        self.counter = 1
-        self.isAlive=True
-        self.pattern_idx=0
-
-        self.pattern0_time=1000
-        self.pattern0_counter=0
-        self.pattern1_time=1000
-        self.pattern1_counter = 0
-
-        self.isJumping=False
-        self.jumpSpeed = 11.5
-        self.hp = 15
-
-    def draw(self):
-        screen.blit(self.image, self.rect)
-
-    def checkbounds(self):
-        if self.rect.bottom > int(0.9*height):
-            self.rect.bottom = int(0.9*height)
-            self.isJumping = False
-
-    def pattern0(self):
-        self.pattern0_counter += 1
-        self.movement[0] = 0
-        self.checkbounds()
-        self.image = self.images[1]
-        if self.pattern0_counter % self.pattern0_time == 1: # 200초가 넘어간 경우
-            self.pattern_idx = 1
-
-    def pattern1(self):
-        self.pattern1_counter += 1
-        self.movement[0] = 0
-        self.checkbounds()
-        self.image = self.images[1]
-        if self.isJumping: 
-            self.movement[1] = self.movement[1] + gravity # 움직임의 y값에 gravity값을 더해 점프 높이를 적용
-        
-        if self.pattern1_counter % self.pattern1_time == 0: # 200초가 넘어간 경우
-            self.pattern_idx = 0
-
-    def pattern2(self):
-        self.pattern2_counter += 1
-        self.movement[0] = 0
-        self.image = self.images[1]
-        if self.pattern2_counter % self.pattern2_time == 0: # 200초가 넘어간 경우
-            self.pattern_idx = random.randrange(0, 1)
-
-    def update(self):
-        self.counter=self.counter+1
-        self.rect = self.rect.move(self.movement)
-        self.checkbounds()
-
-
-        if self.pattern_idx==0: self.pattern0()
-        elif self.pattern_idx==1: self.pattern1()
-        elif self.pattern_idx==2: self.pattern2()
-
 
 
 class Ptera(pygame.sprite.Sprite):
@@ -455,3 +385,85 @@ class Mask_item(pygame.sprite.Sprite):
 
         if self.rect.right < 0:
             self.kill()
+
+
+class Human(pygame.sprite.Sprite):
+    
+    def __init__(self, speed=0, sizex=-1, sizey=-1):
+        pygame.sprite.Sprite.__init__(self)
+        self.images, self.rect = load_sprite_sheet('pteraking.png', 2, 1, sizex, sizey, -1)
+        self.rect.bottom = int(0.9 * height)
+        self.rect.left = width - 150
+
+        self.image = self.images[0]
+        self.movement = [0, 0]
+        self.stop_movement = [0,0]
+
+        self.index = 0
+        self.counter = 1
+        self.isAlive=True
+        self.pattern_idx=0
+
+        self.pattern0_time=200
+        self.pattern0_counter=0
+        self.pattern1_time=200
+        self.pattern1_counter = 0
+        self.pattern2_time=200
+        self.pattern2_counter = 0
+        self.pattern3_time=200
+        self.pattern3_counter = 0
+
+
+        self.isJumping=False
+        self.jumpSpeed = 11.5
+        self.hp = 15
+
+    def draw(self):
+        screen.blit(self.image, self.rect)
+
+    def checkbounds(self):
+        if self.rect.bottom > int(0.9*height):
+            self.rect.bottom = int(0.9*height)
+            self.isJumping = False
+
+    def pattern0(self):
+        self.pattern0_counter += 1
+        self.movement[0] = 0
+        self.image = self.images[1]
+        if self.pattern0_counter % self.pattern0_time == 0: # 200초가 넘어간 경우
+            self.pattern_idx = 1
+
+    def pattern1(self):
+        self.pattern1_counter += 1
+        self.movement[0] = 0
+        self.image = self.images[1]
+        if self.isJumping: 
+            self.movement[1] = self.movement[1] + gravity # 움직임의 y값에 gravity값을 더해 점프 높이를 적용
+        
+        if self.pattern1_counter % self.pattern1_time == 0: # 200초가 넘어간 경우
+            self.pattern_idx = 2
+
+    def pattern2(self):
+        self.pattern2_counter += 1
+        self.movement[0] = 0
+        self.image = self.images[1]
+        if self.pattern2_counter % self.pattern2_time == 0: # 200초가 넘어간 경우
+            self.pattern_idx = 3
+
+    def pattern3(self):
+        self.pattern3_counter += 1
+        self.movement[0] = 0
+        self.image = self.images[1]
+        if self.pattern3_counter % self.pattern3_time == 0: # 200초가 넘어간 경우
+            self.pattern_idx = 0
+
+    def update(self):
+        self.counter=self.counter+1
+        self.rect = self.rect.move(self.movement)
+        self.checkbounds()
+
+
+        if self.pattern_idx==0: self.pattern0()
+        elif self.pattern_idx==1: self.pattern1()
+        elif self.pattern_idx==2: self.pattern2()
+        elif self.pattern_idx==3: self.pattern3()

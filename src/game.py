@@ -385,7 +385,7 @@ def ItemSelectMode():
                             item_cnt+=1
                         
                     if r_back_btn_rect.collidepoint(x, y):
-                        gameplay_story2()
+                        gameplay_story5()
                     # if r_start_btn_rect.collidepoint(x, y):
                     #     gameplay_story1()
 
@@ -2539,13 +2539,7 @@ def gameplay_story3():
                         # print("x: ",pm.x,"y: ",pm.y)
                         for pm in pm_list:
                             if (pm.y>=um.y)and(pm.x<=um.x+35)and(pm.x>=um.x-35):
-                                print("공격에 맞음.")
-                                # if pygame.sprite.collide_mask(playerDino, pm):
-                                playerDino.collision_immune = True
-                                collision_time = pygame.time.get_ticks()
-                                if life == 0:
-                                    playerDino.isDead = True
-                                pm_list.remove(pm)
+                                pm.set_alpha(0)
 
 
                 else:
@@ -2737,6 +2731,7 @@ def gameplay_story4():
     gameOver = False
     gameClear = False
     gameQuit = False
+    Maskplus = False
     ###
     life = 5
     ###
@@ -2806,7 +2801,7 @@ def gameplay_story4():
     while not gameQuit:
         while startMenu:
             pass
-        while not gameOver and playerDino.score<=500:
+        while not gameOver and playerDino.score <= 50:
             if pygame.display.get_surface() == None:
                 print("Couldn't load display surface")
                 gameQuit = True
@@ -2849,6 +2844,9 @@ def gameplay_story4():
                         if event.key == pygame.K_a:
                             space_go=True
                             bk=0
+
+                        if event.key == pygame.K_d:
+                            Maskplus = True
 
                     if event.type == pygame.KEYUP:
                         if event.key == pygame.K_DOWN:
@@ -3096,6 +3094,12 @@ def gameplay_story4():
                 OBJECT_REFRESH_LINE = width * 0.8
                 MAGIC_NUM = 10
 
+                
+                if Maskplus == True: 
+                    playerDino.score2 = 0
+                    Maskplus = False
+
+
                 if (len(pm_list)==0):
                     pass
                 else:
@@ -3303,6 +3307,10 @@ def gameplay_story5():
     startMenu = False
     gameOver = False
     gameQuit = False
+    Umbrella = False
+    Maskplus = False
+    Itemtime = False
+
     life = 5
     paused = False
     playerDino = Dino(dino_size[0], dino_size[1], type = dino_type[type_idx])
@@ -3310,6 +3318,7 @@ def gameplay_story5():
     scb = Scoreboard()
     heart = HeartIndicator(life)
     boss = boss_heart()
+    m_time = Mask_time()
     counter = 0
 
     cacti = pygame.sprite.Group()
@@ -3317,11 +3326,13 @@ def gameplay_story5():
     clouds = pygame.sprite.Group()
     last_obstacle = pygame.sprite.Group()
     holes = pygame.sprite.Group()
+    mask_items = pygame.sprite.Group()
 
     Cactus.containers = cacti
     Hole.containers = holes
     fire_Cactus.containers = fire_cacti
     Cloud.containers = clouds
+    Mask_item.containers = mask_items
 
     gameover_image, gameover_rect = load_image('game_over.png', 380, 22, -1)
     
@@ -3346,6 +3357,7 @@ def gameplay_story5():
     pm_pattern0_count = 0 # 패턴 0 시간
     pm_pattern1_count = 0 # 패턴 1 시간
     pm_pattern2_count = 0 # 패턴 2 시간
+    pm_pattern3_count = 0 # 패턴 3 시간
     human_appearance_score = 100
 
     jumpingx2 = False
@@ -3388,6 +3400,8 @@ def gameplay_story5():
                         if event.key == pygame.K_a:
                             space_go=True
                             bk=0
+                        if event.key == pygame.K_d:
+                            Itemtime=True
 
                     if event.type == pygame.KEYUP:
                         if event.key == pygame.K_DOWN:
@@ -3465,6 +3479,7 @@ def gameplay_story5():
                 bk = bk + 1
                 d_list = []
 
+                print(playerDino.score2)
                 #### 다이노의 미사일 하나씩 꺼내옴
                 for i in range(len(m_list)):
                     m = m_list[i]
@@ -3636,7 +3651,46 @@ def gameplay_story5():
                 for r in rd_list:
                     del rm_list[r]
 
+
+
+                #### 보스 몬스터 패턴 3 - 바이러스 모드
+                if (isHumanTime) and (human.pattern_idx == 3):
                     
+                    # 1. 배경 이미지 처리
+                    # if (playerDino.score%100) < 50:
+                    #     dust_image.set_alpha(dustnum)
+                    #     screen.blit(dust_image, dust_rect)
+                    #     pygame.display.update()
+                    # elif 50 <= (playerDino.score%100) < 100:
+                    #     dustnum=255
+                    #     dust_image.set_alpha(dustnum)
+                    #     screen.blit(dust_image, dust_rect)
+                    #     pygame.display.update()
+                    
+                    
+                    # 3. 보스의 공격
+
+                    if (int(pm_pattern3_count % 80) == 0):
+                        pm = obj()
+                        pm.put_img("./sprites/pking bullet.png")
+                        pm.change_size(15, 15)
+                        pm.x = round(human.rect.centerx)
+                        pm.y = round(human.rect.bottom - 45)
+                        pm.xmove = random.randint(10, 15)
+                        pm_list.append(pm)
+                    
+                pm_pattern3_count += 1
+                pd_list = []
+
+                for i in range(len(pm_list)):
+                    pm=pm_list[i]
+                    pm.y +=pm.move
+                    if pm.y>height or pm.x < 0:
+                        pd_list.append(i)
+
+                pd_list.reverse()
+                for d in pd_list:
+                    del pm_list[d]                    
 
 
                 
@@ -3687,10 +3741,64 @@ def gameplay_story5():
                             if pygame.mixer.get_init() is not None:
                                 die_sound.play()
 
+                if (isHumanTime) and (human.pattern_idx == 3):
+                    for ma in mask_items:
+                        ma.movement[0] = -1 * gamespeed
+                        if not playerDino.collision_immune:
+                            if pygame.sprite.collide_mask(playerDino, ma):
+                                playerDino.collision_immune = True
+                                collision_time = pygame.time.get_ticks()
+                                playerDino.score2 = 0
+                                ma.image.set_alpha(0)
+                                
+                                if pygame.mixer.get_init() is not None:
+                                    checkPoint_sound.play()
+
+                        elif not playerDino.isSuper:
+                            immune_time = pygame.time.get_ticks()
+                            if immune_time - collision_time > collision_immune_time:
+                                playerDino.collision_immune = False
+
                 CACTUS_INTERVAL = 50
                 CLOUD_INTERVAL = 300
                 OBJECT_REFRESH_LINE = width * 0.8
                 MAGIC_NUM = 10
+                MASK_INTERVAL = 50
+
+                if (isHumanTime):
+                    if (Itemtime == True) and (human.pattern_idx == 2) and (Umbrella == True):
+                        um=obj()
+                        um.put_img("./sprites/umbrella_item.png")
+                        um.change_size(70,70)
+                        um.x = (playerDino.rect.left+playerDino.rect.right)/2-40
+                        um.y = playerDino.rect.bottom - 70
+                        um.move = 5
+
+                        if (len(pm_list)==0):
+                            pass
+                        else:
+                            # print("x: ",pm.x,"y: ",pm.y)
+                            for pm in pm_list:
+                                if (pm.y>=um.y)and(pm.x<=um.x+35)and(pm.x>=um.x-35):
+                                    pm.set_alpha(0)
+
+                    else:
+                        if (len(pm_list)==0): pass # 보스 공격 모션
+                        else:
+                            for pm in pm_list:
+                                if (pm.x>=playerDino.rect.left)and(pm.x<=playerDino.rect.right)and(pm.y>playerDino.rect.top)and(pm.y<playerDino.rect.bottom):
+                                    print("공격에 맞음.")
+                                    playerDino.collision_immune = True
+                                    life -= 1
+                                    collision_time = pygame.time.get_ticks()
+                                    if life == 0:
+                                        playerDino.isDead = True
+                                    pm_list.remove(pm)
+
+
+                if (isHumanTime) and (Itemtime == True) and (human.pattern_idx == 3) and (Maskplus == True):
+                    playerDino.score2 = 0
+                    Maskplus = False
 
                 if (isHumanAlive) and (playerDino.score> human_appearance_score):
                     isHumanTime = True
@@ -3734,17 +3842,6 @@ def gameplay_story5():
                                 human.kill()
                                 isHumanAlive=False
 
-                    if (len(pm_list)==0): pass # 보스 공격 모션
-                    else:
-                        for pm in pm_list:
-                            if (pm.x>=playerDino.rect.left)and(pm.x<=playerDino.rect.right)and(pm.y>playerDino.rect.top)and(pm.y<playerDino.rect.bottom):
-                                print("공격에 맞음.")
-                                playerDino.collision_immune = True
-                                life -= 1
-                                collision_time = pygame.time.get_ticks()
-                                if life == 0:
-                                    playerDino.isDead = True
-                                pm_list.remove(pm)
 
                     if (len(rm_list)==0): pass # 보스 공격 모션
                     else:
@@ -3757,7 +3854,14 @@ def gameplay_story5():
                                 if life == 0:
                                     playerDino.isDead = True
                                 rm_list.remove(rm)
-                
+                    if (isHumanTime) and (human.pattern_idx == 3):
+                        if len(mask_items) < 2:
+                            for l in last_obstacle:
+                                if l.rect.right < OBJECT_REFRESH_LINE and random.randrange(MASK_INTERVAL) == MAGIC_NUM:
+                                    last_obstacle.empty()
+                                    last_obstacle.add(Mask_item(gamespeed, object_size[0], object_size[1]))
+
+
                 # 다이노 공격 타임 - 선인장만 나오도록
                 else:
                     if len(cacti) < 2:
@@ -3772,6 +3876,13 @@ def gameplay_story5():
 
                     if len(clouds) < 5 and random.randrange(CLOUD_INTERVAL) == MAGIC_NUM:
                         Cloud(width, random.randrange(height / 5, height / 2))
+                    if (isHumanTime) and (human.pattern_idx == 3):
+                        if len(mask_items) < 2:
+                            for l in last_obstacle:
+                                if l.rect.right < OBJECT_REFRESH_LINE and random.randrange(MASK_INTERVAL) == MAGIC_NUM:
+                                    last_obstacle.empty()
+                                    last_obstacle.add(Mask_item(gamespeed, object_size[0], object_size[1]))
+
 
                 playerDino.update()
                 cacti.update()
@@ -3782,6 +3893,10 @@ def gameplay_story5():
                 scb.update(playerDino.score, high_score)
                 boss.update(human.hp)
                 heart.update(life)
+                mask_items.update()
+                m_time.update(playerDino.score2)
+                if (human.pattern_idx != 3):
+                    playerDino.score2 = 0
 
                 # 보스몬스터 타임이면,
                 if isHumanTime:
@@ -3798,6 +3913,10 @@ def gameplay_story5():
                     cacti.draw(screen)
                     holes.draw(screen)
                     fire_cacti.draw(screen)
+                    if (isHumanTime) and (human.pattern_idx == 3):
+                        mask_items.draw(screen)
+                        m_time.draw()
+                        
 
                     # pkingtime이면, 보스몬스터를 보여줘라.
                     if isHumanTime:
@@ -3820,6 +3939,9 @@ def gameplay_story5():
                             boomCount=0
                             isDown=False
                     #
+                    if (isHumanTime):
+                        if (Itemtime == True) and (human.pattern_idx == 2) and (Umbrella == True):
+                            um.show()
 
                     playerDino.draw()
                     resized_screen.blit(
@@ -3827,6 +3949,9 @@ def gameplay_story5():
                         resized_screen_centerpos)
                     pygame.display.update()
                 clock.tick(FPS)
+
+                if playerDino.score2 == 100:
+                    playerDino.isDead = True
 
                 if playerDino.isDead:
                     gameOver = True
@@ -3899,7 +4024,7 @@ def gameplay_story5():
 
     pygame.quit()
     quit()
-
+    
 def gamerule():
     global resized_screen
     gameQuit = False
@@ -3963,9 +4088,9 @@ def pausing():
     resized_resume_image, resized_resume_rect = load_image(*resize('continue_button.png', 70, 62, -1))
 
     # BUTTONPOS
-    retbutton_rect.centerx = width * 0.4;
+    retbutton_rect.centerx = width * 0.4
     retbutton_rect.top = height * 0.52
-    resume_rect.centerx = width * 0.6;
+    resume_rect.centerx = width * 0.6
     resume_rect.top = height * 0.52
 
     resized_retbutton_rect.centerx = resized_screen.get_width() * 0.4
