@@ -385,7 +385,7 @@ def ItemSelectMode():
                             item_cnt+=1
                         
                     if r_back_btn_rect.collidepoint(x, y):
-                        gameplay_story2()
+                        gameplay_story5()
                     # if r_start_btn_rect.collidepoint(x, y):
                     #     gameplay_story1()
 
@@ -3311,7 +3311,7 @@ def gameplay_story5():
     Maskplus = False
     Itemtime = False
 
-    life = 30
+    life = 5
     paused = False
     playerDino = Dino(dino_size[0], dino_size[1], type = dino_type[type_idx])
     new_ground = Ground(-1 * gamespeed)
@@ -3742,14 +3742,14 @@ def gameplay_story5():
                                 die_sound.play()
 
                 if (isHumanTime) and (human.pattern_idx == 3):
-                    for m in mask_items:
-                        m.movement[0] = -1 * gamespeed
+                    for ma in mask_items:
+                        ma.movement[0] = -1 * gamespeed
                         if not playerDino.collision_immune:
-                            if pygame.sprite.collide_mask(playerDino, m):
+                            if pygame.sprite.collide_mask(playerDino, ma):
                                 playerDino.collision_immune = True
                                 collision_time = pygame.time.get_ticks()
                                 playerDino.score2 = 0
-                                m.image.set_alpha(0)
+                                ma.image.set_alpha(0)
                                 
                                 if pygame.mixer.get_init() is not None:
                                     checkPoint_sound.play()
@@ -3893,10 +3893,9 @@ def gameplay_story5():
                 scb.update(playerDino.score, high_score)
                 boss.update(human.hp)
                 heart.update(life)
-                if (isHumanTime) and (human.pattern_idx == 3):
-                    mask_items.update()
-                    m_time.update(playerDino.score2)
-                else:
+                mask_items.update()
+                m_time.update(playerDino.score2)
+                if (human.pattern_idx != 3):
                     playerDino.score2 = 0
 
                 # 보스몬스터 타임이면,
