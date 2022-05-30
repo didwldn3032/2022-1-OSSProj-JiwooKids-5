@@ -1581,7 +1581,169 @@ def gameplay_story1():
                                     item_time = pygame.time.get_ticks()
                                 elif s.rect.right < 0:
                                     s.kill()
+                else:
+                    for s in stones:
+                        if playerDino.score<50:
+                            s.image.set_alpha(255)
+                        elif 50<=playerDino.score<100:
+                            s.image.set_alpha(70)
+                        elif 100<=playerDino.score<150:
+                            s.image.set_alpha(255)
+                        elif 150<=playerDino.score<200:
+                            s.image.set_alpha(70)
+                        elif 200<=playerDino.score<250:
+                            s.image.set_alpha(255)
+                        elif 250<=playerDino.score<300:
+                            s.image.set_alpha(70)
+                        elif 300<=playerDino.score<350:
+                            s.image.set_alpha(255)
+                        elif 350<=playerDino.score<400:
+                            s.image.set_alpha(70)
+                        elif 400<=playerDino.score<450:
+                            s.image.set_alpha(255)
+                        else:
+                            s.image.set_alpha(70)
+                        
+                        s.movement[0] = -1 * gamespeed
+                        if not playerDino.collision_immune:
+                            if pygame.sprite.collide_mask(playerDino, s):
+                                playerDino.collision_immune = True
+                                life -= 1
+                                collision_time = pygame.time.get_ticks()
+                                if life == 0:
+                                    playerDino.isDead = True
+                                if pygame.mixer.get_init() is not None:
+                                    die_sound.play()
 
+                    for c in cacti:
+                        if playerDino.score<50:
+                            c.image.set_alpha(255)
+                        elif 50<=playerDino.score<100:
+                            c.image.set_alpha(70)
+                        elif 100<=playerDino.score<150:
+                            c.image.set_alpha(255)
+                        elif 150<=playerDino.score<200:
+                            c.image.set_alpha(70)
+                        elif 200<=playerDino.score<250:
+                            c.image.set_alpha(255)
+                        elif 250<=playerDino.score<300:
+                            c.image.set_alpha(70)
+                        elif 300<=playerDino.score<350:
+                            c.image.set_alpha(255)
+                        elif 350<=playerDino.score<400:
+                            c.image.set_alpha(70)
+                        elif 400<=playerDino.score<450:
+                            c.image.set_alpha(255)
+                        else:
+                            c.image.set_alpha(70)
+                        c.movement[0] = -1 * gamespeed
+                        if not playerDino.collision_immune:
+                            if pygame.sprite.collide_mask(playerDino, c):
+                                playerDino.collision_immune = True
+                                life -= 1
+                                collision_time = pygame.time.get_ticks()
+                                if life == 0:
+                                    playerDino.isDead = True
+                                if pygame.mixer.get_init() is not None:
+                                    die_sound.play()
+
+                        elif not playerDino.isSuper:
+                            immune_time = pygame.time.get_ticks()
+                            if immune_time - collision_time > collision_immune_time:
+                                playerDino.collision_immune = False
+
+                    for f in fire_cacti:
+                        if playerDino.score<50:
+                            f.image.set_alpha(255)
+                        elif 50<=playerDino.score<100:
+                            f.image.set_alpha(70)
+                        elif 100<=playerDino.score<150:
+                            f.image.set_alpha(255)
+                        elif 150<=playerDino.score<200:
+                            f.image.set_alpha(70)
+                        elif 200<=playerDino.score<250:
+                            f.image.set_alpha(255)
+                        elif 250<=playerDino.score<300:
+                            f.image.set_alpha(70)
+                        elif 300<=playerDino.score<350:
+                            f.image.set_alpha(255)
+                        elif 350<=playerDino.score<400:
+                            f.image.set_alpha(70)
+                        elif 400<=playerDino.score<450:
+                            f.image.set_alpha(255)
+                        else:
+                            f.image.set_alpha(70)
+                        f.movement[0] = -1 * gamespeed
+                        if not playerDino.collision_immune:
+                            if pygame.sprite.collide_mask(playerDino, f):
+                                playerDino.collision_immune = True
+                                life -= 1
+                                collision_time = pygame.time.get_ticks()
+                                if life == 0:
+                                    playerDino.isDead = True
+                                if pygame.mixer.get_init() is not None:
+                                    die_sound.play()
+
+                        elif not playerDino.isSuper:
+                            immune_time = pygame.time.get_ticks()
+                            if immune_time - collision_time > collision_immune_time:
+                                playerDino.collision_immune = False
+
+                    for p in pteras:
+                        if playerDino.score<50:
+                            p.image.set_alpha(255)
+                        elif 50<=playerDino.score<100:
+                            p.image.set_alpha(70)
+                        elif 100<=playerDino.score<150:
+                            p.image.set_alpha(255)
+                        elif 150<=playerDino.score<200:
+                            p.image.set_alpha(70)
+                        elif 200<=playerDino.score<250:
+                            p.image.set_alpha(255)
+                        elif 250<=playerDino.score<300:
+                            p.image.set_alpha(70)
+                        elif 300<=playerDino.score<350:
+                            p.image.set_alpha(255)
+                        elif 350<=playerDino.score<400:
+                            p.image.set_alpha(70)
+                        elif 400<=playerDino.score<450:
+                            p.image.set_alpha(255)
+                        else:
+                            p.image.set_alpha(70)
+                        p.movement[0] = -1 * gamespeed
+                        if not playerDino.collision_immune:
+                            if pygame.sprite.collide_mask(playerDino, p):
+                                playerDino.collision_immune = True
+                                life -= 1
+                                collision_time = pygame.time.get_ticks()
+                                if life == 0:
+                                    playerDino.isDead = True
+                                if pygame.mixer.get_init() is not None:
+                                    die_sound.play()
+
+                        elif not playerDino.isSuper:
+                            immune_time = pygame.time.get_ticks()
+                            if immune_time - collision_time > collision_immune_time:
+                                playerDino.collision_immune = False
+
+
+                        elif not playerDino.isSuper:
+                            immune_time = pygame.time.get_ticks()
+                            if immune_time - collision_time > collision_immune_time:
+                                playerDino.collision_immune = False
+
+                        if not playerDino.isSuper:
+                            for s in shield_items:
+                                s.movement[0] = -1 * gamespeed
+                                if pygame.sprite.collide_mask(playerDino, s):
+                                    if pygame.mixer.get_init() is not None:
+                                        checkPoint_sound.play()
+                                    playerDino.collision_immune = True
+                                    playerDino.isSuper = True
+                                    s.kill()
+                                    item_time = pygame.time.get_ticks()
+                                elif s.rect.right < 0:
+                                    s.kill()
                 STONE_INTERVAL = 50
 
                 CACTUS_INTERVAL = 50
