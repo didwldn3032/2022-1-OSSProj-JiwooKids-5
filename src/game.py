@@ -36,6 +36,7 @@ def introscreen():
     global dino_type
     dino_type = ['ORIGINAL','RED','ORANGE','YELLOW','GREEN','PURPLE','BLACK','PINK']
     type_idx = 0
+    ALPHA_MOVE = 20
     click_count = 0
     #
     temp_dino = Dino(dino_size[0], dino_size[1])
@@ -44,7 +45,8 @@ def introscreen():
 
     ###이미지 로드###
     # 배경 이미지
-    Background, Background_rect = load_image('intro_bg.png', width, height, -1)
+    alpha_back, alpha_back_rect = alpha_image('earth_bg.png', width + ALPHA_MOVE, height)
+    alpha_back_rect.left = -ALPHA_MOVE
     # 버튼 이미지
     r_btn_gamestart, r_btn_gamestart_rect = load_image(*resize('btn_start.png', 150, 50, -1))
     btn_gamestart, btn_gamestart_rect = load_image('btn_start.png', 150, 50, -1)
@@ -73,7 +75,7 @@ def introscreen():
 
                     ###IMGPOS###
                     #BACKGROUND IMG POS
-                    Background_rect.bottomleft = (width*0, height)
+                    alpha_back_rect.bottomleft = (width*0, height)
                     #이두용이 작성1 끝.
 
                 #이벤트 타입이 quit이면 while문 빠져나가며 게임종료
@@ -112,14 +114,14 @@ def introscreen():
             r_btn_gamestart_rect.centerx, r_btn_board_rect.centerx, r_btn_option_rect.centerx = resized_screen.get_width() * 0.72, resized_screen.get_width() * 0.72, resized_screen.get_width() * 0.72
             r_btn_gamestart_rect.centery, r_btn_board_rect.centery, r_btn_option_rect.centery = resized_screen.get_height() * 0.5, resized_screen.get_height() * (0.5+button_offset), resized_screen.get_height() * (0.5+2*button_offset)
 
-            screen.blit(Background, Background_rect)
+            screen.blit(alpha_back, alpha_back_rect)
             disp_intro_buttons(btn_gamestart, btn_board, btn_option)
 
             temp_dino.draw()
             resized_screen.blit(
                 pygame.transform.scale(screen, (resized_screen.get_width(), resized_screen.get_height())), resized_screen_centerpos)
 
-            pygame.display.update()
+        pygame.display.update()
 
         #tick 통해 FPS 설정
         clock.tick(FPS)
@@ -143,10 +145,11 @@ def option():
     btnpush_interval = 500  # ms
     pygame.mixer.music.stop()
     done = False
+    ALPHA_MOVE = 20
     db_init = False
 
-    largeText = pygame.font.Font('freesansbold.ttf', 60)
-    TextSurf, TextRect = text_objects("[ OPTION ]", largeText)
+    alpha_back, alpha_back_rect = alpha_image('option_bg.png', width + ALPHA_MOVE, height)
+    alpha_back_rect.left = -ALPHA_MOVE
     btn_bgm_on, btn_bgm_on_rect = load_image('btn_bgm_on.png', 60, 60, -1);
     btn_bgm_off, btn_bgm_off_rect = load_image('btn_bgm_off.png', 60, 60, -1)
     r_btn_bgm_on, r_btn_bgm_on_rect = load_image(*resize('btn_bgm_on.png', 60, 60, -1))
@@ -159,7 +162,6 @@ def option():
     btn_credit, btn_credit_rect = load_image('btn_credit.png', 150, 50, -1)
     r_btn_credit, r_btn_credit_rect = load_image(*resize('btn_credit.png', 150, 50, -1))
 
-    TextRect.center = (width * 0.5, height * 0.2)
     btn_bgm_on_rect.center = (width * 0.25, height * 0.5)
     init_btn_rect.center = (width * 0.5, height * 0.5)
     btn_gamerule_rect.center = (width * 0.75, height * 0.5)
@@ -227,8 +229,7 @@ def option():
         r_btn_credit_rect.centerx, r_btn_credit_rect.centery = resized_screen.get_width() * 0.9, resized_screen.get_height() * 0.85
 
         #스크린에 색 채움
-        screen.fill(background_col)
-        screen.blit(TextSurf, TextRect)
+        screen.blit(alpha_back, alpha_back_rect)
         screen.blit(init_btn_image, init_btn_rect)
         screen.blit(btn_gamerule, btn_gamerule_rect)
         screen.blit(btn_home, btn_home_rect)
@@ -257,18 +258,20 @@ def option():
 def selectMode():
     global resized_screen
     gameStart = False
+    ALPHA_MOVE = 20
     btnpush_interval = 500
 
     # 버튼 이미지
 
     ##easy mode button
-    easymode_btn_image, easymode_btn_rect = load_image('easy.png', 150, 50, -1)
-    r_easymode_btn_image, r_easy_btn_rect = load_image(*resize('easy.png', 150, 50, -1))
+    easymode_btn_image, easymode_btn_rect = alpha_image('ranking.png', 200, 60, -1)
+    r_easymode_btn_image, r_easy_btn_rect = alpha_image(*resize('ranking.png', 200, 60, -1))
     # hardmode button
-    btn_hardmode, btn_hardmode_rect = load_image('hard.png', 150, 50, -1)
-    r_btn_hardmode, r_btn_hardmode_rect = load_image(*resize('hard.png', 150, 50, -1))
+    btn_hardmode, btn_hardmode_rect = alpha_image('story.png', 200, 60, -1)
+    r_btn_hardmode, r_btn_hardmode_rect = alpha_image(*resize('story.png', 200, 60, -1))
     # 배경 이미지
-    Background, Background_rect = load_image('intro_bg.png', width, height, -1)
+    alpha_back, alpha_back_rect = alpha_image('earth_bg.png', width + ALPHA_MOVE, height)
+    alpha_back_rect.left = -ALPHA_MOVE
 
 
     easymode_btn_rect.center = (width * 0.5, height * 0.5)
@@ -288,10 +291,10 @@ def selectMode():
                 if pygame.mouse.get_pressed() == (1, 0, 0):
                     x, y = event.pos
                     if r_easy_btn_rect.collidepoint(x, y):
-                        ItemSelectMode()
+                        gameplay_rank()
 
                     if r_btn_hardmode_rect.collidepoint(x, y):
-                        gameplay_hard()
+                        ItemSelectMode()
 
             if event.type == pygame.VIDEORESIZE:
                 checkscrsize(event.w, event.h)
@@ -301,7 +304,7 @@ def selectMode():
                 0.5 + button_offset)
         
 
-        screen.blit(Background, Background_rect)
+        screen.blit(alpha_back, alpha_back_rect)
         screen.blit(easymode_btn_image, easymode_btn_rect)
         screen.blit(btn_hardmode, btn_hardmode_rect)
 
@@ -335,20 +338,20 @@ def ItemSelectMode():
 
     # 배경 이미지
     # back_store, back_store_rect = load_image('intro_bg.png', width, height)
-    alpha_back, alpha_back_rect = alpha_image('intro_bg.png', width + ALPHA_MOVE, height)
+    alpha_back, alpha_back_rect = alpha_image('Earth_bg.png', width + ALPHA_MOVE, height)
     alpha_back_rect.left = -ALPHA_MOVE
 
     # 버튼 이미지
-    char_btn_image, char_btn_rect = load_image('btn_start.png', 150, 80, -1)
-    r_char_btn_image, r_char_btn_rect = load_image(*resize('btn_start.png', 150, 80, -1))
-    skin_btn_image, skin_btn_rect = load_image('btn_start.png', 150, 80, -1)
-    r_skin_btn_image, r_skin_btn_rect = load_image(*resize('btn_start.png', 150, 80, -1))
-    item_btn_image, item_btn_rect = load_image('btn_start.png', 150, 80, -1)
-    r_item_btn_image, r_item_btn_rect = load_image(*resize('btn_start.png', 150, 80, -1))
-    back_btn_image, back_btn_rect = load_image('btn_start.png', 100, 50, -1)
-    r_back_btn_image, r_back_btn_rect = load_image(*resize('btn_start.png', 100, 50, -1))
-    start_btn_image, start_btn_rect = load_image('btn_option.png', 100, 50, -1)
-    r_start_btn_image, r_start_btn_rect = load_image(*resize('btn_option.png', 100, 50, -1))
+    char_btn_image, char_btn_rect = alpha_image('sunglass.png', 150, 150, -1)
+    r_char_btn_image, r_char_btn_rect = alpha_image(*resize('sunglass.png', 150, 150, -1))
+    skin_btn_image, skin_btn_rect = alpha_image('shovel.png', 150, 150, -1)
+    r_skin_btn_image, r_skin_btn_rect = alpha_image(*resize('shovel.png', 150, 150, -1))
+    item_btn_image, item_btn_rect = load_image('umbrella.png', 150, 150, -1)
+    r_item_btn_image, r_item_btn_rect = load_image(*resize('umbrella.png', 150, 150, -1))
+    back_btn_image, back_btn_rect = load_image('LetsGo.png', 100, 30, -1)
+    r_back_btn_image, r_back_btn_rect = load_image(*resize('LetsGo.png', 100, 30, -1))
+    start_btn_image, start_btn_rect = load_image('btn_option.png', 100, 30, -1)
+    r_start_btn_image, r_start_btn_rect = load_image(*resize('btn_option.png', 100, 30, -1))
 
     while not game_start:
         for event in pygame.event.get():
@@ -385,7 +388,7 @@ def ItemSelectMode():
                             item_cnt+=1
                         
                     if r_back_btn_rect.collidepoint(x, y):
-                        gameplay_story5()
+                        gameplay_story1()
                     # if r_start_btn_rect.collidepoint(x, y):
                     #     gameplay_story1()
 
@@ -414,7 +417,7 @@ def ItemSelectMode():
 
 
 
-def gameplay_hard():
+def gameplay_rank():
     global resized_screen
     global high_score
     
@@ -4074,9 +4077,7 @@ def gamerule():
 def pausing():
     global resized_screen
     gameQuit = False
-    pause_pic, pause_pic_rect = load_image('paused.png', 360, 75, -1)
-    pause_pic_rect.centerx = width * 0.5
-    pause_pic_rect.centery = height * 0.2
+    pause_pic, pause_pic_rect = alpha_image('Paused.png', width, height, -1)
 
     pygame.mixer.music.pause()  # 일시정지상태가 되면 배경음악도 일시정지
 
@@ -4198,7 +4199,7 @@ def typescore(score):
 def credit():
     global resized_screen
     done = False
-    creditimg, creditimg_rect = load_image('credit.png', width, height, -1)
+    creditimg, creditimg_rect = alpha_image('credit.png', width, height, -1)
 
     while not done:
         for event in pygame.event.get():
