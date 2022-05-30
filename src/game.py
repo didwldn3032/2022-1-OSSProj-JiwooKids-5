@@ -342,16 +342,22 @@ def ItemSelectMode():
     alpha_back_rect.left = -ALPHA_MOVE
 
     # 버튼 이미지
-    char_btn_image, char_btn_rect = alpha_image('sunglass.png', 150, 150, -1)
-    r_char_btn_image, r_char_btn_rect = alpha_image(*resize('sunglass.png', 150, 150, -1))
-    skin_btn_image, skin_btn_rect = alpha_image('shovel.png', 150, 150, -1)
-    r_skin_btn_image, r_skin_btn_rect = alpha_image(*resize('shovel.png', 150, 150, -1))
-    item_btn_image, item_btn_rect = load_image('umbrella.png', 150, 150, -1)
-    r_item_btn_image, r_item_btn_rect = load_image(*resize('umbrella.png', 150, 150, -1))
-    back_btn_image, back_btn_rect = load_image('LetsGo.png', 100, 30, -1)
-    r_back_btn_image, r_back_btn_rect = load_image(*resize('LetsGo.png', 100, 30, -1))
-    start_btn_image, start_btn_rect = load_image('btn_option.png', 100, 30, -1)
-    r_start_btn_image, r_start_btn_rect = load_image(*resize('btn_option.png', 100, 30, -1))
+    sung_btn_image, sung_btn_rect = alpha_image('sunglass.png', 150, 150, -1)
+    r_sung_btn_image, r_sung_btn_rect = alpha_image(*resize('sunglass.png', 150, 150, -1))
+    shov_btn_image, shov_btn_rect = alpha_image('shovel.png', 150, 150, -1)
+    r_shov_btn_image, r_shov_btn_rect = alpha_image(*resize('shovel.png', 150, 150, -1))
+    umbr_btn_image, umbr_btn_rect = load_image('umbrella.png', 150, 150, -1)
+    r_umbr_btn_image, r_umbr_btn_rect = load_image(*resize('umbrella.png', 150, 150, -1))
+    
+    item_story1 = False
+    item_story2 = False
+    item_story3 = False
+
+
+    lets_btn_image, lets_btn_rect = load_image('LetsGo.png', 100, 30, -1)
+    r_lets_btn_image, r_lets_btn_rect = load_image(*resize('LetsGo.png', 100, 30, -1))
+    option_btn_image, option_btn_rect = load_image('btn_option.png', 100, 30, -1)
+    r_option_btn_image, r_option_btn_rect = load_image(*resize('btn_option.png', 100, 30, -1))
 
     while not game_start:
         for event in pygame.event.get():
@@ -367,44 +373,82 @@ def ItemSelectMode():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if pygame.mouse.get_pressed() == (1, 0, 0):
                     x, y = pygame.mouse.get_pos()
-                    if r_char_btn_rect.collidepoint(x, y):
+                    if r_sung_btn_rect.collidepoint(x, y):
                         if item_story1==False:
                             if item_cnt>=2:
                                 pass
                             else:
                                 item_story1=True
                                 item_cnt+=1
-                    if r_skin_btn_rect.collidepoint(x, y):
-                        if item_cnt>=2:
-                                pass
                         else:
-                            item_story2=True
-                            item_cnt+=1
-                    if r_item_btn_rect.collidepoint(x, y):
-                        if item_cnt>=2:
-                                pass
+                            item_story1=False
+                            item_cnt-=1
+                    if r_shov_btn_rect.collidepoint(x, y):
+                        if item_story2==False:
+                            if item_cnt>=2:
+                                    pass
+                            else:
+                                item_story2=True
+                                item_cnt+=1
                         else:
-                            item_story3=True
-                            item_cnt+=1
-                        
-                    if r_back_btn_rect.collidepoint(x, y):
+                            item_story2=False
+                            item_cnt-=1
+                    if r_umbr_btn_rect.collidepoint(x, y):
+                        if item_story3==False:
+                            if item_cnt>=2:
+                                    pass
+                            else:
+                                item_story3=True
+                                item_cnt+=1
+                        else:
+                            item_story3=False
+                            item_cnt-=1
+                    if r_lets_btn_rect.collidepoint(x, y):
                         gameplay_story1()
                     # if r_start_btn_rect.collidepoint(x, y):
                     #     gameplay_story1()
+                    print(item_story1)
 
-        r_char_btn_rect.centerx = resized_screen.get_width() * 0.2
-        r_char_btn_rect.centery = resized_screen.get_height() * 0.5
-        r_skin_btn_rect.centerx = resized_screen.get_width() * (0.2 + width_offset)
-        r_skin_btn_rect.centery = resized_screen.get_height() * 0.5
-        r_item_btn_rect.centerx = resized_screen.get_width() * (0.2 + 2 * width_offset)
-        r_item_btn_rect.centery = resized_screen.get_height() * 0.5
-        r_back_btn_rect.centerx = resized_screen.get_width() * 0.1
-        r_back_btn_rect.centery = resized_screen.get_height() * 0.1
+        if item_story1 == False:
+            sung_btn_image, sung_btn_rect = alpha_image('sunglass.png', 150, 150, -1)
+            r_sung_btn_image, r_sung_btn_rect = alpha_image(*resize('sunglass.png', 150, 150, -1))
+        else:
+            sung_btn_image, sung_btn_rect = alpha_image('sunglasson.png', 150, 150, -1)
+            r_sung_btn_image, r_sung_btn_rect = alpha_image(*resize('sunglasson.png', 150, 150, -1))
+        
+        if item_story2 == False:
+            shov_btn_image, shov_btn_rect = alpha_image('shovel.png', 150, 150, -1)
+            r_shov_btn_image, r_shov_btn_rect = alpha_image(*resize('shovel.png', 150, 150, -1))
+        else:
+            shov_btn_image, shov_btn_rect = alpha_image('shovelon.png', 150, 150, -1)
+            r_shov_btn_image, r_shov_btn_rect = alpha_image(*resize('shovelon.png', 150, 150, -1))
+        
+        if item_story3 == False:
+            umbr_btn_image, umbr_btn_rect = load_image('umbrella.png', 150, 150, -1)
+            r_umbr_btn_image, r_umbr_btn_rect = load_image(*resize('umbrella.png', 150, 150, -1))
+        else:
+            umbr_btn_image, umbr_btn_rect = load_image('umbrellaon.png', 150, 150, -1)
+            r_umbr_btn_image, r_umbr_btn_rect = load_image(*resize('umbrellaon.png', 150, 150, -1))
+        
+
+
+
+
+
+
+        r_sung_btn_rect.centerx = resized_screen.get_width() * 0.2
+        r_sung_btn_rect.centery = resized_screen.get_height() * 0.5
+        r_shov_btn_rect.centerx = resized_screen.get_width() * (0.2 + width_offset)
+        r_shov_btn_rect.centery = resized_screen.get_height() * 0.5
+        r_umbr_btn_rect.centerx = resized_screen.get_width() * (0.2 + 2 * width_offset)
+        r_umbr_btn_rect.centery = resized_screen.get_height() * 0.5
+        r_lets_btn_rect.centerx = resized_screen.get_width() * 0.1
+        r_lets_btn_rect.centery = resized_screen.get_height() * 0.1
         # r_start_btn_rect.centerx = resized_screen.get_width() * 0.1
         # r_start_btn_rect.centery = resized_screen.get_height() * 0.1
         # screen.blit(back_store, back_store_rect)
         screen.blit(alpha_back, alpha_back_rect)
-        disp_store_buttons(char_btn_image, skin_btn_image, item_btn_image, back_btn_image)
+        disp_store_buttons(sung_btn_image, shov_btn_image, umbr_btn_image, lets_btn_image)
         resized_screen.blit(
             pygame.transform.scale(screen, (resized_screen.get_width(), resized_screen.get_height())),
             resized_screen_center)
