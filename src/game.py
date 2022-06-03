@@ -333,7 +333,7 @@ def ItemSelectMode():
     global item_story4
     global item_cnt
     ALPHA_MOVE = 20
-    width_offset = 0.3
+    width_offset = 0.2
     resized_screen_center = (0, 0)
     global resized_screen
     game_start = False
@@ -453,14 +453,14 @@ def ItemSelectMode():
             r_mask_btn_image, r_mask_btn_rect = load_image(*resize('maskon.png', 150, 150, -1))
         
 
-        r_sung_btn_rect.centerx = resized_screen.get_width() * 0.1
-        r_sung_btn_rect.centery = resized_screen.get_height() * 0.5
-        r_shov_btn_rect.centerx = resized_screen.get_width() * (0.1 + width_offset)
-        r_shov_btn_rect.centery = resized_screen.get_height() * 0.5
-        r_umbr_btn_rect.centerx = resized_screen.get_width() * (0.1 + 2 * width_offset)
-        r_umbr_btn_rect.centery = resized_screen.get_height() * 0.5
-        r_mask_btn_rect.centerx = resized_screen.get_width() * (0.1 + 3 * width_offset)
-        r_mask_btn_rect.centery = resized_screen.get_height() * 0.5
+        r_sung_btn_rect.centerx = resized_screen.get_width() * 0.2
+        r_sung_btn_rect.centery = resized_screen.get_height() * 0.6
+        r_shov_btn_rect.centerx = resized_screen.get_width() * (0.2 + width_offset)
+        r_shov_btn_rect.centery = resized_screen.get_height() * 0.6
+        r_umbr_btn_rect.centerx = resized_screen.get_width() * (0.2 + 2 * width_offset)
+        r_umbr_btn_rect.centery = resized_screen.get_height() * 0.6
+        r_mask_btn_rect.centerx = resized_screen.get_width() * (0.2 + 3 * width_offset)
+        r_mask_btn_rect.centery = resized_screen.get_height() * 0.6
         r_lets_btn_rect.centerx = resized_screen.get_width() * 0.1
         r_lets_btn_rect.centery = resized_screen.get_height() * 0.1
         # r_start_btn_rect.centerx = resized_screen.get_width() * 0.1
