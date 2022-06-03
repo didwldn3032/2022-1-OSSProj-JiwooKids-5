@@ -359,6 +359,7 @@ def ItemSelectMode():
     item_story2 = False
     item_story3 = False
     item_story4 = False
+    item_cnt=0
     
     warning_image, warning_rect = alpha_image('warning_bigger_circle.png', 150, 150, -1)
     lets_btn_image, lets_btn_rect = alpha_image('LetsGo.png', 100, 30, -1)
