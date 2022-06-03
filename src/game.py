@@ -3798,16 +3798,9 @@ def gameplay_story5():
 
                 #### 보스 몬스터 패턴 0 - 미세먼지 모드
                 if (isHumanTime) and (human.pattern_idx == 0):          
-                    # 1. 배경 이미지 처리
-                    # if (playerDino.score%100) < 50:
-                    #     dust_image.set_alpha(dustnum)
-                    #     screen.blit(dust_image, dust_rect)
-                    #     pygame.display.update()
-                    # elif 50 <= (playerDino.score%100) < 100:
-                    #     dustnum=255
-                    #     dust_image.set_alpha(dustnum)
-                    #     screen.blit(dust_image, dust_rect)
-                    #     pygame.display.update()
+                    if (playerDino.score%100) < 50: dustnum = 0       
+                    elif 50 <= (playerDino.score%100) < 100: dustnum = 255
+
 
                     # 2. 장애물 이미지 처리 
                     for c in cacti:
@@ -3850,6 +3843,7 @@ def gameplay_story5():
 
                 #### 보스 몬스터 패턴 1 - 지진 모드
                 if (isHumanTime) and (human.pattern_idx == 1):
+                    dustnum = 0
                     # 1. 보스의 임의 점프
                     JUMP_MAGIC = 50
                     print(str(human.rect.bottom) + " vs "+str(int(0.9 * height)))
@@ -3892,8 +3886,9 @@ def gameplay_story5():
                     del pm_list[d]
 
                 #### 보스 몬스터 패턴 2 - 산성비 모드
+
                 if (isHumanTime) and (human.pattern_idx == 2):
-                    
+                    dustnum = 0
                     # 1. 배경 이미지 처리
                     # if (playerDino.score%100) < 50:
                     #     dust_image.set_alpha(dustnum)
@@ -3955,7 +3950,7 @@ def gameplay_story5():
 
                 #### 보스 몬스터 패턴 3 - 바이러스 모드
                 if (isHumanTime) and (human.pattern_idx == 3):
-                    
+                    dustnum = 0
                     # 1. 배경 이미지 처리
                     # if (playerDino.score%100) < 50:
                     #     dust_image.set_alpha(dustnum)
@@ -4204,6 +4199,8 @@ def gameplay_story5():
                 if pygame.display.get_surface() != None:
                     screen.fill(background_col)
                     screen.blit(Background, Background_rect)
+                    dust_image.set_alpha(dustnum)
+                    screen.blit(dust_image, dust_rect)
                     new_ground.draw()
                     clouds.draw(screen)
                     scb.draw()

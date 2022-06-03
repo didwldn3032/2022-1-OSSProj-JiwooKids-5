@@ -72,7 +72,7 @@ checkPoint_sound = pygame.mixer.Sound('sprites/checkPoint.wav')
 # pygame.mixer.music.load('sprites/t-rex_bgm1.mp3')
 
 
-dino_size = [44, 60]
+dino_size = [44, 47]
 object_size = [40, 40]
 ptera_size = [46, 40]
 collision_immune_time = 500
