@@ -322,6 +322,7 @@ def selectMode():
 item_story1 = False
 item_story2 = False
 item_story3 = False
+item_story4 = False
 #아이템 체크 횟수
 item_cnt=0
 
@@ -329,9 +330,10 @@ def ItemSelectMode():
     global item_story1
     global item_story2
     global item_story3
+    global item_story4
     global item_cnt
     ALPHA_MOVE = 20
-    width_offset = 0.3
+    width_offset = 0.2
     resized_screen_center = (0, 0)
     global resized_screen
     game_start = False
@@ -348,11 +350,15 @@ def ItemSelectMode():
     r_shov_btn_image, r_shov_btn_rect = alpha_image(*resize('shovel.png', 150, 150, -1))
     umbr_btn_image, umbr_btn_rect = load_image('umbrella.png', 150, 150, -1)
     r_umbr_btn_image, r_umbr_btn_rect = load_image(*resize('umbrella.png', 150, 150, -1))
+    mask_btn_image, mask_btn_rect = load_image('mask.png', 150, 150, -1)
+    r_mask_btn_image, r_mask_btn_rect = load_image(*resize('mask.png', 150, 150, -1))
     
+
+
     item_story1 = False
     item_story2 = False
     item_story3 = False
-
+    item_story4 = False
 
     lets_btn_image, lets_btn_rect = load_image('LetsGo.png', 100, 30, -1)
     r_lets_btn_image, r_lets_btn_rect = load_image(*resize('LetsGo.png', 100, 30, -1))
@@ -403,11 +409,20 @@ def ItemSelectMode():
                         else:
                             item_story3=False
                             item_cnt-=1
+                    if r_mask_btn_rect.collidepoint(x, y):
+                        if item_story4==False:
+                            if item_cnt>=2:
+                                    pass
+                            else:
+                                item_story4=True
+                                item_cnt+=1
+                        else:
+                            item_story4=False
+                            item_cnt-=1
                     if r_lets_btn_rect.collidepoint(x, y):
-                        gameplay_story1()
+                        gameplay_story2()
                     # if r_start_btn_rect.collidepoint(x, y):
                     #     gameplay_story1()
-                    print(item_story1)
 
         if item_story1 == False:
             sung_btn_image, sung_btn_rect = alpha_image('sunglass.png', 150, 150, -1)
@@ -430,25 +445,29 @@ def ItemSelectMode():
             umbr_btn_image, umbr_btn_rect = load_image('umbrellaon.png', 150, 150, -1)
             r_umbr_btn_image, r_umbr_btn_rect = load_image(*resize('umbrellaon.png', 150, 150, -1))
         
-
-
-
-
-
+        if item_story4 == False:
+            mask_btn_image, mask_btn_rect = load_image('mask.png', 150, 150, -1)
+            r_mask_btn_image, r_mask_btn_rect = load_image(*resize('mask.png', 150, 150, -1))
+        else:
+            mask_btn_image, mask_btn_rect = load_image('maskon.png', 150, 150, -1)
+            r_mask_btn_image, r_mask_btn_rect = load_image(*resize('maskon.png', 150, 150, -1))
+        
 
         r_sung_btn_rect.centerx = resized_screen.get_width() * 0.2
-        r_sung_btn_rect.centery = resized_screen.get_height() * 0.5
+        r_sung_btn_rect.centery = resized_screen.get_height() * 0.6
         r_shov_btn_rect.centerx = resized_screen.get_width() * (0.2 + width_offset)
-        r_shov_btn_rect.centery = resized_screen.get_height() * 0.5
+        r_shov_btn_rect.centery = resized_screen.get_height() * 0.6
         r_umbr_btn_rect.centerx = resized_screen.get_width() * (0.2 + 2 * width_offset)
-        r_umbr_btn_rect.centery = resized_screen.get_height() * 0.5
+        r_umbr_btn_rect.centery = resized_screen.get_height() * 0.6
+        r_mask_btn_rect.centerx = resized_screen.get_width() * (0.2 + 3 * width_offset)
+        r_mask_btn_rect.centery = resized_screen.get_height() * 0.6
         r_lets_btn_rect.centerx = resized_screen.get_width() * 0.1
         r_lets_btn_rect.centery = resized_screen.get_height() * 0.1
         # r_start_btn_rect.centerx = resized_screen.get_width() * 0.1
         # r_start_btn_rect.centery = resized_screen.get_height() * 0.1
         # screen.blit(back_store, back_store_rect)
         screen.blit(alpha_back, alpha_back_rect)
-        disp_store_buttons(sung_btn_image, shov_btn_image, umbr_btn_image, lets_btn_image)
+        disp_store_buttons(sung_btn_image, shov_btn_image, umbr_btn_image, lets_btn_image, mask_btn_image)
         resized_screen.blit(
             pygame.transform.scale(screen, (resized_screen.get_width(), resized_screen.get_height())),
             resized_screen_center)
@@ -1274,7 +1293,8 @@ def gameplay_story1():
                             jumpingx2=True
 
                         if event.key == pygame.K_d:
-                            Sunglass=True
+                            if item_story1 == True:
+                                Sunglass=True
 
                     if event.type == pygame.KEYUP:
                         if event.key == pygame.K_DOWN:
@@ -2054,7 +2074,8 @@ def gameplay_story2(): # 지진모드
                             jumpingx2=True
 
                         if event.key == pygame.K_d:
-                            Shovel = True
+                            if item_story2 == True:
+                                Shovel = True
                         
                         if event.key == pygame.K_ESCAPE:
                             paused = not paused
@@ -2119,9 +2140,8 @@ def gameplay_story2(): # 지진모드
                     h.movement[0] = -1 * gamespeed
                     if not playerDino.collision_immune:
                         if pygame.sprite.collide_mask(playerDino, h):
-                            if item_story2==True:
-                                if Shovel==True:
-                                    h.image.set_alpha(0)                      
+                            if Shovel==True:
+                                h.image.set_alpha(0)                      
                             else:
                                 playerDino.collision_immune = True
                                 life -= 5
@@ -2362,6 +2382,7 @@ def gameplay_story2(): # 지진모드
 def gameplay_story3():
     global resized_screen
     global high_score
+    global item_story3
     result = db.query_db("select score from user order by score desc;", one=True)
     if result is not None:
         high_score = result['score']
@@ -2484,7 +2505,8 @@ def gameplay_story3():
                             bk=0
 
                         if event.key == pygame.K_d:
-                            Umbrella = True
+                            if item_story3 == True:
+                                Umbrella = True
 
                     if event.type == pygame.KEYUP:
                         if event.key == pygame.K_DOWN:
@@ -2748,7 +2770,7 @@ def gameplay_story3():
                         # print("x: ",pm.x,"y: ",pm.y)
                         for pm in pm_list:
                             if (pm.y>=um.y)and(pm.x<=um.x+35)and(pm.x>=um.x-35):
-                                pm.set_alpha(0)
+                                pm.img.set_alpha(0)
 
 
                 else:
@@ -2930,6 +2952,7 @@ def gameplay_story3():
 def gameplay_story4():
     global resized_screen
     global high_score
+    global item_story4
     result = db.query_db("select score from user order by score desc;", one=True)
     if result is not None:
         high_score = result['score']
@@ -3055,7 +3078,8 @@ def gameplay_story4():
                             bk=0
 
                         if event.key == pygame.K_d:
-                            Maskplus = True
+                            if item_story4 == True:
+                                Maskplus = True
 
                     if event.type == pygame.KEYUP:
                         if event.key == pygame.K_DOWN:
@@ -3501,7 +3525,11 @@ def gameplay_story4():
 def gameplay_story5():
     global resized_screen
     global high_score
-    
+    global item_story1
+    global item_story2
+    global item_story3
+    global item_story4
+
     result = db.query_db("select score from user order by score desc;", one=True)
     if result is not None:
         high_score = result['score']

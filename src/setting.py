@@ -224,29 +224,33 @@ def alpha_image(name, sizex=-1, sizey=-1,color_key=None):
     img.convert_alpha()
     return (img, img.get_rect())
 
-def disp_store_buttons(btn_restart, btn_save, btn_exit, btn_back):
-    width_offset=0.3
+def disp_store_buttons(btn_restart, btn_save, btn_exit, btn_back, btn_true):
+    width_offset=0.2
     resized_screen_center = (0, 0)
     btn_restart_rect = btn_restart.get_rect()
     btn_save_rect = btn_save.get_rect()
     btn_exit_rect = btn_exit.get_rect()
     btn_back_rect = btn_back.get_rect()
+    btn_true_rect = btn_true.get_rect()
     # btn_start_rect = btn_start.get_rect()
 
     btn_restart_rect.centerx = width * 0.2
     btn_save_rect.centerx = width * (0.2 + width_offset)
     btn_exit_rect.centerx = width * (0.2 + 2 * width_offset)
     btn_back_rect.centerx = width * 0.1
+    btn_true_rect.centerx = width * (0.2 + 3 * width_offset)
     # btn_start_rect.centerx = width * 0.9
 
     btn_restart_rect.centery = height * 0.6
     btn_save_rect.centery = height * 0.6
     btn_exit_rect.centery = height * 0.6
     btn_back_rect.centery = height * 0.1
+    btn_true_rect.centery = height * 0.6
     # btn_start_rect.centery = height * 0.1
 
     screen.blit(btn_restart, btn_restart_rect)
     screen.blit(btn_save, btn_save_rect)
     screen.blit(btn_exit, btn_exit_rect)
     screen.blit(btn_back, btn_back_rect)
+    screen.blit(btn_true, btn_true_rect)
     # screen.blit(btn_start, btn_start_rect)
