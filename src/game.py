@@ -348,10 +348,10 @@ def ItemSelectMode():
     r_sung_btn_image, r_sung_btn_rect = alpha_image(*resize('sunglass.png', 150, 150, -1))
     shov_btn_image, shov_btn_rect = alpha_image('shovel.png', 150, 150, -1)
     r_shov_btn_image, r_shov_btn_rect = alpha_image(*resize('shovel.png', 150, 150, -1))
-    umbr_btn_image, umbr_btn_rect = load_image('umbrella.png', 150, 150, -1)
-    r_umbr_btn_image, r_umbr_btn_rect = load_image(*resize('umbrella.png', 150, 150, -1))
-    mask_btn_image, mask_btn_rect = load_image('mask.png', 150, 150, -1)
-    r_mask_btn_image, r_mask_btn_rect = load_image(*resize('mask.png', 150, 150, -1))
+    umbr_btn_image, umbr_btn_rect = alpha_image('umbrella.png', 150, 150, -1)
+    r_umbr_btn_image, r_umbr_btn_rect = alpha_image(*resize('umbrella.png', 150, 150, -1))
+    mask_btn_image, mask_btn_rect = alpha_image('mask.png', 150, 150, -1)
+    r_mask_btn_image, r_mask_btn_rect = alpha_image(*resize('mask.png', 150, 150, -1))
     
 
 
@@ -359,11 +359,12 @@ def ItemSelectMode():
     item_story2 = False
     item_story3 = False
     item_story4 = False
-
-    lets_btn_image, lets_btn_rect = load_image('LetsGo.png', 100, 30, -1)
-    r_lets_btn_image, r_lets_btn_rect = load_image(*resize('LetsGo.png', 100, 30, -1))
-    option_btn_image, option_btn_rect = load_image('btn_option.png', 100, 30, -1)
-    r_option_btn_image, r_option_btn_rect = load_image(*resize('btn_option.png', 100, 30, -1))
+    
+    warning_image, warning_rect = alpha_image('warning_bigger_circle.png', 150, 150, -1)
+    lets_btn_image, lets_btn_rect = alpha_image('LetsGo.png', 100, 30, -1)
+    r_lets_btn_image, r_lets_btn_rect = alpha_image(*resize('LetsGo.png', 100, 30, -1))
+    option_btn_image, option_btn_rect = alpha_image('btn_option.png', 100, 30, -1)
+    r_option_btn_image, r_option_btn_rect = alpha_image(*resize('btn_option.png', 100, 30, -1))
 
     while not game_start:
         for event in pygame.event.get():
@@ -382,7 +383,18 @@ def ItemSelectMode():
                     if r_sung_btn_rect.collidepoint(x, y):
                         if item_story1==False:
                             if item_cnt>=2:
-                                pass
+                                print("경고!")
+                                disp_ind_img(0, warning_image)
+                                resized_screen.blit(
+                                pygame.transform.scale(screen, (resized_screen.get_width(), resized_screen.get_height())),
+                                resized_screen_center)
+                                pygame.display.update()
+                                sleep(2)
+                                disp_ind_img(0, sung_btn_image)
+                                resized_screen.blit(
+                                pygame.transform.scale(screen, (resized_screen.get_width(), resized_screen.get_height())),
+                                resized_screen_center)
+                                pygame.display.update()
                             else:
                                 item_story1=True
                                 item_cnt+=1
@@ -392,7 +404,18 @@ def ItemSelectMode():
                     if r_shov_btn_rect.collidepoint(x, y):
                         if item_story2==False:
                             if item_cnt>=2:
-                                    pass
+                                print("경고!")
+                                disp_ind_img(1, warning_image)
+                                resized_screen.blit(
+                                pygame.transform.scale(screen, (resized_screen.get_width(), resized_screen.get_height())),
+                                resized_screen_center)
+                                pygame.display.update()
+                                sleep(2)
+                                disp_ind_img(1, shov_btn_image)
+                                resized_screen.blit(
+                                pygame.transform.scale(screen, (resized_screen.get_width(), resized_screen.get_height())),
+                                resized_screen_center)
+                                pygame.display.update()
                             else:
                                 item_story2=True
                                 item_cnt+=1
@@ -402,7 +425,18 @@ def ItemSelectMode():
                     if r_umbr_btn_rect.collidepoint(x, y):
                         if item_story3==False:
                             if item_cnt>=2:
-                                    pass
+                                print("경고!")
+                                disp_ind_img(2, warning_image)
+                                resized_screen.blit(
+                                pygame.transform.scale(screen, (resized_screen.get_width(), resized_screen.get_height())),
+                                resized_screen_center)
+                                pygame.display.update()
+                                sleep(2)
+                                disp_ind_img(2, umbr_btn_image)
+                                resized_screen.blit(
+                                pygame.transform.scale(screen, (resized_screen.get_width(), resized_screen.get_height())),
+                                resized_screen_center)
+                                pygame.display.update()
                             else:
                                 item_story3=True
                                 item_cnt+=1
@@ -412,7 +446,18 @@ def ItemSelectMode():
                     if r_mask_btn_rect.collidepoint(x, y):
                         if item_story4==False:
                             if item_cnt>=2:
-                                    pass
+                                print("경고!")
+                                disp_ind_img(3, warning_image)
+                                resized_screen.blit(
+                                pygame.transform.scale(screen, (resized_screen.get_width(), resized_screen.get_height())),
+                                resized_screen_center)
+                                pygame.display.update()
+                                sleep(2)
+                                disp_ind_img(3, mask_btn_image)
+                                resized_screen.blit(
+                                pygame.transform.scale(screen, (resized_screen.get_width(), resized_screen.get_height())),
+                                resized_screen_center)
+                                pygame.display.update()
                             else:
                                 item_story4=True
                                 item_cnt+=1
@@ -420,7 +465,7 @@ def ItemSelectMode():
                             item_story4=False
                             item_cnt-=1
                     if r_lets_btn_rect.collidepoint(x, y):
-                        gameplay_story5()
+                        gameplay_story1()
                     # if r_start_btn_rect.collidepoint(x, y):
                     #     gameplay_story1()
 
@@ -439,18 +484,18 @@ def ItemSelectMode():
             r_shov_btn_image, r_shov_btn_rect = alpha_image(*resize('shovelon.png', 150, 150, -1))
         
         if item_story3 == False:
-            umbr_btn_image, umbr_btn_rect = load_image('umbrella.png', 150, 150, -1)
-            r_umbr_btn_image, r_umbr_btn_rect = load_image(*resize('umbrella.png', 150, 150, -1))
+            umbr_btn_image, umbr_btn_rect = alpha_image('umbrella.png', 150, 150, -1)
+            r_umbr_btn_image, r_umbr_btn_rect = alpha_image(*resize('umbrella.png', 150, 150, -1))
         else:
-            umbr_btn_image, umbr_btn_rect = load_image('umbrellaon.png', 150, 150, -1)
-            r_umbr_btn_image, r_umbr_btn_rect = load_image(*resize('umbrellaon.png', 150, 150, -1))
+            umbr_btn_image, umbr_btn_rect = alpha_image('umbrellaon.png', 150, 150, -1)
+            r_umbr_btn_image, r_umbr_btn_rect = alpha_image(*resize('umbrellaon.png', 150, 150, -1))
         
         if item_story4 == False:
-            mask_btn_image, mask_btn_rect = load_image('mask.png', 150, 150, -1)
-            r_mask_btn_image, r_mask_btn_rect = load_image(*resize('mask.png', 150, 150, -1))
+            mask_btn_image, mask_btn_rect = alpha_image('mask.png', 150, 150, -1)
+            r_mask_btn_image, r_mask_btn_rect = alpha_image(*resize('mask.png', 150, 150, -1))
         else:
-            mask_btn_image, mask_btn_rect = load_image('maskon.png', 150, 150, -1)
-            r_mask_btn_image, r_mask_btn_rect = load_image(*resize('maskon.png', 150, 150, -1))
+            mask_btn_image, mask_btn_rect = alpha_image('maskon.png', 150, 150, -1)
+            r_mask_btn_image, r_mask_btn_rect = alpha_image(*resize('maskon.png', 150, 150, -1))
         
 
         r_sung_btn_rect.centerx = resized_screen.get_width() * 0.2
@@ -1308,6 +1353,10 @@ def gameplay_story1():
 
                         if event.key == pygame.K_s:
                             jumpingx2=False
+                        
+                        if event.key == pygame.K_d:
+                            if item_story1 == True:
+                                Sunglass=True
 
                     if event.type == pygame.MOUSEBUTTONDOWN:
                         if pygame.mouse.get_pressed() == (1, 0, 0) and playerDino.rect.bottom == int(0.9 * height):
@@ -1402,8 +1451,10 @@ def gameplay_story1():
 
                 if item_story1==True:
                     if Sunglass == True:
+                        playerDino.Superglass = True
                         if playerDino.score % 50 ==0:
                             Sunglass=False
+                            playerDino.Superglass = False
                         for s in stones:
                             s.movement[0] = -1 * gamespeed
                             if not playerDino.collision_immune:

@@ -36,7 +36,7 @@ class Dino():
 
         # 해당하는 디노의 스킨을 가져와서 적용
         if type == 'ORIGINAL':
-            self.images, self.rect = load_sprite_sheet('dino.png', 6, 1, sizex, sizey, -1)
+            self.images, self.rect = load_sprite_sheet('dino_11_yellow.png', 11, 1, sizex, sizey, -1)
             # self.images, self.rect = load_sprite_sheet('pinkdino.png', 6, 1, sizex, sizey, -1)
             self.images1, self.rect1 = load_sprite_sheet('dino_ducking.png', 2, 1, 59, sizey, -1)
             # self.images1, self.rect1 = load_sprite_sheet('pinkdino_ducking.png', 2, 1, 59, sizey, -1)
@@ -82,6 +82,10 @@ class Dino():
         self.collision_immune = False
         self.isSuper = False
 
+        # 아이템 사용 상태
+        self.Superglass = False
+        self.Umbrella = False
+
         self.stand_pos_width = self.rect.width
         self.duck_pos_width = self.rect1.width
 
@@ -100,7 +104,21 @@ class Dino():
 
         # 2. index값 변경
         if self.isJumping: 
-            self.index = 0
+            if self.Superglass:
+                self.index=5
+            elif self.Umbrella:
+                self.index=8
+            else: self.index = 0
+        elif self.Superglass:
+            if self.counter % 5 == 0:
+                if self.index==6: self.index=7
+                elif self.index==7: self.index=6
+                else: self.index=6
+        elif self.Umbrella:
+            if self.counter % 5 == 0:
+                if self.index==9: self.index=10
+                elif self.index==10: self.index=9
+                else: self.index=9
         elif self.isBlinking: 
             if self.index == 0:
                 if self.counter % 400 == 399:
