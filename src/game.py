@@ -466,7 +466,7 @@ def ItemSelectMode():
                             item_story4=False
                             item_cnt-=1
                     if r_lets_btn_rect.collidepoint(x, y):
-                        gameplay_story1()
+                        gameplay_story5()
                     # if r_start_btn_rect.collidepoint(x, y):
                     #     gameplay_story1()
 
@@ -2170,7 +2170,10 @@ def gameplay_story2(): # 지진모드
                         checkscrsize(event.w, event.h)
 
             if not paused:
-                
+                if Shovel==True:
+                    playerDino.Sovel=True
+                else:
+                    playerDino.Sovel=False
                 if goLeft:
                     if playerDino.rect.left < 0:
                         playerDino.rect.left = 0
@@ -2598,7 +2601,6 @@ def gameplay_story3():
                         checkscrsize(event.w, event.h)
 
             if not paused:
-
                 if goLeft:
                     if playerDino.rect.left < 0:
                         playerDino.rect.left = 0
@@ -3798,24 +3800,54 @@ def gameplay_story5():
 
                 #### 보스 몬스터 패턴 0 - 미세먼지 모드
                 if (isHumanTime) and (human.pattern_idx == 0):          
-                    if (playerDino.score%100) < 50: dustnum = 0       
-                    elif 50 <= (playerDino.score%100) < 100: dustnum = 255
+                    if (playerDino.score%100) < 50: 
+                        dustnum = 0       
+                    elif 50 <= (playerDino.score%100) < 100: 
+                        dustnum = 255
 
 
                     # 2. 장애물 이미지 처리 
-                    for c in cacti:
-                        if (playerDino.score%100) <50:
-                            c.image.set_alpha(255)
-                        elif 50<=(playerDino.score%100) < 100:
-                            c.image.set_alpha(30)
-                        c.movement[0] = -1 * gamespeed
+                    if item_story1==True:
+                        if Sunglass == True:
+                            playerDino.Superglass = True
+                            if (playerDino.score%100) <50:
+                                playerDino.Superglass=False
+                                Sunglass=False
+                            for c in cacti:
+                                c.image.set_alpha(255)
+                                c.movement[0] = -1 * gamespeed
+                            for f in fire_cacti:
+                                f.image.set_alpha(255)
+                                f.movement[0] = -1 * gamespeed
+                        else:
+                            for c in cacti:
+                                if (playerDino.score%100) <50:
+                                    c.image.set_alpha(255)
+                                elif 50<=(playerDino.score%100) < 100:
+                                    c.image.set_alpha(30)
+                                c.movement[0] = -1 * gamespeed
 
-                    for f in fire_cacti:
-                        if (playerDino.score%100) <50:
-                            c.image.set_alpha(255)
-                        elif 50<=(playerDino.score%100) < 100:
-                            f.image.set_alpha(30)
-                        f.movement[0] = -1 * gamespeed
+                            for f in fire_cacti:
+                                if (playerDino.score%100) <50:
+                                    f.image.set_alpha(255)
+                                elif 50<=(playerDino.score%100) < 100:
+                                    f.image.set_alpha(30)
+                                f.movement[0] = -1 * gamespeed
+
+                    else:
+                        for c in cacti:
+                            if (playerDino.score%100) <50:
+                                c.image.set_alpha(255)
+                            elif 50<=(playerDino.score%100) < 100:
+                                c.image.set_alpha(30)
+                            c.movement[0] = -1 * gamespeed
+
+                        for f in fire_cacti:
+                            if (playerDino.score%100) <50:
+                                f.image.set_alpha(255)
+                            elif 50<=(playerDino.score%100) < 100:
+                                f.image.set_alpha(30)
+                            f.movement[0] = -1 * gamespeed
                     
                     # 3. 보스의 공격
                     if (int(pm_pattern0_count % 80) == 0):
@@ -3843,7 +3875,9 @@ def gameplay_story5():
 
                 #### 보스 몬스터 패턴 1 - 지진 모드
                 if (isHumanTime) and (human.pattern_idx == 1):
-                    dustnum = 0
+                    if item_story2==True:
+                        if Shovel==True:
+                            playerDino.Sovel = True
                     # 1. 보스의 임의 점프
                     JUMP_MAGIC = 50
                     print(str(human.rect.bottom) + " vs "+str(int(0.9 * height)))
@@ -3888,6 +3922,10 @@ def gameplay_story5():
                 #### 보스 몬스터 패턴 2 - 산성비 모드
 
                 if (isHumanTime) and (human.pattern_idx == 2):
+                    if Shovel==True:
+                        playerDino.Sovel=True
+                    else:
+                        playerDino.Sovel=False
                     dustnum = 0
                     # 1. 배경 이미지 처리
                     # if (playerDino.score%100) < 50:
@@ -4028,13 +4066,17 @@ def gameplay_story5():
                     h.movement[0] = -1 * gamespeed
                     if not playerDino.collision_immune:
                         if pygame.sprite.collide_mask(playerDino, h):
-                            playerDino.collision_immune = True
-                            life -= 5
-                            collision_time = pygame.time.get_ticks()
-                            if life <= 0:
-                                playerDino.isDead = True
-                            if pygame.mixer.get_init() is not None:
-                                die_sound.play()
+                            if item_story2==True:
+                                if Shovel==True:
+                                    h.image.set_alpha(0)  
+                            else: 
+                                playerDino.collision_immune = True
+                                life -= 5
+                                collision_time = pygame.time.get_ticks()
+                                if life <= 0:
+                                    playerDino.isDead = True
+                                if pygame.mixer.get_init() is not None:
+                                    die_sound.play()
 
                 if (isHumanTime) and (human.pattern_idx == 3):
                     for ma in mask_items:
@@ -4135,6 +4177,7 @@ def gameplay_story5():
                             if human.hp <= 0:
                                 human.kill()
                                 isHumanAlive=False
+                                Congratulations()
 
 
                     if (len(pm_list)==0): pass # 보스 공격 모션
@@ -4519,8 +4562,57 @@ def credit():
     pygame.quit()
     quit()
 
+def Congratulations():
+    ALPHA_MOVE = 20
+    width_offset = 0.3
+    resized_screen_center = (0, 0)
+    global resized_screen
+    game_start = False
 
+    # 배경 이미지
+    # back_store, back_store_rect = load_image('intro_bg.png', width, height)
+    alpha_back, alpha_back_rect = alpha_image('Earth_bg.png', width + ALPHA_MOVE, height)
+    alpha_back_rect.left = -ALPHA_MOVE
 
+    # BUTTON IMG LOAD
+    retbutton_image, retbutton_rect = load_image('main_button.png', 50, 42, -1)
+    resized_retbutton_image, resized_retbutton_rect = load_image(*resize('main_button.png', 50, 42, -1))
+
+    # BUTTONPOS
+    retbutton_rect.centerx = width * 0.07
+    retbutton_rect.top = height * 0.05
+
+    resized_retbutton_rect.centerx = resized_screen.get_width() * 0.07
+    resized_retbutton_rect.top = resized_screen.get_height() * 0.05
+
+    while not game_start:
+        for event in pygame.event.get():
+            
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                    if pygame.mouse.get_pressed() == (1, 0, 0):
+                        x, y = event.pos
+                        if resized_retbutton_rect.collidepoint(x, y):
+                            introscreen()
+                            return False
+            if event.type == pygame.VIDEORESIZE:
+                check_scr_size(event.w, event.h)
+            if event.type == pygame.QUIT:
+                game_start = True
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    return False
+        screen.blit(alpha_back, alpha_back_rect)
+
+        # screen.fill(white)
+        screen.blit(retbutton_image, retbutton_rect)
+
+        resized_screen.blit(
+            pygame.transform.scale(screen, (resized_screen.get_width(), resized_screen.get_height())),
+            resized_screen_center)
+        pygame.display.update()
+        clock.tick(FPS)
+    pygame.quit()
+    quit()
 
 
 
