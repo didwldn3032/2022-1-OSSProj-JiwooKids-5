@@ -420,7 +420,7 @@ def ItemSelectMode():
                             item_story4=False
                             item_cnt-=1
                     if r_lets_btn_rect.collidepoint(x, y):
-                        gameplay_story2()
+                        gameplay_story5()
                     # if r_start_btn_rect.collidepoint(x, y):
                     #     gameplay_story1()
 
@@ -1381,7 +1381,8 @@ def gameplay_story1():
                     pygame.display.update()
 
             if not paused:
-
+                print(item_story1)
+                print(Sunglass)
                 if goLeft:
                     if playerDino.rect.left < 0:
                         playerDino.rect.left = 0
@@ -3544,6 +3545,8 @@ def gameplay_story5():
     startMenu = False
     gameOver = False
     gameQuit = False
+    Sunglass = False
+    Shovel = False
     Umbrella = False
     Maskplus = False
     Itemtime = False
@@ -3639,6 +3642,14 @@ def gameplay_story5():
                             bk=0
                         if event.key == pygame.K_d:
                             Itemtime=True
+                            if item_story1 == True:
+                                Sunglass = True
+                            if item_story2 == True:
+                                Shovel = True
+                            if item_story3 == True:
+                                Umbrella = True
+                            if item_story4 == True:
+                                Maskplus = True
 
                     if event.type == pygame.KEYUP:
                         if event.key == pygame.K_DOWN:
@@ -4001,36 +4012,35 @@ def gameplay_story5():
                 OBJECT_REFRESH_LINE = width * 0.8
                 MAGIC_NUM = 10
                 MASK_INTERVAL = 50
-
+                um=obj()
+                um.put_img("./sprites/umbrella_item.png")
+                um.change_size(70,70)
+                um.x = (playerDino.rect.left+playerDino.rect.right)/2-40
+                um.y = playerDino.rect.bottom - 70
+                um.move = 5
                 if (isHumanTime):
                     if (Itemtime == True) and (human.pattern_idx == 2) and (Umbrella == True):
-                        um=obj()
-                        um.put_img("./sprites/umbrella_item.png")
-                        um.change_size(70,70)
-                        um.x = (playerDino.rect.left+playerDino.rect.right)/2-40
-                        um.y = playerDino.rect.bottom - 70
-                        um.move = 5
-
-                        if (len(pm_list)==0):
+                        
+                        if (len(rm_list)==0):
                             pass
                         else:
                             # print("x: ",pm.x,"y: ",pm.y)
-                            for pm in pm_list:
-                                if (pm.y>=um.y)and(pm.x<=um.x+35)and(pm.x>=um.x-35):
-                                    pm.set_alpha(0)
+                            for rm in rm_list:
+                                if (rm.y>=um.y)and(rm.x<=um.x+35)and(rm.x>=um.x-35):
+                                    rm.img.set_alpha(0)
 
                     else:
-                        if (len(pm_list)==0): pass # 보스 공격 모션
+                        if (len(rm_list)==0): pass # 보스 공격 모션
                         else:
-                            for pm in pm_list:
-                                if (pm.x>=playerDino.rect.left)and(pm.x<=playerDino.rect.right)and(pm.y>playerDino.rect.top)and(pm.y<playerDino.rect.bottom):
+                            for rm in rm_list:
+                                if (rm.x>=playerDino.rect.left)and(rm.x<=playerDino.rect.right)and(rm.y>playerDino.rect.top)and(rm.y<playerDino.rect.bottom):
                                     print("공격에 맞음.")
                                     playerDino.collision_immune = True
                                     life -= 1
                                     collision_time = pygame.time.get_ticks()
                                     if life == 0:
                                         playerDino.isDead = True
-                                    pm_list.remove(pm)
+                                    rm_list.remove(rm)
 
 
                 if (isHumanTime) and (Itemtime == True) and (human.pattern_idx == 3) and (Maskplus == True):
@@ -4080,17 +4090,17 @@ def gameplay_story5():
                                 isHumanAlive=False
 
 
-                    if (len(rm_list)==0): pass # 보스 공격 모션
+                    if (len(pm_list)==0): pass # 보스 공격 모션
                     else:
-                        for rm in rm_list:
-                            if (rm.x>=playerDino.rect.left)and(rm.x<=playerDino.rect.right)and(rm.y>playerDino.rect.top)and(rm.y<playerDino.rect.bottom):
+                        for pm in pm_list:
+                            if (pm.x>=playerDino.rect.left)and(pm.x<=playerDino.rect.right)and(pm.y>playerDino.rect.top)and(pm.y<playerDino.rect.bottom):
                                 print("공격에 맞음.")
                                 playerDino.collision_immune = True
                                 life -= 1
                                 collision_time = pygame.time.get_ticks()
                                 if life == 0:
                                     playerDino.isDead = True
-                                rm_list.remove(rm)
+                                pm_list.remove(pm)
                     if (isHumanTime) and (human.pattern_idx == 3):
                         if len(mask_items) < 2:
                             for l in last_obstacle:
