@@ -36,34 +36,34 @@ class Dino():
 
         # 해당하는 디노의 스킨을 가져와서 적용
         if type == 'ORIGINAL':
-            self.images, self.rect = load_sprite_sheet('dino_11_yellow.png', 11, 1, sizex, sizey, -1)
+            self.images, self.rect = load_sprite_sheet('dino_arrange.png', 11, 1, sizex, sizey, -1)
             # self.images, self.rect = load_sprite_sheet('pinkdino.png', 6, 1, sizex, sizey, -1)
-            self.images1, self.rect1 = load_sprite_sheet('dino_ducking.png', 2, 1, 59, sizey, -1)
+            self.images1, self.rect1 = load_sprite_sheet('dino_ducking.png', 6, 1, 59, sizey, -1)
             # self.images1, self.rect1 = load_sprite_sheet('pinkdino_ducking.png', 2, 1, 59, sizey, -1)
         elif type == 'PINK':
-            self.images, self.rect = load_sprite_sheet('pink_dino.png', 6, 1, sizex, sizey, -1)
-            self.images1, self.rect1 = load_sprite_sheet('pink_dino_ducking.png', 2, 1, 59, sizey, -1)
+            self.images, self.rect = load_sprite_sheet('dino_pink.png', 11, 1, sizex, sizey, -1)
+            self.images1, self.rect1 = load_sprite_sheet('dino_pink_ducking.png', 6, 1, 59, sizey, -1)
         elif type == 'RED':
-            self.images, self.rect = load_sprite_sheet('red_dino.png', 6, 1, sizex, sizey, -1)
-            self.images1, self.rect1 = load_sprite_sheet('red_dino_ducking.png', 2, 1, 59, sizey, -1)    
+            self.images, self.rect = load_sprite_sheet('dino_red.png', 11, 1, sizex, sizey, -1)
+            self.images1, self.rect1 = load_sprite_sheet('dino_red_ducking.png', 6, 1, 59, sizey, -1)    
         elif type == 'ORANGE':
-            self.images, self.rect = load_sprite_sheet('orange_dino.png', 6, 1, sizex, sizey, -1)
-            self.images1, self.rect1 = load_sprite_sheet('orange_dino_ducking.png', 2, 1, 59, sizey, -1) 
+            self.images, self.rect = load_sprite_sheet('dino_orange.png', 11, 1, sizex, sizey, -1)
+            self.images1, self.rect1 = load_sprite_sheet('dino_orange_ducking.png', 6, 1, 59, sizey, -1) 
         elif type == 'YELLOW':
-            self.images, self.rect = load_sprite_sheet('yellow_dino.png', 6, 1, sizex, sizey, -1)
-            self.images1, self.rect1 = load_sprite_sheet('yellow_dino_ducking.png', 2, 1, 59, sizey, -1)
+            self.images, self.rect = load_sprite_sheet('dino_yellow.png', 11, 1, sizex, sizey, -1)
+            self.images1, self.rect1 = load_sprite_sheet('dino_yellow_ducking.png', 6, 1, 59, sizey, -1)
         elif type == 'GREEN':
-            self.images, self.rect = load_sprite_sheet('green_dino.png', 6, 1, sizex, sizey, -1)
-            self.images1, self.rect1 = load_sprite_sheet('green_dino_ducking.png', 2, 1, 59, sizey, -1)
+            self.images, self.rect = load_sprite_sheet('dino_green.png', 11, 1, sizex, sizey, -1)
+            self.images1, self.rect1 = load_sprite_sheet('dino_green_ducking.png', 6, 1, 59, sizey, -1)
         elif type == 'PURPLE':
-            self.images, self.rect = load_sprite_sheet('purple_dino.png', 6, 1, sizex, sizey, -1)
-            self.images1, self.rect1 = load_sprite_sheet('purple_dino_ducking.png', 2, 1, 59, sizey, -1)  
+            self.images, self.rect = load_sprite_sheet('dino_purple.png', 11, 1, sizex, sizey, -1)
+            self.images1, self.rect1 = load_sprite_sheet('dino_purple_ducking.png', 6, 1, 59, sizey, -1)  
         elif type == 'BLACK':
-            self.images, self.rect = load_sprite_sheet('black_dino.png', 6, 1, sizex, sizey, -1)
-            self.images1, self.rect1 = load_sprite_sheet('black_dino_ducking.png', 2, 1, 59, sizey, -1)    
+            self.images, self.rect = load_sprite_sheet('dino_black.png', 11, 1, sizex, sizey, -1)
+            self.images1, self.rect1 = load_sprite_sheet('dino_black_ducking.png', 6, 1, 59, sizey, -1)    
         else: 
-            self.images, self.rect = load_sprite_sheet('dino.png', 6, 1, sizex, sizey, -1)
-            self.images1, self.rect1 = load_sprite_sheet('dino_ducking.png', 2, 1, 59, sizey, -1)
+            self.images, self.rect = load_sprite_sheet('dino_arrange.png', 11, 1, sizex, sizey, -1)
+            self.images1, self.rect1 = load_sprite_sheet('dino_ducking.png', 6, 1, 59, sizey, -1)
 
         self.rect.bottom = int(0.9*height)
         self.rect.left = width/15
@@ -84,7 +84,7 @@ class Dino():
 
         # 아이템 사용 상태
         self.Superglass = False
-        self.Umbrella = False
+        self.Sovel = False
 
         self.stand_pos_width = self.rect.width
         self.duck_pos_width = self.rect1.width
@@ -102,50 +102,71 @@ class Dino():
         if self.isJumping: 
             self.movement[1] = self.movement[1] + gravity # 움직임의 y값에 gravity값을 더해 점프 높이를 적용
 
-        # 2. index값 변경
-        if self.isJumping: 
-            if self.Superglass:
-                self.index=5
-            elif self.Umbrella:
-                self.index=8
-            else: self.index = 0
-        elif self.Superglass:
-            if self.counter % 5 == 0:
-                if self.index==6: self.index=7
-                elif self.index==7: self.index=6
-                else: self.index=6
-        elif self.Umbrella:
-            if self.counter % 5 == 0:
-                if self.index==9: self.index=10
-                elif self.index==10: self.index=9
-                else: self.index=9
-        elif self.isBlinking: 
-            if self.index == 0:
-                if self.counter % 400 == 399:
-                    self.index = (self.index + 1)%2
-            else:
-                if self.counter % 20 == 19:
-                    self.index = (self.index + 1)%2
-        elif self.isDucking: 
-            if self.counter % 5 == 0:
-                self.index = (self.index + 1)%2
-        else:
-            if self.counter % 5 == 0:
-                self.index = (self.index + 1)%2 + 2
+        # 2. Dino의 상황별 모션 구현
+        if self.Superglass: # 안경쓰고 있을 때
+            if self.isJumping: self.index = 5 # 뛰고있을 때
+            # 걸어갈 때
+            if self.isDucking: # 숙이고있으면
+                if self.counter % 5 == 0: 
+                    if self.index==2: self.index=3
+                    elif self.index==3: self.index=2
+                    else: self.index=2
+            else: # 서있으면
+                if self.counter % 5 == 0: 
+                    if self.index == 6: self.index=7
+                    elif self.index == 7: self.index=6
+                    else: self.index = 6
+
+        elif self.Sovel: # 삽들고 있을 때
+            if self.isJumping: self.index = 8 # 뛰고있을 때
+            # 걸어갈 때
+            if not self.isDucking: # 서있으면
+                if self.counter % 5 == 0:
+                    if self.index==9: self.index=10
+                    elif self.index==10: self.index=9
+                    else: self.index=9
+            else: # 숙이고있으면
+                if self.counter % 5 == 0:
+                    if self.index==4: self.index=5
+                    elif self.index==5: self.index=4
+                    else: self.index=4
+
+        # elif self.isBlinking: # 눈 깜빡이기
+        #     if self.index == 0:
+        #         if self.counter % 400 == 399:
+        #             self.index = 2
+        #     else:
+        #         if self.counter % 20 == 19:
+        #             self.index = 2
+
+        else: # 아무것도 안입고 있을 때
+            if self.isJumping: self.index = 0 # 뛰고있을 때
+             # 걸어갈 때
+            if not self.isDucking: # 서있으면
+                if self.counter % 5 == 0:
+                    if self.index==2: self.index=3
+                    elif self.index==3: self.index=2
+                    else: self.index=2
+            else: # 숙이고있으면
+                if self.counter % 5 == 0:
+                    if self.index==0: self.index=1
+                    elif self.index==1: self.index=0
+                    else: self.index=0
 
         if self.isDead: # 죽었을 경우
             self.index = 4
 
         if self.collision_immune:
-            if self.counter % 10 == 0:
-                self.index = 5
+            if self.counter % 10 == 0: self.index = 2
 
-        # 5. 
+        # 숙이고 있는 모션 구현
         if not self.isDucking:
-            self.image = self.images[self.index]
+            if self.counter % 5 == 0:
+                self.image = self.images[self.index]
             self.rect.width = self.stand_pos_width
         else:
-            self.image = self.images1[self.index % 2]
+            if self.counter % 5 == 0: 
+                self.image = self.images1[self.index]
             if self.collision_immune is True:
                 if self.counter % 5 == 0:
                     self.image = self.images[5]

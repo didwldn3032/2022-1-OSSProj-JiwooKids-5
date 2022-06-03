@@ -466,7 +466,7 @@ def ItemSelectMode():
                             item_story4=False
                             item_cnt-=1
                     if r_lets_btn_rect.collidepoint(x, y):
-                        gameplay_story5()
+                        gameplay_story1()
                     # if r_start_btn_rect.collidepoint(x, y):
                     #     gameplay_story1()
 
