@@ -420,7 +420,7 @@ def ItemSelectMode():
                             item_story4=False
                             item_cnt-=1
                     if r_lets_btn_rect.collidepoint(x, y):
-                        gameplay_story1()
+                        gameplay_story2()
                     # if r_start_btn_rect.collidepoint(x, y):
                     #     gameplay_story1()
 
@@ -1293,7 +1293,8 @@ def gameplay_story1():
                             jumpingx2=True
 
                         if event.key == pygame.K_d:
-                            Sunglass=True
+                            if item_story1 == True:
+                                Sunglass=True
 
                     if event.type == pygame.KEYUP:
                         if event.key == pygame.K_DOWN:
@@ -2073,7 +2074,8 @@ def gameplay_story2(): # 지진모드
                             jumpingx2=True
 
                         if event.key == pygame.K_d:
-                            Shovel = True
+                            if item_story2 == True:
+                                Shovel = True
                         
                         if event.key == pygame.K_ESCAPE:
                             paused = not paused
@@ -2138,9 +2140,8 @@ def gameplay_story2(): # 지진모드
                     h.movement[0] = -1 * gamespeed
                     if not playerDino.collision_immune:
                         if pygame.sprite.collide_mask(playerDino, h):
-                            if item_story2==True:
-                                if Shovel==True:
-                                    h.image.set_alpha(0)                      
+                            if Shovel==True:
+                                h.image.set_alpha(0)                      
                             else:
                                 playerDino.collision_immune = True
                                 life -= 5
@@ -2381,6 +2382,7 @@ def gameplay_story2(): # 지진모드
 def gameplay_story3():
     global resized_screen
     global high_score
+    global item_story3
     result = db.query_db("select score from user order by score desc;", one=True)
     if result is not None:
         high_score = result['score']
@@ -2503,7 +2505,8 @@ def gameplay_story3():
                             bk=0
 
                         if event.key == pygame.K_d:
-                            Umbrella = True
+                            if item_story3 == True:
+                                Umbrella = True
 
                     if event.type == pygame.KEYUP:
                         if event.key == pygame.K_DOWN:
@@ -2767,7 +2770,7 @@ def gameplay_story3():
                         # print("x: ",pm.x,"y: ",pm.y)
                         for pm in pm_list:
                             if (pm.y>=um.y)and(pm.x<=um.x+35)and(pm.x>=um.x-35):
-                                pm.set_alpha(0)
+                                pm.img.set_alpha(0)
 
 
                 else:
@@ -2949,6 +2952,7 @@ def gameplay_story3():
 def gameplay_story4():
     global resized_screen
     global high_score
+    global item_story4
     result = db.query_db("select score from user order by score desc;", one=True)
     if result is not None:
         high_score = result['score']
@@ -3074,7 +3078,8 @@ def gameplay_story4():
                             bk=0
 
                         if event.key == pygame.K_d:
-                            Maskplus = True
+                            if item_story4 == True:
+                                Maskplus = True
 
                     if event.type == pygame.KEYUP:
                         if event.key == pygame.K_DOWN:
@@ -3520,7 +3525,11 @@ def gameplay_story4():
 def gameplay_story5():
     global resized_screen
     global high_score
-    
+    global item_story1
+    global item_story2
+    global item_story3
+    global item_story4
+
     result = db.query_db("select score from user order by score desc;", one=True)
     if result is not None:
         high_score = result['score']
