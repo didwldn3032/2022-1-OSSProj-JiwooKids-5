@@ -72,7 +72,7 @@ checkPoint_sound = pygame.mixer.Sound('sprites/checkPoint.wav')
 # pygame.mixer.music.load('sprites/t-rex_bgm1.mp3')
 
 
-dino_size = [44, 47]
+dino_size = [44, 60]
 object_size = [40, 40]
 ptera_size = [46, 40]
 collision_immune_time = 500
@@ -122,8 +122,9 @@ def load_sprite_sheet(
         colorkey = None,
         ):
     fullname = os.path.join('sprites', sheetname)
-    sheet = pygame.image.load(fullname)
-    sheet = sheet.convert()
+    # sheet = pygame.image.load(fullname)
+    # sheet = sheet.convert()
+    sheet, sheet_rect = alpha_image(sheetname, -1, -1, -1)
 
     sheet_rect = sheet.get_rect()
 
@@ -254,3 +255,20 @@ def disp_store_buttons(btn_restart, btn_save, btn_exit, btn_back, btn_true):
     screen.blit(btn_back, btn_back_rect)
     screen.blit(btn_true, btn_true_rect)
     # screen.blit(btn_start, btn_start_rect)
+
+def disp_ind_img(index, image):
+    width_offset=0.2
+    image_rect = image.get_rect()
+    if index==0:
+        image_rect.centerx = width * 0.2
+        image_rect.centery = height * 0.6
+    elif index==1:
+        image_rect.centerx = width * (0.2 + width_offset)
+        image_rect.centery = height * 0.6
+    elif index==2:
+        image_rect.centerx = width * (0.2 + 2 * width_offset)
+        image_rect.centery = height * 0.6
+    elif index==3:
+        image_rect.centerx = width * (0.2 + 3 * width_offset)
+        image_rect.centery = height * 0.6
+    screen.blit(image, image_rect)
