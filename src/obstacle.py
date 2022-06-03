@@ -404,13 +404,13 @@ class Human(pygame.sprite.Sprite):
         self.isAlive=True
         self.pattern_idx=0
 
-        self.pattern0_time=200
+        self.pattern0_time=1000
         self.pattern0_counter=0
-        self.pattern1_time=200
+        self.pattern1_time=1000
         self.pattern1_counter = 0
-        self.pattern2_time=200
+        self.pattern2_time=1000
         self.pattern2_counter = 0
-        self.pattern3_time=200
+        self.pattern3_time=1000
         self.pattern3_counter = 0
 
 
