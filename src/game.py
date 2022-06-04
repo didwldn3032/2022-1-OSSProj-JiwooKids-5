@@ -3654,6 +3654,7 @@ def gameplay_story5():
     pm_pattern3_count = 0 # 패턴 3 시간
     human_appearance_score = 100
     Umbrella_time=0
+    Umbrella_cnt=2
 
     jumpingx2 = False
 
@@ -3702,7 +3703,7 @@ def gameplay_story5():
                                     Sunglass = True
                                 if (item_story2 == True) and (human.pattern_idx == 1):
                                     Shovel = True
-                                if (item_story3 == True) and (human.pattern_idx == 2):
+                                if (item_story3 == True) and (human.pattern_idx == 2) and (Umbrella_cnt!=0):
                                     Umbrella = True
                                 if (item_story4 == True) and (human.pattern_idx == 3):
                                     Maskplus = True
@@ -3739,10 +3740,6 @@ def gameplay_story5():
                         checkscrsize(event.w, event.h)
 
             if not paused:
-                print("item_story3",item_story3)
-                print("패턴",human.pattern_idx)
-                print("우산",Umbrella)
-
                 if goLeft:
                     if playerDino.rect.left < 0:
                         playerDino.rect.left = 0
@@ -4114,6 +4111,11 @@ def gameplay_story5():
                 um.x = (playerDino.rect.left+playerDino.rect.right)/2-40
                 um.y = playerDino.rect.bottom - 70
                 um.move = 5
+                if (Umbrella_time!=1) and (Umbrella_time % 300 == 1):
+                    Umbrella_time=0
+                    Umbrella=False
+                    Umbrella_cnt-=1
+
 
                 if (isHumanTime):
                     if (Itemtime == True) and (human.pattern_idx == 2) and (Umbrella == True):
