@@ -3605,7 +3605,7 @@ def gameplay_story5():
     Maskplus = False
     Itemtime = False
 
-    life = 5
+    life = 50
     paused = False
     playerDino = Dino(dino_size[0], dino_size[1], type = dino_type[type_idx])
     new_ground = Ground(-1 * gamespeed)
@@ -3653,6 +3653,7 @@ def gameplay_story5():
     pm_pattern2_count = 0 # 패턴 2 시간
     pm_pattern3_count = 0 # 패턴 3 시간
     human_appearance_score = 100
+    Umbrella_time=0
 
     jumpingx2 = False
 
@@ -3695,15 +3696,17 @@ def gameplay_story5():
                             space_go=True
                             bk=0
                         if event.key == pygame.K_d:
-                            Itemtime=True
-                            if item_story1 == True:
-                                Sunglass = True
-                            if item_story2 == True:
-                                Shovel = True
-                            if item_story3 == True:
-                                Umbrella = True
-                            if item_story4 == True:
-                                Maskplus = True
+                            if (isHumanTime):
+                                Itemtime=True
+                                if (item_story1 == True) and (human.pattern_idx == 0):
+                                    Sunglass = True
+                                if (item_story2 == True) and (human.pattern_idx == 1):
+                                    Shovel = True
+                                if (item_story3 == True) and (human.pattern_idx == 2):
+                                    Umbrella = True
+                                if (item_story4 == True) and (human.pattern_idx == 3):
+                                    Maskplus = True
+                    
 
                     if event.type == pygame.KEYUP:
                         if event.key == pygame.K_DOWN:
@@ -3736,6 +3739,10 @@ def gameplay_story5():
                         checkscrsize(event.w, event.h)
 
             if not paused:
+                print("item_story3",item_story3)
+                print("패턴",human.pattern_idx)
+                print("우산",Umbrella)
+
                 if goLeft:
                     if playerDino.rect.left < 0:
                         playerDino.rect.left = 0
@@ -4107,9 +4114,10 @@ def gameplay_story5():
                 um.x = (playerDino.rect.left+playerDino.rect.right)/2-40
                 um.y = playerDino.rect.bottom - 70
                 um.move = 5
+
                 if (isHumanTime):
                     if (Itemtime == True) and (human.pattern_idx == 2) and (Umbrella == True):
-                        
+                        Umbrella_time+=1
                         if (len(rm_list)==0):
                             pass
                         else:
@@ -4281,7 +4289,8 @@ def gameplay_story5():
                     if (isHumanTime):
                         if (Itemtime == True) and (human.pattern_idx == 2) and (Umbrella == True):
                             um.show()
-
+                    
+                    
                     playerDino.draw()
                     resized_screen.blit(
                         pygame.transform.scale(screen, (resized_screen.get_width(), resized_screen.get_height())),

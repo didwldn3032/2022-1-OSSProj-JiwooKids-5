@@ -431,7 +431,7 @@ class Human(pygame.sprite.Sprite):
         self.movement[0] = 0
         self.image = self.images[1]
         if self.pattern0_counter % self.pattern0_time == 0: # 200초가 넘어간 경우
-            self.pattern_idx = 1
+            self.pattern_idx = 2
 
     def pattern1(self):
         self.pattern1_counter += 1
@@ -448,14 +448,14 @@ class Human(pygame.sprite.Sprite):
         self.movement[0] = 0
         self.image = self.images[1]
         if self.pattern2_counter % self.pattern2_time == 0: # 200초가 넘어간 경우
-            self.pattern_idx = 3
+            self.pattern_idx = 2
 
     def pattern3(self):
         self.pattern3_counter += 1
         self.movement[0] = 0
         self.image = self.images[1]
         if self.pattern3_counter % self.pattern3_time == 0: # 200초가 넘어간 경우
-            self.pattern_idx = 0
+            self.pattern_idx = 2
 
     def update(self):
         self.counter=self.counter+1
