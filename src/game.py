@@ -344,8 +344,8 @@ def ItemSelectMode():
     alpha_back_rect.left = -ALPHA_MOVE
 
     # 버튼 이미지
-    sung_btn_image, sung_btn_rect = alpha_image('sunglass.png', 150, 150, -1)
-    r_sung_btn_image, r_sung_btn_rect = alpha_image(*resize('sunglass.png', 150, 150, -1))
+    sung_btn_image, sung_btn_rect = alpha_image('Superglass.png', 150, 150, -1)
+    r_sung_btn_image, r_sung_btn_rect = alpha_image(*resize('Superglass.png', 150, 150, -1))
     shov_btn_image, shov_btn_rect = alpha_image('shovel.png', 150, 150, -1)
     r_shov_btn_image, r_shov_btn_rect = alpha_image(*resize('shovel.png', 150, 150, -1))
     umbr_btn_image, umbr_btn_rect = alpha_image('umbrella.png', 150, 150, -1)
@@ -466,16 +466,16 @@ def ItemSelectMode():
                             item_story4=False
                             item_cnt-=1
                     if r_lets_btn_rect.collidepoint(x, y):
-                        gameplay_story5()
+                        gameplay_story2()
                     # if r_start_btn_rect.collidepoint(x, y):
                     #     gameplay_story1()
 
         if item_story1 == False:
-            sung_btn_image, sung_btn_rect = alpha_image('sunglass.png', 150, 150, -1)
-            r_sung_btn_image, r_sung_btn_rect = alpha_image(*resize('sunglass.png', 150, 150, -1))
+            sung_btn_image, sung_btn_rect = alpha_image('Superglass.png', 150, 150, -1)
+            r_sung_btn_image, r_sung_btn_rect = alpha_image(*resize('Superglass.png', 150, 150, -1))
         else:
-            sung_btn_image, sung_btn_rect = alpha_image('sunglasson.png', 150, 150, -1)
-            r_sung_btn_image, r_sung_btn_rect = alpha_image(*resize('sunglasson.png', 150, 150, -1))
+            sung_btn_image, sung_btn_rect = alpha_image('Superglasson.png', 150, 150, -1)
+            r_sung_btn_image, r_sung_btn_rect = alpha_image(*resize('Superglasson.png', 150, 150, -1))
         
         if item_story2 == False:
             shov_btn_image, shov_btn_rect = alpha_image('shovel.png', 150, 150, -1)
@@ -1224,6 +1224,7 @@ Shovel = False #삽
 def gameplay_story1():
     global item_story1
     Sunglass = False #선글라스
+    Sunglass_cnt=2
     global resized_screen
     global high_score
     result = db.query_db("select score from user order by score desc;", one=True)
@@ -1338,7 +1339,7 @@ def gameplay_story1():
                         if event.key == pygame.K_s:
                             jumpingx2=True
 
-                        if event.key == pygame.K_d:
+                        if (event.key == pygame.K_d) and (Sunglass_cnt!=0):
                             if item_story1 == True:
                                 Sunglass=True
 
@@ -1355,10 +1356,6 @@ def gameplay_story1():
                         if event.key == pygame.K_s:
                             jumpingx2=False
                         
-                        if event.key == pygame.K_d:
-                            if item_story1 == True:
-                                Sunglass=True
-
                     if event.type == pygame.MOUSEBUTTONDOWN:
                         if pygame.mouse.get_pressed() == (1, 0, 0) and playerDino.rect.bottom == int(0.9 * height):
                             # (mouse left button, wheel button, mouse right button)
@@ -1431,8 +1428,6 @@ def gameplay_story1():
                     pygame.display.update()
 
             if not paused:
-                print(item_story1)
-                print(Sunglass)
                 if goLeft:
                     if playerDino.rect.left < 0:
                         playerDino.rect.left = 0
@@ -1455,6 +1450,7 @@ def gameplay_story1():
                         playerDino.Superglass = True
                         if playerDino.score % 50 ==0:
                             Sunglass=False
+                            Sunglass_cnt-=1
                             playerDino.Superglass = False
                         for s in stones:
                             s.movement[0] = -1 * gamespeed
@@ -2030,6 +2026,8 @@ def gameplay_story2(): # 지진모드
     global item_story2
     #아이템 관련 변수 설정
     Shovel = False #삽
+    Shovel_cnt=2
+    Shovel_time=0
     global resized_screen
     global high_score
     result = db.query_db("select score from user order by score desc;", one=True)
@@ -2127,7 +2125,7 @@ def gameplay_story2(): # 지진모드
                             jumpingx2=True
 
                         if event.key == pygame.K_d:
-                            if item_story2 == True:
+                            if (item_story2 == True) and (Shovel_cnt!=0):
                                 Shovel = True
                         
                         if event.key == pygame.K_ESCAPE:
@@ -2336,6 +2334,14 @@ def gameplay_story2(): # 지진모드
                 stones.update()
                 holes.update()
 
+                if (Shovel==True):
+                    Shovel_time+=1
+
+                if (Shovel_time!=1) and (Shovel_time % 300 == 1):
+                    Shovel_time=0
+                    Shovel=False
+                    Shovel_cnt-=1
+
                 if pygame.display.get_surface() != None:
                     new_ground.draw()
                     clouds.draw(screen)
@@ -2450,6 +2456,8 @@ def gameplay_story3():
     gameClear = False
     gameQuit = False
     Umbrella = False
+    Umbrella_time=0
+    Umbrella_cnt=2
     ###
     life = 5
     ###
@@ -2561,8 +2569,9 @@ def gameplay_story3():
                             bk=0
 
                         if event.key == pygame.K_d:
-                            if item_story3 == True:
+                            if (item_story3 == True) and (Umbrella_cnt!=0):
                                 Umbrella = True
+                           
 
                     if event.type == pygame.KEYUP:
                         if event.key == pygame.K_DOWN:
@@ -2811,7 +2820,13 @@ def gameplay_story3():
                 OBJECT_REFRESH_LINE = width * 0.8
                 MAGIC_NUM = 10
 
+                if (Umbrella_time!=1) and (Umbrella_time % 300 == 1):
+                    Umbrella_time=0
+                    Umbrella=False
+                    Umbrella_cnt-=1
+
                 if Umbrella == True:
+                    Umbrella_time+=1
                     um=obj()
                     um.put_img("./sprites/umbrella_item.png")
                     um.change_size(70,70)
@@ -3019,6 +3034,7 @@ def gameplay_story4():
     gameClear = False
     gameQuit = False
     Maskplus = False
+    Maskplus_cnt=2
     ###
     life = 5
     ###
@@ -3133,8 +3149,9 @@ def gameplay_story4():
                             bk=0
 
                         if event.key == pygame.K_d:
-                            if item_story4 == True:
+                            if (item_story4 == True) and (Maskplus_cnt!=0):
                                 Maskplus = True
+
 
                     if event.type == pygame.KEYUP:
                         if event.key == pygame.K_DOWN:
@@ -3386,6 +3403,7 @@ def gameplay_story4():
                 if Maskplus == True: 
                     playerDino.score2 = 0
                     Maskplus = False
+                    Maskplus_cnt-=1
 
 
                 if (len(pm_list)==0):
@@ -3605,7 +3623,14 @@ def gameplay_story5():
     Maskplus = False
     Itemtime = False
 
-    life = 50
+    Sunglass_cnt=2
+    Shovel_time=0
+    Shovel_cnt=2
+    Umbrella_time=0
+    Umbrella_cnt=2
+    Maskplus_cnt=2
+
+    life = 5
     paused = False
     playerDino = Dino(dino_size[0], dino_size[1], type = dino_type[type_idx])
     new_ground = Ground(-1 * gamespeed)
@@ -3653,9 +3678,7 @@ def gameplay_story5():
     pm_pattern2_count = 0 # 패턴 2 시간
     pm_pattern3_count = 0 # 패턴 3 시간
     human_appearance_score = 100
-    Umbrella_time=0
-    Umbrella_cnt=2
-
+    
     jumpingx2 = False
 
     while not gameQuit:
@@ -3699,13 +3722,13 @@ def gameplay_story5():
                         if event.key == pygame.K_d:
                             if (isHumanTime):
                                 Itemtime=True
-                                if (item_story1 == True) and (human.pattern_idx == 0):
+                                if (item_story1 == True) and (human.pattern_idx == 0) and (Sunglass_cnt!=0):
                                     Sunglass = True
-                                if (item_story2 == True) and (human.pattern_idx == 1):
+                                if (item_story2 == True) and (human.pattern_idx == 1) and (Shovel_cnt!=0):
                                     Shovel = True
                                 if (item_story3 == True) and (human.pattern_idx == 2) and (Umbrella_cnt!=0):
                                     Umbrella = True
-                                if (item_story4 == True) and (human.pattern_idx == 3):
+                                if (item_story4 == True) and (human.pattern_idx == 3) and (Maskplus_cnt!=0):
                                     Maskplus = True
                     
 
@@ -3817,6 +3840,7 @@ def gameplay_story5():
                             if (playerDino.score%100) <50:
                                 playerDino.Superglass=False
                                 Sunglass=False
+                                Sunglass_cnt-=1
                             for c in cacti:
                                 c.image.set_alpha(255)
                                 c.movement[0] = -1 * gamespeed
@@ -4145,6 +4169,7 @@ def gameplay_story5():
                 if (isHumanTime) and (Itemtime == True) and (human.pattern_idx == 3) and (Maskplus == True):
                     playerDino.score2 = 0
                     Maskplus = False
+                    Maskplus_cnt-=1
 
                 if (isHumanAlive) and (playerDino.score> human_appearance_score):
                     isHumanTime = True
@@ -4248,6 +4273,18 @@ def gameplay_story5():
                 # 보스몬스터 타임이면,
                 if isHumanTime:
                     human.update()
+                
+                print(Shovel)
+                print(Shovel_cnt)
+                print(Shovel_time)
+
+                if (Shovel==True):
+                    Shovel_time+=1
+
+                if (Shovel_time!=1) and (Shovel_time % 300 == 1):
+                    Shovel_time=0
+                    Shovel=False
+                    Shovel_cnt-=1
 
                 if pygame.display.get_surface() != None:
                     screen.fill(background_col)
