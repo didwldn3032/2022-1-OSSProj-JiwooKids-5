@@ -466,7 +466,7 @@ def ItemSelectMode():
                             item_story4=False
                             item_cnt-=1
                     if r_lets_btn_rect.collidepoint(x, y):
-                        gameplay_story2()
+                        gameplay_story1()
                     # if r_start_btn_rect.collidepoint(x, y):
                     #     gameplay_story1()
 
@@ -2951,7 +2951,7 @@ def gameplay_story3():
 
                 counter = (counter + 1)
 
-                if playerDino.score >= 50:
+                if playerDino.score >= 500:
                     gameClear = True
                     break
 
@@ -3104,7 +3104,7 @@ def gameplay_story4():
     while not gameQuit:
         while startMenu:
             pass
-        while not gameOver and playerDino.score <= 50:
+        while not gameOver and playerDino.score <= 500:
             if pygame.display.get_surface() == None:
                 print("Couldn't load display surface")
                 gameQuit = True
@@ -3523,7 +3523,7 @@ def gameplay_story4():
 
                 counter = (counter + 1)
 
-                if playerDino.score >= 50:
+                if playerDino.score >= 500:
                     gameClear = True
                     break
 
@@ -4619,7 +4619,7 @@ def Congratulations():
 
     # 배경 이미지
     # back_store, back_store_rect = load_image('intro_bg.png', width, height)
-    alpha_back, alpha_back_rect = alpha_image('Earth_bg.png', width + ALPHA_MOVE, height)
+    alpha_back, alpha_back_rect = alpha_image('Congratulations.png', width + ALPHA_MOVE, height)
     alpha_back_rect.left = -ALPHA_MOVE
 
     # BUTTON IMG LOAD
