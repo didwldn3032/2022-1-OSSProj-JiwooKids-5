@@ -36,34 +36,34 @@ class Dino():
 
         # 해당하는 디노의 스킨을 가져와서 적용
         if type == 'ORIGINAL':
-            self.images, self.rect = load_sprite_sheet('dino_arrange.png', 11, 1, sizex, sizey, -1)
+            self.images, self.rect = load_sprite_sheet('dino_arrange.png', 14, 1, sizex, sizey, -1)
             # self.images, self.rect = load_sprite_sheet('pinkdino.png', 6, 1, sizex, sizey, -1)
-            self.images1, self.rect1 = load_sprite_sheet('dino_ducking.png', 6, 1, 59, sizey, -1)
+            self.images1, self.rect1 = load_sprite_sheet('dino_ducking.png', 8, 1, 59, sizey, -1)
             # self.images1, self.rect1 = load_sprite_sheet('pinkdino_ducking.png', 2, 1, 59, sizey, -1)
         elif type == 'PINK':
-            self.images, self.rect = load_sprite_sheet('dino_pink.png', 11, 1, sizex, sizey, -1)
-            self.images1, self.rect1 = load_sprite_sheet('dino_pink_ducking.png', 6, 1, 59, sizey, -1)
+            self.images, self.rect = load_sprite_sheet('dino_pink.png', 14, 1, sizex, sizey, -1)
+            self.images1, self.rect1 = load_sprite_sheet('dino_pink_ducking.png', 8, 1, 59, sizey, -1)
         elif type == 'RED':
-            self.images, self.rect = load_sprite_sheet('dino_red.png', 11, 1, sizex, sizey, -1)
-            self.images1, self.rect1 = load_sprite_sheet('dino_red_ducking.png', 6, 1, 59, sizey, -1)    
+            self.images, self.rect = load_sprite_sheet('dino_red.png', 14, 1, sizex, sizey, -1)
+            self.images1, self.rect1 = load_sprite_sheet('dino_red_ducking.png', 8, 1, 59, sizey, -1)    
         elif type == 'ORANGE':
-            self.images, self.rect = load_sprite_sheet('dino_orange.png', 11, 1, sizex, sizey, -1)
-            self.images1, self.rect1 = load_sprite_sheet('dino_orange_ducking.png', 6, 1, 59, sizey, -1) 
+            self.images, self.rect = load_sprite_sheet('dino_orange.png', 14, 1, sizex, sizey, -1)
+            self.images1, self.rect1 = load_sprite_sheet('dino_orange_ducking.png', 8, 1, 59, sizey, -1) 
         elif type == 'YELLOW':
-            self.images, self.rect = load_sprite_sheet('dino_yellow.png', 11, 1, sizex, sizey, -1)
-            self.images1, self.rect1 = load_sprite_sheet('dino_yellow_ducking.png', 6, 1, 59, sizey, -1)
+            self.images, self.rect = load_sprite_sheet('dino_yellow.png', 14, 1, sizex, sizey, -1)
+            self.images1, self.rect1 = load_sprite_sheet('dino_yellow_ducking.png', 8, 1, 59, sizey, -1)
         elif type == 'GREEN':
-            self.images, self.rect = load_sprite_sheet('dino_green.png', 11, 1, sizex, sizey, -1)
-            self.images1, self.rect1 = load_sprite_sheet('dino_green_ducking.png', 6, 1, 59, sizey, -1)
+            self.images, self.rect = load_sprite_sheet('dino_green.png', 14, 1, sizex, sizey, -1)
+            self.images1, self.rect1 = load_sprite_sheet('dino_green_ducking.png', 8, 1, 59, sizey, -1)
         elif type == 'PURPLE':
-            self.images, self.rect = load_sprite_sheet('dino_purple.png', 11, 1, sizex, sizey, -1)
-            self.images1, self.rect1 = load_sprite_sheet('dino_purple_ducking.png', 6, 1, 59, sizey, -1)  
+            self.images, self.rect = load_sprite_sheet('dino_purple.png', 14, 1, sizex, sizey, -1)
+            self.images1, self.rect1 = load_sprite_sheet('dino_purple_ducking.png', 8, 1, 59, sizey, -1)  
         elif type == 'BLACK':
-            self.images, self.rect = load_sprite_sheet('dino_black.png', 11, 1, sizex, sizey, -1)
-            self.images1, self.rect1 = load_sprite_sheet('dino_black_ducking.png', 6, 1, 59, sizey, -1)    
+            self.images, self.rect = load_sprite_sheet('dino_black.png', 14, 1, sizex, sizey, -1)
+            self.images1, self.rect1 = load_sprite_sheet('dino_black_ducking.png', 8, 1, 59, sizey, -1)    
         else: 
-            self.images, self.rect = load_sprite_sheet('dino_arrange.png', 11, 1, sizex, sizey, -1)
-            self.images1, self.rect1 = load_sprite_sheet('dino_ducking.png', 6, 1, 59, sizey, -1)
+            self.images, self.rect = load_sprite_sheet('dino_arrange.png', 14, 1, sizex, sizey, -1)
+            self.images1, self.rect1 = load_sprite_sheet('dino_ducking.png', 8, 1, 59, sizey, -1)
 
         self.rect.bottom = int(0.9*height)
         self.rect.left = width/15
@@ -86,6 +86,7 @@ class Dino():
         # 아이템 사용 상태
         self.Superglass = False
         self.Sovel = False
+        self.Mask = False
 
         self.stand_pos_width = self.rect.width
         self.duck_pos_width = self.rect1.width
@@ -131,6 +132,20 @@ class Dino():
                     if self.index==4: self.index=5
                     elif self.index==5: self.index=4
                     else: self.index=4
+
+        elif self.Mask: # 마스크 쓰고 있을 때
+            if self.isJumping: self.index = 11 # 뛰고있을 때
+            # 걸어갈 때
+            if not self.isDucking: # 서있으면
+                if self.counter % 5 == 0:
+                    if self.index==12: self.index=13
+                    elif self.index==13: self.index=12
+                    else: self.index=12
+            else: # 숙이고있으면
+                if self.counter % 5 == 0:
+                    if self.index==6: self.index=7
+                    elif self.index==7: self.index=6
+                    else: self.index=6
 
         # elif self.isBlinking: # 눈 깜빡이기
         #     if self.index == 0:
