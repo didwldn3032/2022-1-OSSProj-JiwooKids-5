@@ -466,7 +466,7 @@ def ItemSelectMode():
                             item_story4=False
                             item_cnt-=1
                     if r_lets_btn_rect.collidepoint(x, y):
-                        gameplay_story2()
+                        gameplay_story4()
                     # if r_start_btn_rect.collidepoint(x, y):
                     #     gameplay_story1()
 
@@ -3634,7 +3634,7 @@ def gameplay_story5():
     paused = False
     playerDino = Dino(dino_size[0], dino_size[1], type = dino_type[type_idx])
     new_ground = Ground(-1 * gamespeed)
-    scb = Scoreboard()
+    s_scb = Story_Scoreboard()
     heart = HeartIndicator(life)
     boss = boss_heart()
     m_time = Mask_time()
@@ -4262,7 +4262,7 @@ def gameplay_story5():
                 clouds.update()
                 holes.update()
                 new_ground.update()
-                scb.update(playerDino.score, high_score)
+                s_scb.update(playerDino.score)
                 boss.update(human.hp)
                 heart.update(life)
                 mask_items.update()
@@ -4293,7 +4293,7 @@ def gameplay_story5():
                     screen.blit(dust_image, dust_rect)
                     new_ground.draw()
                     clouds.draw(screen)
-                    scb.draw()
+                    s_scb.draw()
                     boss.draw()
                     heart.draw()
                     cacti.draw(screen)
@@ -4397,11 +4397,11 @@ def gameplay_story5():
                     if event.type == pygame.VIDEORESIZE:
                         checkscrsize(event.w, event.h)
 
-            scb.update(playerDino.score,high_score)
+            s_scb.update(playerDino.score)
             boss.update(human.hp)
             if pygame.display.get_surface() != None:
                 disp_gameOver_msg(gameover_image)
-                scb.draw()
+                s_scb.draw()
                 boss.draw()
                 resized_screen.blit(
                     pygame.transform.scale(screen, (resized_screen.get_width(), resized_screen.get_height())),

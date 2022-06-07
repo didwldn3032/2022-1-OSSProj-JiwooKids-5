@@ -201,7 +201,7 @@ class Mask_time:
         self.pos_x = 0
         self.pos_y = 0
         if x == -1:
-            self.pos_x = width * 0.59
+            self.pos_x = width * 0.63
         else:
             self.pos_x = x
         if y == -1:
