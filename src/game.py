@@ -2951,7 +2951,7 @@ def gameplay_story3():
 
                 counter = (counter + 1)
 
-                if playerDino.score >= 50:
+                if playerDino.score >= 500:
                     gameClear = True
                     break
 
@@ -3104,7 +3104,7 @@ def gameplay_story4():
     while not gameQuit:
         while startMenu:
             pass
-        while not gameOver and playerDino.score <= 50:
+        while not gameOver and playerDino.score <= 500:
             if pygame.display.get_surface() == None:
                 print("Couldn't load display surface")
                 gameQuit = True
@@ -3523,7 +3523,7 @@ def gameplay_story4():
 
                 counter = (counter + 1)
 
-                if playerDino.score >= 50:
+                if playerDino.score >= 500:
                     gameClear = True
                     break
 
@@ -3906,6 +3906,8 @@ def gameplay_story5():
                     if item_story2==True:
                         if Shovel==True:
                             playerDino.Sovel = True
+                        else:
+                            playerDino.Sovel = False
                     # 1. 보스의 임의 점프
                     JUMP_MAGIC = 50
                     print(str(human.rect.bottom) + " vs "+str(int(0.9 * height)))
@@ -3950,10 +3952,6 @@ def gameplay_story5():
                 #### 보스 몬스터 패턴 2 - 산성비 모드
 
                 if (isHumanTime) and (human.pattern_idx == 2):
-                    if Shovel==True:
-                        playerDino.Sovel=True
-                    else:
-                        playerDino.Sovel=False
                     dustnum = 0
                     # 1. 배경 이미지 처리
                     # if (playerDino.score%100) < 50:
@@ -4016,6 +4014,10 @@ def gameplay_story5():
 
                 #### 보스 몬스터 패턴 3 - 바이러스 모드
                 if (isHumanTime) and (human.pattern_idx == 3):
+                    if Shovel==True:
+                        Shovel=False
+                        playerDino.Sovel=False
+
                     dustnum = 0
                     # 1. 배경 이미지 처리
                     # if (playerDino.score%100) < 50:
@@ -4096,7 +4098,17 @@ def gameplay_story5():
                         if pygame.sprite.collide_mask(playerDino, h):
                             if item_story2==True:
                                 if Shovel==True:
+                                    playerDino.Sovel=True
                                     h.image.set_alpha(0)  
+                                else:
+                                    playerDino.Sovel=False
+                                    playerDino.collision_immune = True
+                                    life -= 5
+                                    collision_time = pygame.time.get_ticks()
+                                    if life <= 0:
+                                        playerDino.isDead = True
+                                    if pygame.mixer.get_init() is not None:
+                                        die_sound.play()
                             else: 
                                 playerDino.collision_immune = True
                                 life -= 5
@@ -4285,6 +4297,8 @@ def gameplay_story5():
                     Shovel_time=0
                     Shovel=False
                     Shovel_cnt-=1
+                    playerDino.Sovel=True
+                    
 
                 if pygame.display.get_surface() != None:
                     screen.fill(background_col)
@@ -4619,7 +4633,7 @@ def Congratulations():
 
     # 배경 이미지
     # back_store, back_store_rect = load_image('intro_bg.png', width, height)
-    alpha_back, alpha_back_rect = alpha_image('Earth_bg.png', width + ALPHA_MOVE, height)
+    alpha_back, alpha_back_rect = alpha_image('Congratulations.png', width + ALPHA_MOVE, height)
     alpha_back_rect.left = -ALPHA_MOVE
 
     # BUTTON IMG LOAD
