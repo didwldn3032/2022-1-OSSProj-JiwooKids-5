@@ -1247,6 +1247,7 @@ def gameplay_story1():
     #먼지이미지
     dust_image,dust_rect = load_image('dust.png',800,400,-1)
 
+
     #불투명도
     dustnum=0
     dust_image.set_alpha(dustnum)
@@ -1444,6 +1445,10 @@ def gameplay_story1():
                     if  playerDino.rect.bottom == int(height * 0.9):
                         playerDino.isJumping = True
                         playerDino.movement[1] = -1 * playerDino.superJumpSpeed
+
+        
+
+
 
                 if item_story1==True:
                     if Sunglass == True:
@@ -3623,21 +3628,34 @@ def gameplay_story5():
     Maskplus = False
     Itemtime = False
 
-    Sunglass_cnt=2
+    if item_story1==True:
+        Sunglass_cnt=2
+    else:
+        Sunglass_cnt=0
     Shovel_time=0
-    Shovel_cnt=2
+    if item_story2==True:
+        Shovel_cnt=2
+    else:
+        Shovel_cnt=0
     Umbrella_time=0
-    Umbrella_cnt=2
-    Maskplus_cnt=2
+    if item_story3==True:
+        Umbrella_cnt=2
+    else:
+        Umbrella_cnt=0
+    if item_story4==True:
+        Maskplus_cnt=2
+    else:
+        Maskplus_cnt=0
 
     life = 5
     paused = False
     playerDino = Dino(dino_size[0], dino_size[1], type = dino_type[type_idx])
     new_ground = Ground(-1 * gamespeed)
-    scb = Scoreboard()
+    s_scb = Story_Scoreboard()
     heart = HeartIndicator(life)
     boss = boss_heart()
     m_time = Mask_time()
+    item_s = Item_status()
     counter = 0
 
     cacti = pygame.sprite.Group()
@@ -4274,11 +4292,12 @@ def gameplay_story5():
                 clouds.update()
                 holes.update()
                 new_ground.update()
-                scb.update(playerDino.score, high_score)
+                s_scb.update(playerDino.score)
                 boss.update(human.hp)
                 heart.update(life)
                 mask_items.update()
                 m_time.update(playerDino.score2)
+                item_s.update(Sunglass_cnt,Shovel_cnt,Umbrella_cnt,Maskplus_cnt)
                 if (human.pattern_idx != 3):
                     playerDino.score2 = 0
 
@@ -4286,9 +4305,6 @@ def gameplay_story5():
                 if isHumanTime:
                     human.update()
                 
-                print(Shovel)
-                print(Shovel_cnt)
-                print(Shovel_time)
 
                 if (Shovel==True):
                     Shovel_time+=1
@@ -4307,12 +4323,13 @@ def gameplay_story5():
                     screen.blit(dust_image, dust_rect)
                     new_ground.draw()
                     clouds.draw(screen)
-                    scb.draw()
+                    s_scb.draw()
                     boss.draw()
                     heart.draw()
                     cacti.draw(screen)
                     holes.draw(screen)
                     fire_cacti.draw(screen)
+                    item_s.draw()
                     if (isHumanTime) and (human.pattern_idx == 3):
                         mask_items.draw(screen)
                         m_time.draw()
@@ -4411,11 +4428,11 @@ def gameplay_story5():
                     if event.type == pygame.VIDEORESIZE:
                         checkscrsize(event.w, event.h)
 
-            scb.update(playerDino.score,high_score)
+            s_scb.update(playerDino.score)
             boss.update(human.hp)
             if pygame.display.get_surface() != None:
                 disp_gameOver_msg(gameover_image)
-                scb.draw()
+                s_scb.draw()
                 boss.draw()
                 resized_screen.blit(
                     pygame.transform.scale(screen, (resized_screen.get_width(), resized_screen.get_height())),
