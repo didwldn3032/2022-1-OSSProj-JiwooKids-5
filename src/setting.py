@@ -215,6 +215,7 @@ def textsize(size):
 # 투명한 이미지 불러오기
 def alpha_image(name, sizex=-1, sizey=-1,color_key=None):
     full_name = os.path.join('sprites', name)
+    #ubuntu ver : full_name = os.path.join('/home/q202-14/2022-1-OSSProj-JiwooKids-5/sprites', name)
     img = pygame.image.load(full_name)
     if color_key is not None:
         if color_key == -1:
