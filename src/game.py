@@ -466,7 +466,7 @@ def ItemSelectMode():
                             item_story4=False
                             item_cnt-=1
                     if r_lets_btn_rect.collidepoint(x, y):
-                        gameplay_story5()
+                        gameplay_story4()
                     # if r_start_btn_rect.collidepoint(x, y):
                     #     gameplay_story1()
 
@@ -1224,7 +1224,6 @@ Shovel = False #삽
 def gameplay_story1():
     global item_story1
     Sunglass = False #선글라스
-    Sunglass_cnt=2
     global resized_screen
     global high_score
     result = db.query_db("select score from user order by score desc;", one=True)
@@ -1241,6 +1240,13 @@ def gameplay_story1():
     life = 5
     ###
     paused = False
+    if item_story1 == True:
+        Sunglass_cnt=2
+    else:
+        Sunglass_cnt=0
+    Shovel_cnt=0
+    Umbrella_cnt=0
+    Maskplus_cnt=0
 
     #배경이미지
     back_image,back_rect = load_image('new_rock_2.png',800,400,-1)
@@ -1257,6 +1263,7 @@ def gameplay_story1():
     new_ground = Ground(-1 * gamespeed)
     s_scb = Story_Scoreboard()
     heart = HeartIndicator(life)
+    item_s = Item_status()
     counter = 0
 
     cacti = pygame.sprite.Group()
@@ -1918,6 +1925,7 @@ def gameplay_story1():
                 new_ground.update()
                 s_scb.update(playerDino.score)
                 heart.update(life)
+                item_s.update(Sunglass_cnt,Shovel_cnt,Umbrella_cnt,Maskplus_cnt)
                 slow_items.update()
 
                 stones.update()
@@ -1927,6 +1935,7 @@ def gameplay_story1():
                     clouds.draw(screen)
                     s_scb.draw()
                     heart.draw()
+                    item_s.draw()
                     cacti.draw(screen)
                     stones.draw(screen)
                     fire_cacti.draw(screen)
@@ -2031,7 +2040,6 @@ def gameplay_story2(): # 지진모드
     global item_story2
     #아이템 관련 변수 설정
     Shovel = False #삽
-    Shovel_cnt=2
     Shovel_time=0
     global resized_screen
     global high_score
@@ -2049,12 +2057,21 @@ def gameplay_story2(): # 지진모드
 
     paused = False
 
+    if item_story2 == True:
+        Shovel_cnt=2
+    else:
+        Shovel_cnt=0
+    Sunglass_cnt=0
+    Umbrella_cnt=0
+    Maskplus_cnt=0
+
     playerDino = Dino(dino_size[0], dino_size[1], type=dino_type[type_idx])
     Background, Background_rect = load_image('new_rock_2.png', 800, 400, -1)
     
     new_ground = Ground(-1 * gamespeed)
     s_scb = Story_Scoreboard()
     heart = HeartIndicator(life)
+    item_s = Item_status()
     counter = 0
 
     cacti = pygame.sprite.Group()
@@ -2335,6 +2352,7 @@ def gameplay_story2(): # 지진모드
                 new_ground.update()
                 s_scb.update(playerDino.score)
                 heart.update(life)
+                item_s.update(Sunglass_cnt,Shovel_cnt,Umbrella_cnt,Maskplus_cnt)
 
                 stones.update()
                 holes.update()
@@ -2352,6 +2370,7 @@ def gameplay_story2(): # 지진모드
                     clouds.draw(screen)
                     s_scb.draw()
                     heart.draw()
+                    item_s.draw()
                     cacti.draw(screen)
                     stones.draw(screen)
                     holes.draw(screen)
@@ -2462,17 +2481,25 @@ def gameplay_story3():
     gameQuit = False
     Umbrella = False
     Umbrella_time=0
-    Umbrella_cnt=2
     ###
     life = 5
     ###
     paused = False
+
+    if item_story3 == True:
+        Umbrella_cnt=2
+    else:
+        Umbrella_cnt=0
+    Sunglass_cnt=0
+    Shovel_cnt=0
+    Maskplus_cnt=0
 
     playerDino = Dino(dino_size[0], dino_size[1], type=dino_type[type_idx])
 
     new_ground = Ground(-1 * gamespeed)
     s_scb = Story_Scoreboard()
     heart = HeartIndicator(life)
+    item_s = Item_status()
     counter = 0
 
     cacti = pygame.sprite.Group()
@@ -2908,6 +2935,7 @@ def gameplay_story3():
                 new_ground.update()
                 s_scb.update(playerDino.score)
                 heart.update(life)
+                item_s.update(Sunglass_cnt,Shovel_cnt,Umbrella_cnt,Maskplus_cnt)
                 slow_items.update()
 
                 stones.update()
@@ -2921,6 +2949,7 @@ def gameplay_story3():
                     clouds.draw(screen)
                     s_scb.draw()
                     heart.draw()
+                    item_s.draw()
                     cacti.draw(screen)
                     stones.draw(screen)
                     fire_cacti.draw(screen)
@@ -3045,12 +3074,21 @@ def gameplay_story4():
     ###
     paused = False
 
+    if item_story4 == True:
+        Maskplus_cnt=2
+    else:
+        Maskplus_cnt=0
+    Sunglass_cnt=0
+    Shovel_cnt=0
+    Umbrella_cnt=0
+
     playerDino = Dino(dino_size[0], dino_size[1], type=dino_type[type_idx])
 
     new_ground = Ground(-1 * gamespeed)
     s_scb = Story_Scoreboard()
     heart = HeartIndicator(life)
     m_time = Mask_time()
+    item_s = Item_status()
     counter = 0
 
     cacti = pygame.sprite.Group()
@@ -3477,6 +3515,7 @@ def gameplay_story4():
                 new_ground.update()
                 s_scb.update(playerDino.score)
                 heart.update(life)
+                item_s.update(Sunglass_cnt,Shovel_cnt,Umbrella_cnt,Maskplus_cnt)
                 slow_items.update()
 
                 stones.update()
@@ -3490,6 +3529,7 @@ def gameplay_story4():
                     clouds.draw(screen)
                     s_scb.draw()
                     heart.draw()
+                    item_s.draw()
                     cacti.draw(screen)
                     stones.draw(screen)
                     fire_cacti.draw(screen)
@@ -4330,6 +4370,7 @@ def gameplay_story5():
                     holes.draw(screen)
                     fire_cacti.draw(screen)
                     item_s.draw()
+                    item_s.update(Sunglass_cnt,Shovel_cnt,Umbrella_cnt,Maskplus_cnt)
                     if (isHumanTime) and (human.pattern_idx == 3):
                         mask_items.draw(screen)
                         m_time.draw()
