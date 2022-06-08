@@ -466,7 +466,7 @@ def ItemSelectMode():
                             item_story4=False
                             item_cnt-=1
                     if r_lets_btn_rect.collidepoint(x, y):
-                        gameplay_story4()
+                        gameplay_story1()
                     # if r_start_btn_rect.collidepoint(x, y):
                     #     gameplay_story1()
 
@@ -4494,7 +4494,7 @@ def gamerule():
         screen_board_height
         ))
 
-    gamerule_image, gamerule_rect= load_image("gamerule.png",800,300,-1)
+    gamerule_image, gamerule_rect= alpha_image("Earth_keyboard.png",width,height,-1)
     gamerule_rect.centerx=width*0.5
     gamerule_rect.centery=height*0.5
 
