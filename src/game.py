@@ -565,18 +565,12 @@ def gameplay_rank():
     stones = pygame.sprite.Group() #add stones
     clouds = pygame.sprite.Group()
     last_obstacle = pygame.sprite.Group()
-    shield_items = pygame.sprite.Group()
-    life_items = pygame.sprite.Group()
-    slow_items = pygame.sprite.Group()
 
 
     Cactus.containers = cacti
     fire_Cactus.containers = fire_cacti
     Ptera.containers = pteras
     Cloud.containers = clouds
-    ShieldItem.containers = shield_items
-    LifeItem.containers = life_items
-    SlowItem.containers = slow_items
     Stone.containers = stones # add stone containers
 
     # BUTTON IMG LOAD
@@ -893,67 +887,11 @@ def gameplay_rank():
                         if immune_time - collision_time > collision_immune_time:
                             playerDino.collision_immune = False
 
-                for s in stones:
-                    s.movement[0] = -1 * gamespeed
-                    if not playerDino.collision_immune:
-                        if pygame.sprite.collide_mask(playerDino, s):
-                            playerDino.collision_immune = True
-                            life -= 1
-                            collision_time = pygame.time.get_ticks()
-                            if life == 0:
-                                playerDino.isDead = True
-                            if pygame.mixer.get_init() is not None:
-                                die_sound.play()
-
-                if not playerDino.isSuper:
-                    for s in shield_items:
-                        s.movement[0] = -1 * gamespeed
-                        if pygame.sprite.collide_mask(playerDino, s):
-                            if pygame.mixer.get_init() is not None:
-                                checkPoint_sound.play()
-                            playerDino.collision_immune = True
-                            playerDino.isSuper = True
-                            s.kill()
-                            item_time = pygame.time.get_ticks()
-                        elif s.rect.right < 0:
-                            s.kill()
-                else:
-                    for s in shield_items:
-                        s.movement[0] = -1 * gamespeed
-                        if pygame.sprite.collide_mask(playerDino, s):
-                            if pygame.mixer.get_init() is not None:
-                                checkPoint_sound.play()
-                            playerDino.collision_immune = True
-                            playerDino.isSuper = True
-                            s.kill()
-                            item_time = pygame.time.get_ticks()
-                        elif s.rect.right < 0:
-                            s.kill()
 
                     if pygame.time.get_ticks() - item_time > shield_time:
                         playerDino.collision_immune = False
                         playerDino.isSuper = False
 
-                for l in life_items:
-                    l.movement[0] = -1 * gamespeed
-                    if pygame.sprite.collide_mask(playerDino, l):
-                        if pygame.mixer.get_init() is not None:
-                            checkPoint_sound.play()
-                        life += 1
-                        l.kill()
-                    elif l.rect.right < 0:
-                        l.kill()
-
-                for k in slow_items:
-                    k.movement[0] = -1 * gamespeed
-                    if pygame.sprite.collide_mask(playerDino, k):
-                        if pygame.mixer.get_init() is not None:
-                            checkPoint_sound.play()
-                        gamespeed -= 1
-                        new_ground.speed += 1
-                        k.kill()
-                    elif k.rect.right < 0:
-                        k.kill()
 
 
                 STONE_INTERVAL = 100
@@ -962,9 +900,6 @@ def gameplay_rank():
                 PTERA_INTERVAL = 12
                 #
                 CLOUD_INTERVAL = 300
-                SHIELD_INTERVAL = 500
-                LIFE_INTERVAL = 1000
-                SLOW_INTERVAL = 1000
 
                 OBJECT_REFRESH_LINE = width * 0.8
                 MAGIC_NUM = 10
@@ -1061,40 +996,17 @@ def gameplay_rank():
                     if len(clouds) < 5 and random.randrange(CLOUD_INTERVAL) == MAGIC_NUM:
                         Cloud(width, random.randrange(height / 5, height / 2))
 
-                    if len(shield_items) == 0 and random.randrange(
-                            SHIELD_INTERVAL) == MAGIC_NUM and counter > SHIELD_INTERVAL:
-                        for l in last_obstacle:
-                            if l.rect.right < OBJECT_REFRESH_LINE:
-                                last_obstacle.empty()
-                                last_obstacle.add(ShieldItem(gamespeed, object_size[0], object_size[1]))
-
-                    if len(life_items) == 0 and random.randrange(
-                            LIFE_INTERVAL) == MAGIC_NUM and counter > LIFE_INTERVAL * 2:
-                        for l in last_obstacle:
-                            if l.rect.right < OBJECT_REFRESH_LINE:
-                                last_obstacle.empty()
-                                last_obstacle.add(LifeItem(gamespeed, object_size[0], object_size[1]))
-
-                    if len(slow_items) == 0 and random.randrange(SLOW_INTERVAL) == MAGIC_NUM and counter > SLOW_INTERVAL:
-                        for l in last_obstacle:
-                            if l.rect.right < OBJECT_REFRESH_LINE:
-                                last_obstacle.empty()
-                                last_obstacle.add(SlowItem(gamespeed, object_size[0], object_size[1]))
-
                 playerDino.update()
                 cacti.update()
                 fire_cacti.update()
                 stones.update()
                 pteras.update()
                 clouds.update()
-                shield_items.update()
-                life_items.update()
 
                 new_ground.update()
                 scb.update(playerDino.score,high_score)
                 boss.update(pking.hp)
                 heart.update(life)
-                slow_items.update()
 
                 # 보스몬스터 타임이면,
                 if isPkingTime:
@@ -1112,9 +1024,6 @@ def gameplay_rank():
                     fire_cacti.draw(screen)
                     stones.draw(screen)
                     pteras.draw(screen)
-                    shield_items.draw(screen)
-                    life_items.draw(screen)
-                    slow_items.draw(screen)
 
                     # pkingtime이면, 보스몬스터를 보여줘라.
                     if isPkingTime:
@@ -1274,9 +1183,6 @@ def gameplay_story1():
     stones = pygame.sprite.Group()
 
     last_obstacle = pygame.sprite.Group()
-    shield_items = pygame.sprite.Group()
-    life_items = pygame.sprite.Group()
-    slow_items = pygame.sprite.Group()
     # highjump_items = pygame.sprite.Group()
 
     Stone.containers = stones
@@ -1285,9 +1191,6 @@ def gameplay_story1():
     fire_Cactus.containers = fire_cacti
     Ptera.containers = pteras
     Cloud.containers = clouds
-    ShieldItem.containers = shield_items
-    LifeItem.containers = life_items
-    SlowItem.containers = slow_items
     # HighJumpItem.containers = highjump_items
 
     # BUTTON IMG LOAD
@@ -1531,18 +1434,6 @@ def gameplay_story1():
                                 immune_time = pygame.time.get_ticks()
                                 if immune_time - collision_time > collision_immune_time:
                                     playerDino.collision_immune = False
-                        if not playerDino.isSuper:
-                            for s in shield_items:
-                                s.movement[0] = -1 * gamespeed
-                                if pygame.sprite.collide_mask(playerDino, s):
-                                    if pygame.mixer.get_init() is not None:
-                                        checkPoint_sound.play()
-                                    playerDino.collision_immune = True
-                                    playerDino.isSuper = True
-                                    s.kill()
-                                    item_time = pygame.time.get_ticks()
-                                elif s.rect.right < 0:
-                                    s.kill()
                     else:
                         for s in stones:
                             if playerDino.score<50:
@@ -1694,18 +1585,7 @@ def gameplay_story1():
                                 if immune_time - collision_time > collision_immune_time:
                                     playerDino.collision_immune = False
 
-                        if not playerDino.isSuper:
-                            for s in shield_items:
-                                s.movement[0] = -1 * gamespeed
-                                if pygame.sprite.collide_mask(playerDino, s):
-                                    if pygame.mixer.get_init() is not None:
-                                        checkPoint_sound.play()
-                                    playerDino.collision_immune = True
-                                    playerDino.isSuper = True
-                                    s.kill()
-                                    item_time = pygame.time.get_ticks()
-                                elif s.rect.right < 0:
-                                    s.kill()
+                        
                 else:
                     for s in stones:
                         if playerDino.score<50:
@@ -1857,26 +1737,12 @@ def gameplay_story1():
                             if immune_time - collision_time > collision_immune_time:
                                 playerDino.collision_immune = False
 
-                        if not playerDino.isSuper:
-                            for s in shield_items:
-                                s.movement[0] = -1 * gamespeed
-                                if pygame.sprite.collide_mask(playerDino, s):
-                                    if pygame.mixer.get_init() is not None:
-                                        checkPoint_sound.play()
-                                    playerDino.collision_immune = True
-                                    playerDino.isSuper = True
-                                    s.kill()
-                                    item_time = pygame.time.get_ticks()
-                                elif s.rect.right < 0:
-                                    s.kill()
+                        
                 STONE_INTERVAL = 50
 
                 CACTUS_INTERVAL = 50
                 PTERA_INTERVAL = 300
                 CLOUD_INTERVAL = 300
-                SHIELD_INTERVAL = 500
-                LIFE_INTERVAL = 1000
-                SLOW_INTERVAL = 1000
                 HIGHJUMP_INTERVAL = 300
                 OBJECT_REFRESH_LINE = width * 0.8
                 MAGIC_NUM = 10
@@ -1919,14 +1785,11 @@ def gameplay_story1():
                 fire_cacti.update()
                 pteras.update()
                 clouds.update()
-                shield_items.update()
-                life_items.update()
                 # highjump_items.update()
                 new_ground.update()
                 s_scb.update(playerDino.score)
                 heart.update(life)
                 item_s.update(Sunglass_cnt,Shovel_cnt,Umbrella_cnt,Maskplus_cnt)
-                slow_items.update()
 
                 stones.update()
                 
@@ -1940,9 +1803,6 @@ def gameplay_story1():
                     stones.draw(screen)
                     fire_cacti.draw(screen)
                     pteras.draw(screen)
-                    shield_items.draw(screen)
-                    life_items.draw(screen)
-                    slow_items.draw(screen)
                     # highjump_items.draw(screen)
                     playerDino.draw()
                     resized_screen.blit(
@@ -2510,9 +2370,6 @@ def gameplay_story3():
     stones = pygame.sprite.Group()
 
     last_obstacle = pygame.sprite.Group()
-    shield_items = pygame.sprite.Group()
-    life_items = pygame.sprite.Group()
-    slow_items = pygame.sprite.Group()
     # highjump_items = pygame.sprite.Group()
 
     Stone.containers = stones
@@ -2521,9 +2378,6 @@ def gameplay_story3():
     fire_Cactus.containers = fire_cacti
     Ptera.containers = pteras
     Cloud.containers = clouds
-    ShieldItem.containers = shield_items
-    LifeItem.containers = life_items
-    SlowItem.containers = slow_items
     # HighJumpItem.containers = highjump_items
 
     # BUTTON IMG LOAD
@@ -2827,27 +2681,12 @@ def gameplay_story3():
                             playerDino.collision_immune = False
 
 
-                if not playerDino.isSuper:
-                    for s in shield_items:
-                        s.movement[0] = -1 * gamespeed
-                        if pygame.sprite.collide_mask(playerDino, s):
-                            if pygame.mixer.get_init() is not None:
-                                checkPoint_sound.play()
-                            playerDino.collision_immune = True
-                            playerDino.isSuper = True
-                            s.kill()
-                            item_time = pygame.time.get_ticks()
-                        elif s.rect.right < 0:
-                            s.kill()
 
                 STONE_INTERVAL = 50
 
                 CACTUS_INTERVAL = 50
                 PTERA_INTERVAL = 300
                 CLOUD_INTERVAL = 300
-                SHIELD_INTERVAL = 500
-                LIFE_INTERVAL = 1000
-                SLOW_INTERVAL = 1000
                 HIGHJUMP_INTERVAL = 300
                 OBJECT_REFRESH_LINE = width * 0.8
                 MAGIC_NUM = 10
@@ -2929,14 +2768,11 @@ def gameplay_story3():
                 fire_cacti.update()
                 pteras.update()
                 clouds.update()
-                shield_items.update()
-                life_items.update()
                 # highjump_items.update()
                 new_ground.update()
                 s_scb.update(playerDino.score)
                 heart.update(life)
                 item_s.update(Sunglass_cnt,Shovel_cnt,Umbrella_cnt,Maskplus_cnt)
-                slow_items.update()
 
                 stones.update()
                 for a in a_list:
@@ -2954,9 +2790,6 @@ def gameplay_story3():
                     stones.draw(screen)
                     fire_cacti.draw(screen)
                     pteras.draw(screen)
-                    shield_items.draw(screen)
-                    life_items.draw(screen)
-                    slow_items.draw(screen)
                     # highjump_items.draw(screen)
 
                     for pm in pm_list:
@@ -3100,9 +2933,6 @@ def gameplay_story4():
     mask_items = pygame.sprite.Group()
 
     last_obstacle = pygame.sprite.Group()
-    shield_items = pygame.sprite.Group()
-    life_items = pygame.sprite.Group()
-    slow_items = pygame.sprite.Group()
     # highjump_items = pygame.sprite.Group()
 
     Stone.containers = stones
@@ -3111,9 +2941,6 @@ def gameplay_story4():
     fire_Cactus.containers = fire_cacti
     Ptera.containers = pteras
     Cloud.containers = clouds
-    ShieldItem.containers = shield_items
-    LifeItem.containers = life_items
-    SlowItem.containers = slow_items
     Mask_item.containers = mask_items
     # HighJumpItem.containers = highjump_items
 
@@ -3416,18 +3243,7 @@ def gameplay_story4():
                             playerDino.collision_immune = False
 
 
-                if not playerDino.isSuper:
-                    for s in shield_items:
-                        s.movement[0] = -1 * gamespeed
-                        if pygame.sprite.collide_mask(playerDino, s):
-                            if pygame.mixer.get_init() is not None:
-                                checkPoint_sound.play()
-                            playerDino.collision_immune = True
-                            playerDino.isSuper = True
-                            s.kill()
-                            item_time = pygame.time.get_ticks()
-                        elif s.rect.right < 0:
-                            s.kill()
+                
 
                 STONE_INTERVAL = 50
 
@@ -3435,9 +3251,6 @@ def gameplay_story4():
                 MASK_INTERVAL = 50
                 PTERA_INTERVAL = 300
                 CLOUD_INTERVAL = 300
-                SHIELD_INTERVAL = 500
-                LIFE_INTERVAL = 1000
-                SLOW_INTERVAL = 1000
                 HIGHJUMP_INTERVAL = 300
                 OBJECT_REFRESH_LINE = width * 0.8
                 MAGIC_NUM = 10
@@ -3510,13 +3323,10 @@ def gameplay_story4():
                 m_time.update(playerDino.score2)
                 pteras.update()
                 clouds.update()
-                shield_items.update()
-                life_items.update()
                 new_ground.update()
                 s_scb.update(playerDino.score)
                 heart.update(life)
                 item_s.update(Sunglass_cnt,Shovel_cnt,Umbrella_cnt,Maskplus_cnt)
-                slow_items.update()
 
                 stones.update()
                 for a in a_list:
@@ -3536,9 +3346,6 @@ def gameplay_story4():
                     mask_items.draw(screen)
                     m_time.draw()
                     pteras.draw(screen)
-                    shield_items.draw(screen)
-                    life_items.draw(screen)
-                    slow_items.draw(screen)
                     # highjump_items.draw(screen)
 
                     for pm in pm_list:
