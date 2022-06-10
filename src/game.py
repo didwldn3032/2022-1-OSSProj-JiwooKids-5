@@ -288,7 +288,7 @@ def selectMode():
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
-                    return False
+                    introscreen()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if pygame.mouse.get_pressed() == (1, 0, 0):
                     x, y = event.pos
@@ -888,11 +888,6 @@ def gameplay_rank():
                         immune_time = pygame.time.get_ticks()
                         if immune_time - collision_time > collision_immune_time:
                             playerDino.collision_immune = False
-
-
-                    if pygame.time.get_ticks() - item_time > shield_time:
-                        playerDino.collision_immune = False
-                        playerDino.isSuper = False
 
 
 
@@ -4261,6 +4256,71 @@ def gameplay_story5():
 
     pygame.quit()
     quit()
+
+
+def board():
+    global resized_screen
+    gameQuit = False
+    scroll_y=0
+    # 10
+    max_per_screen = 10
+    results = db.query_db("select username, score from user order by score desc;")
+    screen_board_height = resized_screen.get_height()+(len(results)//max_per_screen)*resized_screen.get_height()
+    screen_board = pygame.surface.Surface((
+        resized_screen.get_width(),
+        screen_board_height
+        ))
+
+    title_image, title_rect = load_image("ranking_title.png", 360, 75, -1)
+    title_rect.centerx = width * 0.5
+    title_rect.centery = height * 0.2
+
+    while not gameQuit:
+        if pygame.display.get_surface() is None:
+            gameQuit = True
+        else:
+            screen_board.fill(background_col)
+            screen_board.blit(title_image, title_rect)
+            for i, result in enumerate(results):
+                top_i_surface = font.render(f"TOP {i + 1}", True, black)
+                name_inform_surface = font.render("Name", True, black)
+                score_inform_surface = font.render("Score", True, black)
+                score_surface = font.render(str(result['score']), True, black)
+                txt_surface = font.render(result['username'], True, black)
+
+                screen_board.blit(top_i_surface, (width * 0.25, height * (0.55 + 0.1 * i)))
+                screen_board.blit(name_inform_surface, (width * 0.4, height * 0.40))
+                screen_board.blit(score_inform_surface, (width * 0.6, height * 0.40))
+                screen_board.blit(txt_surface, (width*0.4, height * (0.55 + 0.1 * i)))
+                screen_board.blit(score_surface, (width * 0.6, height * (0.55 + 0.1 * i)))
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    gameQuit = True
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_RETURN or event.key == pygame.K_SPACE:
+                        gameQuit = True
+                        introscreen()
+                    if event.key == pygame.K_UP: scroll_y = min(scroll_y + 15, 0)
+                    if event.key == pygame.K_DOWN: scroll_y = max(scroll_y - 15, -(len(results)//max_per_screen)*scr_size[1])
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if event.button == 4: scroll_y = min(scroll_y + 15, 0)
+                    if event.button == 5: scroll_y = max(scroll_y - 15, -(len(results)//max_per_screen)*scr_size[1])
+                    if event.button == 1:
+                        gameQuit = True
+                        introscreen()
+                if event.type == pygame.VIDEORESIZE:
+                    checkscrsize(event.w, event.h)
+
+            screen.blit(screen_board, (0, scroll_y))
+            resized_screen.blit(
+                pygame.transform.scale(screen, (resized_screen.get_width(), resized_screen.get_height())), resized_screen_centerpos)
+            pygame.display.update()
+        clock.tick(FPS)
+
+    pygame.quit()
+    quit()
+
+
     
 def gamerule():
     global resized_screen
