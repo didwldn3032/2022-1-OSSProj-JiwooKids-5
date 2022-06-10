@@ -466,7 +466,7 @@ def ItemSelectMode():
                             item_story4=False
                             item_cnt-=1
                     if r_lets_btn_rect.collidepoint(x, y):
-                        gameplay_story4()
+                        gameplay_story5()
                     # if r_start_btn_rect.collidepoint(x, y):
                     #     gameplay_story1()
 
@@ -3673,7 +3673,6 @@ def gameplay_story5():
                 bk = bk + 1
                 d_list = []
 
-                print(playerDino.score2)
                 #### 다이노의 미사일 하나씩 꺼내옴
                 for i in range(len(m_list)):
                     m = m_list[i]
@@ -3775,9 +3774,7 @@ def gameplay_story5():
                             playerDino.Sovel = False
                     # 1. 보스의 임의 점프
                     JUMP_MAGIC = 50
-                    print(str(human.rect.bottom) + " vs "+str(int(0.9 * height)))
                     if (random.randrange(0, 100) == JUMP_MAGIC):
-                        print("구덩이 활성화")
                         if (human.rect.bottom == int(0.9 * height)):
                             
                             human.isJumping = True
@@ -3818,17 +3815,6 @@ def gameplay_story5():
 
                 if (isHumanTime) and (human.pattern_idx == 2):
                     dustnum = 0
-                    # 1. 배경 이미지 처리
-                    # if (playerDino.score%100) < 50:
-                    #     dust_image.set_alpha(dustnum)
-                    #     screen.blit(dust_image, dust_rect)
-                    #     pygame.display.update()
-                    # elif 50 <= (playerDino.score%100) < 100:
-                    #     dustnum=255
-                    #     dust_image.set_alpha(dustnum)
-                    #     screen.blit(dust_image, dust_rect)
-                    #     pygame.display.update()
-                    
                     
                     # 3. 보스의 공격
 
@@ -3883,18 +3869,7 @@ def gameplay_story5():
                         Shovel=False
                         playerDino.Sovel=False
 
-                    dustnum = 0
-                    # 1. 배경 이미지 처리
-                    # if (playerDino.score%100) < 50:
-                    #     dust_image.set_alpha(dustnum)
-                    #     screen.blit(dust_image, dust_rect)
-                    #     pygame.display.update()
-                    # elif 50 <= (playerDino.score%100) < 100:
-                    #     dustnum=255
-                    #     dust_image.set_alpha(dustnum)
-                    #     screen.blit(dust_image, dust_rect)
-                    #     pygame.display.update()
-                    
+                    dustnum = 0                   
                     
                     # 3. 보스의 공격
 
@@ -4301,7 +4276,7 @@ def gamerule():
         screen_board_height
         ))
 
-    gamerule_image, gamerule_rect= load_image("gamerule.png",800,300,-1)
+    gamerule_image, gamerule_rect= alpha_image("Earth_keyboard.png",width,height,-1)
     gamerule_rect.centerx=width*0.5
     gamerule_rect.centery=height*0.5
 
