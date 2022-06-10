@@ -1183,7 +1183,6 @@ def gameplay_story1():
     stones = pygame.sprite.Group()
 
     last_obstacle = pygame.sprite.Group()
-    # highjump_items = pygame.sprite.Group()
 
     Stone.containers = stones
 
@@ -1191,7 +1190,6 @@ def gameplay_story1():
     fire_Cactus.containers = fire_cacti
     Ptera.containers = pteras
     Cloud.containers = clouds
-    # HighJumpItem.containers = highjump_items
 
     # BUTTON IMG LOAD
     # retbutton_image, retbutton_rect = load_image('replay_button.png', 70, 62, -1)
@@ -1743,7 +1741,6 @@ def gameplay_story1():
                 CACTUS_INTERVAL = 50
                 PTERA_INTERVAL = 300
                 CLOUD_INTERVAL = 300
-                HIGHJUMP_INTERVAL = 300
                 OBJECT_REFRESH_LINE = width * 0.8
                 MAGIC_NUM = 10
 
@@ -1785,7 +1782,6 @@ def gameplay_story1():
                 fire_cacti.update()
                 pteras.update()
                 clouds.update()
-                # highjump_items.update()
                 new_ground.update()
                 s_scb.update(playerDino.score)
                 heart.update(life)
@@ -1803,7 +1799,6 @@ def gameplay_story1():
                     stones.draw(screen)
                     fire_cacti.draw(screen)
                     pteras.draw(screen)
-                    # highjump_items.draw(screen)
                     playerDino.draw()
                     resized_screen.blit(
                         pygame.transform.scale(screen, (resized_screen.get_width(), resized_screen.get_height())),
@@ -2370,7 +2365,6 @@ def gameplay_story3():
     stones = pygame.sprite.Group()
 
     last_obstacle = pygame.sprite.Group()
-    # highjump_items = pygame.sprite.Group()
 
     Stone.containers = stones
 
@@ -2378,7 +2372,6 @@ def gameplay_story3():
     fire_Cactus.containers = fire_cacti
     Ptera.containers = pteras
     Cloud.containers = clouds
-    # HighJumpItem.containers = highjump_items
 
     # BUTTON IMG LOAD
     # retbutton_image, retbutton_rect = load_image('replay_button.png', 70, 62, -1)
@@ -2687,7 +2680,6 @@ def gameplay_story3():
                 CACTUS_INTERVAL = 50
                 PTERA_INTERVAL = 300
                 CLOUD_INTERVAL = 300
-                HIGHJUMP_INTERVAL = 300
                 OBJECT_REFRESH_LINE = width * 0.8
                 MAGIC_NUM = 10
 
@@ -2768,7 +2760,6 @@ def gameplay_story3():
                 fire_cacti.update()
                 pteras.update()
                 clouds.update()
-                # highjump_items.update()
                 new_ground.update()
                 s_scb.update(playerDino.score)
                 heart.update(life)
@@ -2790,7 +2781,6 @@ def gameplay_story3():
                     stones.draw(screen)
                     fire_cacti.draw(screen)
                     pteras.draw(screen)
-                    # highjump_items.draw(screen)
 
                     for pm in pm_list:
                         pm.show()
@@ -2933,7 +2923,6 @@ def gameplay_story4():
     mask_items = pygame.sprite.Group()
 
     last_obstacle = pygame.sprite.Group()
-    # highjump_items = pygame.sprite.Group()
 
     Stone.containers = stones
 
@@ -2942,7 +2931,6 @@ def gameplay_story4():
     Ptera.containers = pteras
     Cloud.containers = clouds
     Mask_item.containers = mask_items
-    # HighJumpItem.containers = highjump_items
 
     # BUTTON IMG LOAD
     # retbutton_image, retbutton_rect = load_image('replay_button.png', 70, 62, -1)
@@ -3251,7 +3239,6 @@ def gameplay_story4():
                 MASK_INTERVAL = 50
                 PTERA_INTERVAL = 300
                 CLOUD_INTERVAL = 300
-                HIGHJUMP_INTERVAL = 300
                 OBJECT_REFRESH_LINE = width * 0.8
                 MAGIC_NUM = 10
 
@@ -3346,8 +3333,6 @@ def gameplay_story4():
                     mask_items.draw(screen)
                     m_time.draw()
                     pteras.draw(screen)
-                    # highjump_items.draw(screen)
-
                     for pm in pm_list:
                         pm.show()
 
