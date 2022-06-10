@@ -66,10 +66,14 @@ off_pushtime=0
 jump_sound = pygame.mixer.Sound('sprites/jump.wav')
 die_sound = pygame.mixer.Sound('sprites/die.wav')
 checkPoint_sound = pygame.mixer.Sound('sprites/checkPoint.wav')
+# background_music = pygame.mixer.Sound('t-rex_let-the-games-begin-21858.mp3')
 #background_music = pygame.mixer.Sound('sprites/t-rex_bgm1.mp3')
 
 # HERE: REMOVE SOUND!!
-# pygame.mixer.music.load('sprites/t-rex_bgm1.mp3')
+# pygame.mixer.music.load('sprites/t-rex_let-the-games-begin-21858.mp3')
+background_m=pygame.mixer.Sound("sprites/t-rex_let-the-games-begin-21858.mp3")
+ingame_m=pygame.mixer.Sound("sprites/t-rex_man-is-he-mega-glbml-22045.mp3")
+gameclear_m=pygame.mixer.Sound("sprites/t-rex_happy-birthday-funk-spot-16197.mp3")
 
 
 dino_size = [44, 47]
