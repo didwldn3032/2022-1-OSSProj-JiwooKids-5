@@ -240,25 +240,3 @@ class Item_status:
         self.sc_rect.left = self.pos_x
         self.sc_rect.top = self.pos_y
 
-        width_offset = 0.2
-
-        superglass_image, superglass_rect = alpha_image('superglass_icon.png', 40, 40, -1)
-        shoval_image, shoval_rect = alpha_image('shovel_icon.png', 40, 40, -1)
-        umbrella_image, umbrella_rect = alpha_image('umbrella_icon.png', 40, 40, -1)
-        mask_image, mask_rect = alpha_image('mask_icon.png', 40, 40, -1)
-
-        interval = 70
-        superglass_rect.left = self.pos_x - interval + 10 + 20 
-        superglass_rect.top = self.pos_y
-        shoval_rect.left = self.pos_x + 10 + 20 + 20 -5 
-        shoval_rect.top = self.pos_y
-        umbrella_rect.left = self.pos_x + interval + 10 + 20 + 40 -10 -5
-        umbrella_rect.top = self.pos_y
-        mask_rect.left = self.pos_x + interval*2 + 10 + 20 + 60 -15 -10
-        mask_rect.top = self.pos_y
-
-        screen.blit(superglass_image, superglass_rect)
-        screen.blit(shoval_image, shoval_rect)
-        screen.blit(umbrella_image, umbrella_rect)
-        screen.blit(mask_image, mask_rect)
-
