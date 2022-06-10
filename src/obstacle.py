@@ -391,8 +391,8 @@ class Human(pygame.sprite.Sprite):
     
     def __init__(self, speed=0, sizex=-1, sizey=-1):
         pygame.sprite.Sprite.__init__(self)
-        self.images, self.rect = load_sprite_sheet('pteraking.png', 2, 1, sizex, sizey, -1)
-        self.rect.bottom = int(0.9 * height)
+        self.images, self.rect = load_sprite_sheet('soldier.png', 2, 1, sizex, sizey, -1)
+        self.rect.bottom = int(0.98 * height)
         self.rect.left = width - 150
 
         self.image = self.images[0]
@@ -427,16 +427,21 @@ class Human(pygame.sprite.Sprite):
             self.isJumping = False
 
     def pattern0(self):
+        if self.counter % 10 == 0:
+            self.index = (self.index+1) % 2
+        self.image = self.images[self.index]
         self.pattern0_counter += 1
         self.movement[0] = 0
-        self.image = self.images[1]
         if self.pattern0_counter % self.pattern0_time == 0: # 200초가 넘어간 경우
             self.pattern_idx = 1
 
     def pattern1(self):
+        if self.counter % 10 == 0:
+            self.index = (self.index+1) % 2    
+        self.image = self.images[self.index]
+
         self.pattern1_counter += 1
         self.movement[0] = 0
-        self.image = self.images[1]
         if self.isJumping: 
             self.movement[1] = self.movement[1] + gravity # 움직임의 y값에 gravity값을 더해 점프 높이를 적용
         
@@ -444,16 +449,22 @@ class Human(pygame.sprite.Sprite):
             self.pattern_idx = 2
 
     def pattern2(self):
+        if self.counter % 10 == 0:
+            self.index = (self.index+1) % 2
+        self.image = self.images[self.index]
+
         self.pattern2_counter += 1
         self.movement[0] = 0
-        self.image = self.images[1]
         if self.pattern2_counter % self.pattern2_time == 0: # 200초가 넘어간 경우
             self.pattern_idx = 3
 
     def pattern3(self):
+        if self.counter % 10 == 0:
+            self.index = (self.index+1) % 2
+        self.image = self.images[self.index]
+
         self.pattern3_counter += 1
         self.movement[0] = 0
-        self.image = self.images[1]
         if self.pattern3_counter % self.pattern3_time == 0: # 200초가 넘어간 경우
             self.pattern_idx = 0
 
@@ -461,7 +472,6 @@ class Human(pygame.sprite.Sprite):
         self.counter=self.counter+1
         self.rect = self.rect.move(self.movement)
         self.checkbounds()
-
 
         if self.pattern_idx==0: self.pattern0()
         elif self.pattern_idx==1: self.pattern1()
