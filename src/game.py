@@ -3662,7 +3662,7 @@ def gameplay_story5():
         high_score = result['score']
     
     dust_image, dust_rect = load_image('dust.png',800,400,-1)
-    Background, Background_rect = load_image('new_rock_2.png', 800, 400, -1)
+    Background, Background_rect = load_image('background_with_items.png', 800, 400, -1)
 
     dustnum=0
     dust_image.set_alpha(dustnum)
