@@ -28,6 +28,8 @@ db = InterfDB("db/score.db")
 
 ## 시작 화면 ##
 def introscreen():
+    # pygame.mixer.music.play(-1)  # 배경음악 실행
+    background_m.play(-1) # 배경음악 실행
     global resized_screen
 
     # temp_dino를 전역변수로 설정합니다.
@@ -143,7 +145,7 @@ def option():
     global resized_screen
 
     btnpush_interval = 500  # ms
-    pygame.mixer.music.stop()
+    # pygame.mixer.music.stop()
     done = False
     ALPHA_MOVE = 20
     db_init = False
@@ -1147,7 +1149,8 @@ def gameplay_rank():
 
                 if playerDino.isDead:
                     gameOver = True
-                    pygame.mixer.music.stop()  # 죽으면 배경음악 멈춤
+                    ingame_m.stop() 
+                    # pygame.mixer.music.stop()  # 죽으면 배경음악 멈춤
                     if playerDino.score > high_score:
                         high_score = playerDino.score
 
@@ -1222,6 +1225,8 @@ Shovel = False #삽
 
 ## 미세먼지 ##
 def gameplay_story1():
+    background_m.stop()
+    ingame_m.play(-1)
     global item_story1
     Sunglass = False #선글라스
     global resized_screen
@@ -1957,7 +1962,8 @@ def gameplay_story1():
 
                 if playerDino.isDead:
                     gameOver = True
-                    pygame.mixer.music.stop()  # 죽으면 배경음악 멈춤
+                    ingame_m.stop() # 죽으면 배경음악 멈춤
+                    # pygame.mixer.music.stop()  # 죽으면 배경음악 멈춤
                     if playerDino.score > high_score:
                         high_score = playerDino.score
 
@@ -2385,6 +2391,7 @@ def gameplay_story2(): # 지진모드
 
                 if playerDino.isDead:
                     gameOver = True
+                    ingame_m.stop() 
                     # pygame.mixer.music.stop()  # 죽으면 배경음악 멈춤
                     if playerDino.score > high_score:
                         high_score = playerDino.score
@@ -2975,7 +2982,8 @@ def gameplay_story3():
 
                 if playerDino.isDead:
                     gameOver = True
-                    pygame.mixer.music.stop()  # 죽으면 배경음악 멈춤
+                    ingame_m.stop() 
+                    # pygame.mixer.music.stop()  # 죽으면 배경음악 멈춤
                     if playerDino.score > high_score:
                         high_score = playerDino.score
 
@@ -3558,7 +3566,8 @@ def gameplay_story4():
 
                 if playerDino.isDead:
                     gameOver = True
-                    pygame.mixer.music.stop()  # 죽으면 배경음악 멈춤
+                    ingame_m.stop() 
+                    # pygame.mixer.music.stop()  # 죽으면 배경음악 멈춤
                     if playerDino.score > high_score:
                         high_score = playerDino.score
 
@@ -4257,6 +4266,7 @@ def gameplay_story5():
                             if human.hp <= 0:
                                 human.kill()
                                 isHumanAlive=False
+                                ingame_m.stop()
                                 Congratulations()
 
 
@@ -4389,7 +4399,8 @@ def gameplay_story5():
 
                 if playerDino.isDead:
                     gameOver = True
-                    pygame.mixer.music.stop()  # 죽으면 배경음악 멈춤
+                    ingame_m.stop() 
+                    # pygame.mixer.music.stop()  # 죽으면 배경음악 멈춤
                     if playerDino.score > high_score:
                         high_score = playerDino.score
 
@@ -4438,7 +4449,7 @@ def gameplay_story5():
                                 f"insert into user(username, score) values ('{gamername}', '{playerDino.score}');")
                             db.commit()
                             board()
-                        else:
+                        else: 
                             board()
 
                     if event.type == pygame.VIDEORESIZE:
@@ -4658,6 +4669,7 @@ def credit():
     quit()
 
 def Congratulations():
+    gameclear_m.play(-1)
     ALPHA_MOVE = 20
     width_offset = 0.3
     resized_screen_center = (0, 0)
@@ -4687,6 +4699,7 @@ def Congratulations():
                     if pygame.mouse.get_pressed() == (1, 0, 0):
                         x, y = event.pos
                         if resized_retbutton_rect.collidepoint(x, y):
+                            gameclear_m.stop() 
                             introscreen()
                             return False
             if event.type == pygame.VIDEORESIZE:
