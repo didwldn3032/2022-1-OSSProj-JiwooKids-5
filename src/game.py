@@ -468,7 +468,8 @@ def ItemSelectMode():
                             item_story4=False
                             item_cnt-=1
                     if r_lets_btn_rect.collidepoint(x, y):
-                        gameplay_story4()
+                        gameplay_story5()
+
                     # if r_start_btn_rect.collidepoint(x, y):
                     #     gameplay_story1()
 
@@ -578,7 +579,8 @@ def gameplay_rank():
     # BUTTON IMG LOAD
     # retbutton_image, retbutton_rect = load_image('replay_button.png', 70, 62, -1)
     gameover_image, gameover_rect = load_image('game_over.png', 380, 22, -1)
-    
+    back_image,back_rect = alpha_image('ranking_bg.png',800,400,-1)
+
     # 1. 미사일 발사.
     space_go=False
     m_list=[]
@@ -616,6 +618,10 @@ def gameplay_rank():
                 gameQuit = True
                 gameOver = True
             else:
+
+                screen.fill(background_col)
+                screen.blit(back_image,back_rect)
+
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
                         gameQuit = True
@@ -1011,7 +1017,6 @@ def gameplay_rank():
                 #
 
                 if pygame.display.get_surface() != None:
-                    screen.fill(background_col)
                     new_ground.draw()
                     clouds.draw(screen)
                     scb.draw()
@@ -1158,7 +1163,7 @@ def gameplay_story1():
     Maskplus_cnt=0
 
     #배경이미지
-    back_image,back_rect = load_image('background_with_items.png',800,400,-1)
+    back_image,back_rect = load_image('dust_with_items.png',800,400,-1)
     #먼지이미지
     dust_image,dust_rect = load_image('dust.png',800,400,-1)
 
@@ -1214,8 +1219,6 @@ def gameplay_story1():
             else:
                 screen.fill(background_col)
                 screen.blit(back_image,back_rect)
-                pygame.display.update()
-
                 
 
                 for event in pygame.event.get():
@@ -1747,7 +1750,7 @@ def gameplay_story2(): # 지진모드
     Maskplus_cnt=0
 
     playerDino = Dino(dino_size[0], dino_size[1], type=dino_type[type_idx])
-    Background, Background_rect = load_image('new_rock_2.png', 800, 400, -1)
+    Background, Background_rect = load_image('eq_with_items.png', 800, 400, -1)
     
     new_ground = Ground(-1 * gamespeed)
     s_scb = Story_Scoreboard()
@@ -2223,7 +2226,7 @@ def gameplay_story3():
     #2단 점프
     jumpingx2=False
 
-    back_image, back_rect = load_image("story3_background.png", 800, 400, -1)
+    back_image, back_rect = load_image("rain_with_items.png", 800, 400, -1)
     
 
 
@@ -2784,7 +2787,7 @@ def gameplay_story4():
     #2단 점프
     jumpingx2=False
 
-    back_image, back_rect = load_image("story3_background.png", 800, 400, -1)
+    back_image, back_rect = load_image("mask_with_items.png", 800, 400, -1)
     
 
 
