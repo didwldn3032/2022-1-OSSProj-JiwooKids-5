@@ -492,7 +492,7 @@ def ItemSelectMode():
                             item_story4=False
                             item_cnt-=1
                     if r_lets_btn_rect.collidepoint(x, y):
-                        gameplay_story5()
+                        gameplay_story1()
                     # if r_start_btn_rect.collidepoint(x, y):
                     #     gameplay_story1()
 
@@ -1161,13 +1161,24 @@ def gameplay_story1():
     life = 5
     ###
     paused = False
-    if item_story1 == True:
+    if item_story1==True:
         Sunglass_cnt=2
     else:
         Sunglass_cnt=0
-    Shovel_cnt=0
-    Umbrella_cnt=0
-    Maskplus_cnt=0
+    Shovel_time=0
+    if item_story2==True:
+        Shovel_cnt=2
+    else:
+        Shovel_cnt=0
+    Umbrella_time=0
+    if item_story3==True:
+        Umbrella_cnt=2
+    else:
+        Umbrella_cnt=0
+    if item_story4==True:
+        Maskplus_cnt=2
+    else:
+        Maskplus_cnt=0
 
     #배경이미지
     back_image,back_rect = load_image('dust_with_items.png',800,400,-1)
@@ -1754,13 +1765,24 @@ def gameplay_story2(): # 지진모드
 
     paused = False
 
-    if item_story2 == True:
+    if item_story1==True:
+        Sunglass_cnt=2
+    else:
+        Sunglass_cnt=0
+    Shovel_time=0
+    if item_story2==True:
         Shovel_cnt=2
     else:
         Shovel_cnt=0
-    Sunglass_cnt=0
-    Umbrella_cnt=0
-    Maskplus_cnt=0
+    Umbrella_time=0
+    if item_story3==True:
+        Umbrella_cnt=2
+    else:
+        Umbrella_cnt=0
+    if item_story4==True:
+        Maskplus_cnt=2
+    else:
+        Maskplus_cnt=0
 
     playerDino = Dino(dino_size[0], dino_size[1], type=dino_type[type_idx])
     Background, Background_rect = alpha_image('rocks_with_items.png', 800, 400, -1)
@@ -2190,13 +2212,24 @@ def gameplay_story3():
     ###
     paused = False
 
-    if item_story3 == True:
+    if item_story1==True:
+        Sunglass_cnt=2
+    else:
+        Sunglass_cnt=0
+    Shovel_time=0
+    if item_story2==True:
+        Shovel_cnt=2
+    else:
+        Shovel_cnt=0
+    Umbrella_time=0
+    if item_story3==True:
         Umbrella_cnt=2
     else:
         Umbrella_cnt=0
-    Sunglass_cnt=0
-    Shovel_cnt=0
-    Maskplus_cnt=0
+    if item_story4==True:
+        Maskplus_cnt=2
+    else:
+        Maskplus_cnt=0
 
     playerDino = Dino(dino_size[0], dino_size[1], type=dino_type[type_idx])
 
@@ -2737,13 +2770,24 @@ def gameplay_story4():
     ###
     paused = False
 
-    if item_story4 == True:
+    if item_story1==True:
+        Sunglass_cnt=2
+    else:
+        Sunglass_cnt=0
+    Shovel_time=0
+    if item_story2==True:
+        Shovel_cnt=2
+    else:
+        Shovel_cnt=0
+    Umbrella_time=0
+    if item_story3==True:
+        Umbrella_cnt=2
+    else:
+        Umbrella_cnt=0
+    if item_story4==True:
         Maskplus_cnt=2
     else:
         Maskplus_cnt=0
-    Sunglass_cnt=0
-    Shovel_cnt=0
-    Umbrella_cnt=0
 
     playerDino = Dino(dino_size[0], dino_size[1], type=dino_type[type_idx])
 
@@ -4193,6 +4237,7 @@ def gamerule():
 
 def pausing():
     global gameOver
+    global gameQuit
     global resized_screen
     global paused
     gameQuit = False
@@ -4239,7 +4284,8 @@ def pausing():
                         x, y = event.pos
                         if resized_retbutton_rect.collidepoint(x, y):
                             ingame_m.stop() 
-                            gameOver = True
+                            gameOver = False
+                            gameQuit = True
                             introscreen()
                             
 
