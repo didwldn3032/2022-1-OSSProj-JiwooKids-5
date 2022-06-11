@@ -468,7 +468,7 @@ def ItemSelectMode():
                             item_story4=False
                             item_cnt-=1
                     if r_lets_btn_rect.collidepoint(x, y):
-                        gameplay_story5()
+                        gameplay_story4()
                     # if r_start_btn_rect.collidepoint(x, y):
                     #     gameplay_story1()
 
@@ -1158,7 +1158,7 @@ def gameplay_story1():
     Maskplus_cnt=0
 
     #배경이미지
-    back_image,back_rect = load_image('new_rock_2.png',800,400,-1)
+    back_image,back_rect = load_image('background_with_items.png',800,400,-1)
     #먼지이미지
     dust_image,dust_rect = load_image('dust.png',800,400,-1)
 
@@ -1286,55 +1286,12 @@ def gameplay_story1():
 
                 #미세먼지 등장
 
-                if playerDino.score<50:
-                    dust_image.set_alpha(dustnum)
-                    screen.blit(dust_image,dust_rect)
-                    pygame.display.update()
-                elif 50<=playerDino.score<100:
-                    dustnum=255
-                    dust_image.set_alpha(dustnum)
-                    screen.blit(dust_image,dust_rect)
-                    pygame.display.update()
-                elif 100<=playerDino.score<150:
+                if 0<=playerDino.score%100<50:
                     dustnum=0
                     dust_image.set_alpha(dustnum)
-                    screen.blit(dust_image,dust_rect)
-                    pygame.display.update()
-                elif 150<=playerDino.score<200:
+                elif 50<=playerDino.score%100<100:
                     dustnum=255
                     dust_image.set_alpha(dustnum)
-                    screen.blit(dust_image,dust_rect)
-                    pygame.display.update()
-                elif 200<=playerDino.score<250:
-                    dustnum=0
-                    dust_image.set_alpha(dustnum)
-                    screen.blit(dust_image,dust_rect)
-                    pygame.display.update()
-                elif 250<=playerDino.score<300:
-                    dustnum=255
-                    dust_image.set_alpha(dustnum)
-                    screen.blit(dust_image,dust_rect)
-                    pygame.display.update()
-                elif 300<=playerDino.score<350:
-                    dustnum=0
-                    dust_image.set_alpha(dustnum)
-                    screen.blit(dust_image,dust_rect)
-                    pygame.display.update()
-                elif 350<=playerDino.score<400:
-                    dustnum=255
-                    dust_image.set_alpha(dustnum)
-                    screen.blit(dust_image,dust_rect)
-                    pygame.display.update()
-                elif 400<=playerDino.score<450:
-                    dustnum=0
-                    dust_image.set_alpha(dustnum)
-                    screen.blit(dust_image,dust_rect)
-                    pygame.display.update()
-                else:
-                    dustnum=255
-                    dust_image.set_alpha(dustnum)
-                    screen.blit(dust_image,dust_rect)
-                    pygame.display.update()
 
             if not paused:
                 if goLeft:
@@ -1353,10 +1310,6 @@ def gameplay_story1():
                     if  playerDino.rect.bottom == int(height * 0.9):
                         playerDino.isJumping = True
                         playerDino.movement[1] = -1 * playerDino.superJumpSpeed
-
-        
-
-
 
                 if item_story1==True:
                     if Sunglass == True:
@@ -1434,25 +1387,9 @@ def gameplay_story1():
                                     playerDino.collision_immune = False
                     else:
                         for s in stones:
-                            if playerDino.score<50:
+                            if 0<=playerDino.score%100<50:
                                 s.image.set_alpha(255)
-                            elif 50<=playerDino.score<100:
-                                s.image.set_alpha(70)
-                            elif 100<=playerDino.score<150:
-                                s.image.set_alpha(255)
-                            elif 150<=playerDino.score<200:
-                                s.image.set_alpha(70)
-                            elif 200<=playerDino.score<250:
-                                s.image.set_alpha(255)
-                            elif 250<=playerDino.score<300:
-                                s.image.set_alpha(70)
-                            elif 300<=playerDino.score<350:
-                                s.image.set_alpha(255)
-                            elif 350<=playerDino.score<400:
-                                s.image.set_alpha(70)
-                            elif 400<=playerDino.score<450:
-                                s.image.set_alpha(255)
-                            else:
+                            elif 50<=playerDino.score%100<100:
                                 s.image.set_alpha(70)
                             
                             s.movement[0] = -1 * gamespeed
@@ -1467,25 +1404,9 @@ def gameplay_story1():
                                         die_sound.play()
 
                         for c in cacti:
-                            if playerDino.score<50:
+                            if 0<=playerDino.score%100<50:
                                 c.image.set_alpha(255)
-                            elif 50<=playerDino.score<100:
-                                c.image.set_alpha(70)
-                            elif 100<=playerDino.score<150:
-                                c.image.set_alpha(255)
-                            elif 150<=playerDino.score<200:
-                                c.image.set_alpha(70)
-                            elif 200<=playerDino.score<250:
-                                c.image.set_alpha(255)
-                            elif 250<=playerDino.score<300:
-                                c.image.set_alpha(70)
-                            elif 300<=playerDino.score<350:
-                                c.image.set_alpha(255)
-                            elif 350<=playerDino.score<400:
-                                c.image.set_alpha(70)
-                            elif 400<=playerDino.score<450:
-                                c.image.set_alpha(255)
-                            else:
+                            elif 50<=playerDino.score%100<100:
                                 c.image.set_alpha(70)
                             c.movement[0] = -1 * gamespeed
                             if not playerDino.collision_immune:
@@ -1504,25 +1425,9 @@ def gameplay_story1():
                                     playerDino.collision_immune = False
 
                         for f in fire_cacti:
-                            if playerDino.score<50:
+                            if 0<=playerDino.score%100<50:
                                 f.image.set_alpha(255)
-                            elif 50<=playerDino.score<100:
-                                f.image.set_alpha(70)
-                            elif 100<=playerDino.score<150:
-                                f.image.set_alpha(255)
-                            elif 150<=playerDino.score<200:
-                                f.image.set_alpha(70)
-                            elif 200<=playerDino.score<250:
-                                f.image.set_alpha(255)
-                            elif 250<=playerDino.score<300:
-                                f.image.set_alpha(70)
-                            elif 300<=playerDino.score<350:
-                                f.image.set_alpha(255)
-                            elif 350<=playerDino.score<400:
-                                f.image.set_alpha(70)
-                            elif 400<=playerDino.score<450:
-                                f.image.set_alpha(255)
-                            else:
+                            elif 50<=playerDino.score%100<100:
                                 f.image.set_alpha(70)
                             f.movement[0] = -1 * gamespeed
                             if not playerDino.collision_immune:
@@ -1541,25 +1446,9 @@ def gameplay_story1():
                                     playerDino.collision_immune = False
 
                         for p in pteras:
-                            if playerDino.score<50:
+                            if 0<=playerDino.score%100<50:
                                 p.image.set_alpha(255)
-                            elif 50<=playerDino.score<100:
-                                p.image.set_alpha(70)
-                            elif 100<=playerDino.score<150:
-                                p.image.set_alpha(255)
-                            elif 150<=playerDino.score<200:
-                                p.image.set_alpha(70)
-                            elif 200<=playerDino.score<250:
-                                p.image.set_alpha(255)
-                            elif 250<=playerDino.score<300:
-                                p.image.set_alpha(70)
-                            elif 300<=playerDino.score<350:
-                                p.image.set_alpha(255)
-                            elif 350<=playerDino.score<400:
-                                p.image.set_alpha(70)
-                            elif 400<=playerDino.score<450:
-                                p.image.set_alpha(255)
-                            else:
+                            elif 50<=playerDino.score%100<100:
                                 p.image.set_alpha(70)
                             p.movement[0] = -1 * gamespeed
                             if not playerDino.collision_immune:
@@ -1586,25 +1475,9 @@ def gameplay_story1():
                         
                 else:
                     for s in stones:
-                        if playerDino.score<50:
+                        if 0<=playerDino.score%100<50:
                             s.image.set_alpha(255)
-                        elif 50<=playerDino.score<100:
-                            s.image.set_alpha(70)
-                        elif 100<=playerDino.score<150:
-                            s.image.set_alpha(255)
-                        elif 150<=playerDino.score<200:
-                            s.image.set_alpha(70)
-                        elif 200<=playerDino.score<250:
-                            s.image.set_alpha(255)
-                        elif 250<=playerDino.score<300:
-                            s.image.set_alpha(70)
-                        elif 300<=playerDino.score<350:
-                            s.image.set_alpha(255)
-                        elif 350<=playerDino.score<400:
-                            s.image.set_alpha(70)
-                        elif 400<=playerDino.score<450:
-                            s.image.set_alpha(255)
-                        else:
+                        elif 50<=playerDino.score%100<100:
                             s.image.set_alpha(70)
                         
                         s.movement[0] = -1 * gamespeed
@@ -1619,25 +1492,9 @@ def gameplay_story1():
                                     die_sound.play()
 
                     for c in cacti:
-                        if playerDino.score<50:
+                        if 0<=playerDino.score%100<50:
                             c.image.set_alpha(255)
-                        elif 50<=playerDino.score<100:
-                            c.image.set_alpha(70)
-                        elif 100<=playerDino.score<150:
-                            c.image.set_alpha(255)
-                        elif 150<=playerDino.score<200:
-                            c.image.set_alpha(70)
-                        elif 200<=playerDino.score<250:
-                            c.image.set_alpha(255)
-                        elif 250<=playerDino.score<300:
-                            c.image.set_alpha(70)
-                        elif 300<=playerDino.score<350:
-                            c.image.set_alpha(255)
-                        elif 350<=playerDino.score<400:
-                            c.image.set_alpha(70)
-                        elif 400<=playerDino.score<450:
-                            c.image.set_alpha(255)
-                        else:
+                        elif 50<=playerDino.score%100<100:
                             c.image.set_alpha(70)
                         c.movement[0] = -1 * gamespeed
                         if not playerDino.collision_immune:
@@ -1656,25 +1513,9 @@ def gameplay_story1():
                                 playerDino.collision_immune = False
 
                     for f in fire_cacti:
-                        if playerDino.score<50:
+                        if 0<=playerDino.score%100<50:
                             f.image.set_alpha(255)
-                        elif 50<=playerDino.score<100:
-                            f.image.set_alpha(70)
-                        elif 100<=playerDino.score<150:
-                            f.image.set_alpha(255)
-                        elif 150<=playerDino.score<200:
-                            f.image.set_alpha(70)
-                        elif 200<=playerDino.score<250:
-                            f.image.set_alpha(255)
-                        elif 250<=playerDino.score<300:
-                            f.image.set_alpha(70)
-                        elif 300<=playerDino.score<350:
-                            f.image.set_alpha(255)
-                        elif 350<=playerDino.score<400:
-                            f.image.set_alpha(70)
-                        elif 400<=playerDino.score<450:
-                            f.image.set_alpha(255)
-                        else:
+                        elif 50<=playerDino.score%100<100:
                             f.image.set_alpha(70)
                         f.movement[0] = -1 * gamespeed
                         if not playerDino.collision_immune:
@@ -1693,25 +1534,9 @@ def gameplay_story1():
                                 playerDino.collision_immune = False
 
                     for p in pteras:
-                        if playerDino.score<50:
+                        if 0<=playerDino.score%100<50:
                             p.image.set_alpha(255)
-                        elif 50<=playerDino.score<100:
-                            p.image.set_alpha(70)
-                        elif 100<=playerDino.score<150:
-                            p.image.set_alpha(255)
-                        elif 150<=playerDino.score<200:
-                            p.image.set_alpha(70)
-                        elif 200<=playerDino.score<250:
-                            p.image.set_alpha(255)
-                        elif 250<=playerDino.score<300:
-                            p.image.set_alpha(70)
-                        elif 300<=playerDino.score<350:
-                            p.image.set_alpha(255)
-                        elif 350<=playerDino.score<400:
-                            p.image.set_alpha(70)
-                        elif 400<=playerDino.score<450:
-                            p.image.set_alpha(255)
-                        else:
+                        elif 50<=playerDino.score%100<100:
                             p.image.set_alpha(70)
                         p.movement[0] = -1 * gamespeed
                         if not playerDino.collision_immune:
@@ -1737,7 +1562,6 @@ def gameplay_story1():
 
                         
                 STONE_INTERVAL = 50
-
                 CACTUS_INTERVAL = 50
                 PTERA_INTERVAL = 300
                 CLOUD_INTERVAL = 300
@@ -1790,6 +1614,7 @@ def gameplay_story1():
                 stones.update()
                 
                 if pygame.display.get_surface() != None:
+                    screen.blit(dust_image,dust_rect)
                     new_ground.draw()
                     clouds.draw(screen)
                     s_scb.draw()
@@ -2895,6 +2720,7 @@ def gameplay_story4():
     gameQuit = False
     Maskplus = False
     Maskplus_cnt=2
+    mask_dino_time=0
     ###
     life = 5
     ###
@@ -3244,12 +3070,17 @@ def gameplay_story4():
                 CLOUD_INTERVAL = 300
                 OBJECT_REFRESH_LINE = width * 0.8
                 MAGIC_NUM = 10
-
+                mask_dino_time+=1
                 
-                if Maskplus == True: 
+                if Maskplus == True:
+                    playerDino.Mask=True
+                    mask_dino_time=0
                     playerDino.score2 = 0
                     Maskplus = False
                     Maskplus_cnt-=1
+
+                if mask_dino_time==30:
+                    playerDino.Mask=False
 
 
                 if (len(pm_list)==0):
@@ -3463,6 +3294,7 @@ def gameplay_story5():
     Umbrella = False
     Maskplus = False
     Itemtime = False
+    mask_dino_time=0
 
     if item_story1==True:
         Sunglass_cnt=2
@@ -3970,6 +3802,7 @@ def gameplay_story5():
                 OBJECT_REFRESH_LINE = width * 0.8
                 MAGIC_NUM = 10
                 MASK_INTERVAL = 50
+
                 um=obj()
                 um.put_img("./sprites/umbrella_item.png")
                 um.change_size(70,70)
@@ -4006,11 +3839,17 @@ def gameplay_story5():
                                         playerDino.isDead = True
                                     rm_list.remove(rm)
 
+                mask_dino_time+=1
 
                 if (isHumanTime) and (Itemtime == True) and (human.pattern_idx == 3) and (Maskplus == True):
+                    playerDino.Mask=True
+                    mask_dino_time=0
                     playerDino.score2 = 0
                     Maskplus = False
                     Maskplus_cnt-=1
+                
+                if mask_dino_time == 30:
+                    playerDino.Mask=False
 
                 if (isHumanAlive) and (playerDino.score> human_appearance_score):
                     isHumanTime = True
@@ -4297,7 +4136,7 @@ def board():
                 if event.type == pygame.QUIT:
                     gameQuit = True
                 if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_RETURN or event.key == pygame.K_SPACE:
+                    if event.key == pygame.K_RETURN or event.key == pygame.K_SPACE or event.key == pygame.K_ESCAPE:
                         gameQuit = True
                         introscreen()
                     if event.key == pygame.K_UP: scroll_y = min(scroll_y + 15, 0)
@@ -4369,7 +4208,9 @@ def gamerule():
     quit()
 
 def pausing():
+    global gameOver
     global resized_screen
+    global paused
     gameQuit = False
     pause_pic, pause_pic_rect = alpha_image('Paused.png', width, height, -1)
 
@@ -4401,9 +4242,11 @@ def pausing():
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     gameQuit = True
+                    gameOver = True
 
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
+                        paused = False
                         pygame.mixer.music.unpause()  # pausing상태에서 다시 esc누르면 배경음악 일시정지 해제
                         return False
 
@@ -4411,9 +4254,14 @@ def pausing():
                     if pygame.mouse.get_pressed() == (1, 0, 0):
                         x, y = event.pos
                         if resized_retbutton_rect.collidepoint(x, y):
+                            ingame_m.stop() 
+                            gameOver = True
                             introscreen()
+                            
 
                         if resized_resume_rect.collidepoint(x, y):
+                            gameOver = False
+                            paused = False
                             pygame.mixer.music.unpause()  # pausing상태에서 오른쪽의 아이콘 클릭하면 배경음악 일시정지 해제
 
                             return False
