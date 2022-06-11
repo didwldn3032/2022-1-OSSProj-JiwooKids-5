@@ -4170,6 +4170,7 @@ def board():
                     if event.button == 4: scroll_y = min(scroll_y + 15, 0)
                     if event.button == 5: scroll_y = max(scroll_y - 15, -(len(results)//max_per_screen)*scr_size[1])
                     if event.button == 1:
+                        background_m.stop()
                         gameQuit = True
                         introscreen()
                 if event.type == pygame.VIDEORESIZE:
