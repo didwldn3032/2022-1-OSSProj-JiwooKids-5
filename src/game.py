@@ -64,6 +64,7 @@ def introscreen():
     while not gameStart:
         if pygame.display.get_surface() == None:
             print("Couldn't load display surface")
+            gameQuit = True
             return True
         else:
             #for 문으로 동시에 일어나는 여러 이벤트를 event.get()통해 이벤트 감지, 이를 리스트에 저장하고 차례로 반환하며 처리
@@ -1683,6 +1684,7 @@ def gameplay_story1():
         while gameClear:
             if pygame.display.get_surface() == None:
                 print("Couldn't load display surface")
+                gameQuit = True
             else:
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
@@ -1711,7 +1713,7 @@ def gameplay_story1():
             if pygame.display.get_surface() == None:
                 print("Couldn't load display surface")
                 gameQuit = True
-                gameOver = False
+                # gameOver = False
 
             for event in pygame.event.get():
                     if event.type == pygame.QUIT:
@@ -2130,6 +2132,8 @@ def gameplay_story2(): # 지진모드
         while gameClear:
             if pygame.display.get_surface() == None:
                 print("Couldn't load display surface")
+                gameQuit = True
+
             else:
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
@@ -2157,7 +2161,7 @@ def gameplay_story2(): # 지진모드
             if pygame.display.get_surface() == None:
                 print("Couldn't load display surface")
                 gameQuit = True
-                gameOver = False
+                # gameOver = False
 
             for event in pygame.event.get():
                     if event.type == pygame.QUIT:
@@ -2687,6 +2691,8 @@ def gameplay_story3():
         while gameClear:
             if pygame.display.get_surface() == None:
                 print("Couldn't load display surface")
+                gameQuit = True
+
             else:
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
@@ -2714,7 +2720,7 @@ def gameplay_story3():
             if pygame.display.get_surface() == None:
                 print("Couldn't load display surface")
                 gameQuit = True
-                gameOver = False
+                # gameOver = False
 
             for event in pygame.event.get():
                     if event.type == pygame.QUIT:
@@ -3247,6 +3253,8 @@ def gameplay_story4():
         while gameClear:
             if pygame.display.get_surface() == None:
                 print("Couldn't load display surface")
+                gameQuit = True
+
             else:
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
@@ -3274,7 +3282,7 @@ def gameplay_story4():
             if pygame.display.get_surface() == None:
                 print("Couldn't load display surface")
                 gameQuit = True
-                gameOver = False
+                # gameOver = False
 
             for event in pygame.event.get():
                     if event.type == pygame.QUIT:
@@ -3381,7 +3389,7 @@ def gameplay_story5():
     mask_items = pygame.sprite.Group()
 
     Cactus.containers = cacti
-    Hole.containers = holes
+    purple_Hole.containers = holes
     fire_Cactus.containers = fire_cacti
     Cloud.containers = clouds
     Mask_item.containers = mask_items
@@ -3632,11 +3640,13 @@ def gameplay_story5():
                             human.isJumping = True
                             human.movement[1] = -1 * human.jumpSpeed
 
-                            for l in last_obstacle:
-                                if l.rect.right > OBJECT_REFRESH_LINE: l.kill()
+                            for c in cacti:
+                                if c.rect.right > OBJECT_REFRESH_LINE: c.kill()
+                            for f in fire_cacti:
+                                if f.rect.right > OBJECT_REFRESH_LINE: f.kill()
 
                             new_hole_right = human.rect.left - width
-                            last_obstacle.add(Hole(gamespeed, object_size[0], object_size[1], new_hole_right))
+                            last_obstacle.add(purple_Hole(gamespeed, object_size[0], object_size[1], new_hole_right))
 
                     
                     # 3. 보스의 공격
@@ -3886,11 +3896,9 @@ def gameplay_story5():
                     isHumanTime = True
                 else:
                     isHumanTime = False
-
-                # 보스몬스터 타임 - 선인장, 불선인장만 나오도록
-                if isHumanTime:
-                    if len(cacti) < 2:
-                        if len(cacti) == 0 and playerDino.score <= 1:
+                
+                if len(cacti) < 2:
+                        if len(cacti) == 0:
                             last_obstacle.empty()
                             last_obstacle.add(Cactus(gamespeed, object_size[0], object_size[1]))
                         else:
@@ -3899,14 +3907,16 @@ def gameplay_story5():
                                     last_obstacle.empty()
                                     last_obstacle.add(Cactus(gamespeed, object_size[0], object_size[1]))
 
-                    if len(fire_cacti) < 2:
-                        for l in last_obstacle:
-                            if l.rect.right < OBJECT_REFRESH_LINE and random.randrange(CACTUS_INTERVAL*5) == MAGIC_NUM:
-                                last_obstacle.empty()
-                                last_obstacle.add(fire_Cactus(gamespeed, object_size[0], object_size[1]))
+                if len(fire_cacti) < 2:
+                    for l in last_obstacle:
+                        if l.rect.right < OBJECT_REFRESH_LINE and random.randrange(CACTUS_INTERVAL*5) == MAGIC_NUM:
+                            last_obstacle.empty()
+                            last_obstacle.add(fire_Cactus(gamespeed, object_size[0], object_size[1]))
 
-                    if len(clouds) < 5 and random.randrange(CLOUD_INTERVAL) == MAGIC_NUM:
-                        Cloud(width, random.randrange(height / 5, height / 2))
+                if len(clouds) < 5 and random.randrange(CLOUD_INTERVAL) == MAGIC_NUM:
+                    Cloud(width, random.randrange(height / 5, height / 2))
+                # 보스몬스터 타임 - 선인장, 불선인장만 나오도록
+                if isHumanTime:
 
                     if (len(m_list)==0): pass # 다이노 공격 모션
                     else:
@@ -3938,28 +3948,6 @@ def gameplay_story5():
                                 if life == 0:
                                     playerDino.isDead = True
                                 pm_list.remove(pm)
-                    if (isHumanTime) and (human.pattern_idx == 3):
-                        if len(mask_items) < 2:
-                            for l in last_obstacle:
-                                if l.rect.right < OBJECT_REFRESH_LINE and random.randrange(MASK_INTERVAL) == MAGIC_NUM:
-                                    last_obstacle.empty()
-                                    last_obstacle.add(Mask_item(gamespeed, object_size[0], object_size[1]))
-
-
-                # 다이노 공격 타임 - 선인장만 나오도록
-                else:
-                    if len(cacti) < 2:
-                        if len(cacti) == 0:
-                            last_obstacle.empty()
-                            last_obstacle.add(Cactus(gamespeed, object_size[0], object_size[1]))
-                        else:
-                            for l in last_obstacle:
-                                if l.rect.right < OBJECT_REFRESH_LINE and random.randrange(CACTUS_INTERVAL) == MAGIC_NUM:
-                                    last_obstacle.empty()
-                                    last_obstacle.add(Cactus(gamespeed, object_size[0], object_size[1]))
-
-                    if len(clouds) < 5 and random.randrange(CLOUD_INTERVAL) == MAGIC_NUM:
-                        Cloud(width, random.randrange(height / 5, height / 2))
                     if (isHumanTime) and (human.pattern_idx == 3):
                         if len(mask_items) < 2:
                             for l in last_obstacle:
@@ -4074,7 +4062,7 @@ def gameplay_story5():
             if pygame.display.get_surface() == None:
                 print("Couldn't load display surface")
                 gameQuit = True
-                gameOver = False
+                # gameOver = False
             else:
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
