@@ -2791,7 +2791,7 @@ def gameplay_story4():
     while not gameQuit:
         while startMenu:
             pass
-        while not gameOver and playerDino.score <= 500:
+        while not gameOver and not gameClear:
             if pygame.display.get_surface() == None:
                 print("Couldn't load display surface")
                 gameQuit = True
@@ -3195,7 +3195,7 @@ def gameplay_story4():
 
                 counter = (counter + 1)
 
-                if playerDino.score >= 500:
+                if playerDino.score >= 50:
                     gameClear = True
                     break
 
