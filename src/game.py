@@ -492,7 +492,7 @@ def ItemSelectMode():
                             item_story4=False
                             item_cnt-=1
                     if r_lets_btn_rect.collidepoint(x, y):
-                        gameplay_story5()
+                        gameplay_story1()
                     # if r_start_btn_rect.collidepoint(x, y):
                     #     gameplay_story1()
 
@@ -3629,8 +3629,8 @@ def gameplay_story5():
                             human.isJumping = True
                             human.movement[1] = -1 * human.jumpSpeed
 
-                            for l in last_obstacle:
-                                if l.rect.right > OBJECT_REFRESH_LINE: l.kill()
+                            for c in cacti:
+                                if c.rect.right > OBJECT_REFRESH_LINE: c.kill()
 
                             new_hole_right = human.rect.left - width
                             last_obstacle.add(purple_Hole(gamespeed, object_size[0], object_size[1], new_hole_right))
@@ -3883,17 +3883,16 @@ def gameplay_story5():
                     isHumanTime = True
                 else:
                     isHumanTime = False
-
-                # 보스몬스터 타임 - 선인장, 불선인장만 나오도록
+                
                 if len(cacti) < 2:
-                    if len(cacti) == 0 and playerDino.score <= 1:
-                        last_obstacle.empty()
-                        last_obstacle.add(Cactus(gamespeed, object_size[0], object_size[1]))
-                    else:
-                        for l in last_obstacle:
-                            if l.rect.right < OBJECT_REFRESH_LINE and random.randrange(CACTUS_INTERVAL) == MAGIC_NUM:
-                                last_obstacle.empty()
-                                last_obstacle.add(Cactus(gamespeed, object_size[0], object_size[1]))
+                        if len(cacti) == 0:
+                            last_obstacle.empty()
+                            last_obstacle.add(Cactus(gamespeed, object_size[0], object_size[1]))
+                        else:
+                            for l in last_obstacle:
+                                if l.rect.right < OBJECT_REFRESH_LINE and random.randrange(CACTUS_INTERVAL) == MAGIC_NUM:
+                                    last_obstacle.empty()
+                                    last_obstacle.add(Cactus(gamespeed, object_size[0], object_size[1]))
 
                 if len(fire_cacti) < 2:
                     for l in last_obstacle:
@@ -3903,43 +3902,45 @@ def gameplay_story5():
 
                 if len(clouds) < 5 and random.randrange(CLOUD_INTERVAL) == MAGIC_NUM:
                     Cloud(width, random.randrange(height / 5, height / 2))
+                # 보스몬스터 타임 - 선인장, 불선인장만 나오도록
+                if isHumanTime:
 
-                if (len(m_list)==0): pass # 다이노 공격 모션
-                else:
-                    if (m.x>=human.rect.left)and(m.x<=human.rect.right)and(m.y>human.rect.top)and(m.y<human.rect.bottom):
-                        isDown=True
-                        boom=obj()
-                        boom.put_img("./sprites/boom.png")
-                        boom.change_size(200,100)
-                        boom.x=human.rect.centerx-round(human.rect.width)
-                        boom.y=human.rect.centery-round(human.rect.height/2)
-                        human.hp -= 1
-                        m_list.remove(m)
+                    if (len(m_list)==0): pass # 다이노 공격 모션
+                    else:
+                        if (m.x>=human.rect.left)and(m.x<=human.rect.right)and(m.y>human.rect.top)and(m.y<human.rect.bottom):
+                            isDown=True
+                            boom=obj()
+                            boom.put_img("./sprites/boom.png")
+                            boom.change_size(200,100)
+                            boom.x=human.rect.centerx-round(human.rect.width)
+                            boom.y=human.rect.centery-round(human.rect.height/2)
+                            human.hp -= 1
+                            m_list.remove(m)
 
-                        if human.hp <= 0:
-                            human.kill()
-                            isHumanAlive=False
-                            ingame_m.stop()
-                            Congratulations()
+                            if human.hp <= 0:
+                                human.kill()
+                                isHumanAlive=False
+                                ingame_m.stop()
+                                Congratulations()
 
 
-                if (len(pm_list)==0): pass # 보스 공격 모션
-                else:
-                    for pm in pm_list:
-                        if (pm.x>=playerDino.rect.left)and(pm.x<=playerDino.rect.right)and(pm.y>playerDino.rect.top)and(pm.y<playerDino.rect.bottom):
-                            print("공격에 맞음.")
-                            playerDino.collision_immune = True
-                            life -= 1
-                            collision_time = pygame.time.get_ticks()
-                            if life == 0:
-                                playerDino.isDead = True
-                            pm_list.remove(pm)
-                if (isHumanTime) and (human.pattern_idx == 3):
-                    if len(mask_items) < 2:
-                        for l in last_obstacle:
-                            if l.rect.right < OBJECT_REFRESH_LINE and random.randrange(MASK_INTERVAL) == MAGIC_NUM:
-                                last_obstacle.empty()
-                                last_obstacle.add(Mask_item(gamespeed, object_size[0], object_size[1]))
+                    if (len(pm_list)==0): pass # 보스 공격 모션
+                    else:
+                        for pm in pm_list:
+                            if (pm.x>=playerDino.rect.left)and(pm.x<=playerDino.rect.right)and(pm.y>playerDino.rect.top)and(pm.y<playerDino.rect.bottom):
+                                print("공격에 맞음.")
+                                playerDino.collision_immune = True
+                                life -= 1
+                                collision_time = pygame.time.get_ticks()
+                                if life == 0:
+                                    playerDino.isDead = True
+                                pm_list.remove(pm)
+                    if (isHumanTime) and (human.pattern_idx == 3):
+                        if len(mask_items) < 2:
+                            for l in last_obstacle:
+                                if l.rect.right < OBJECT_REFRESH_LINE and random.randrange(MASK_INTERVAL) == MAGIC_NUM:
+                                    last_obstacle.empty()
+                                    last_obstacle.add(Mask_item(gamespeed, object_size[0], object_size[1]))
 
 
                 playerDino.update()
