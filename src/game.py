@@ -3334,7 +3334,7 @@ def gameplay_story5():
     mask_items = pygame.sprite.Group()
 
     Cactus.containers = cacti
-    Hole.containers = holes
+    purple_Hole.containers = holes
     fire_Cactus.containers = fire_cacti
     Cloud.containers = clouds
     Mask_item.containers = mask_items
@@ -3589,7 +3589,7 @@ def gameplay_story5():
                                 if l.rect.right > OBJECT_REFRESH_LINE: l.kill()
 
                             new_hole_right = human.rect.left - width
-                            last_obstacle.add(Hole(gamespeed, object_size[0], object_size[1], new_hole_right))
+                            last_obstacle.add(purple_Hole(gamespeed, object_size[0], object_size[1], new_hole_right))
 
                     
                     # 3. 보스의 공격
