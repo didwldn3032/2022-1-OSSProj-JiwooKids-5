@@ -20,6 +20,8 @@ game.py : src 하위 모듈에서 생성한 클래스를 가져와 화면과 게
 '''
 
 db = InterfDB("db/score.db")
+clearScore = 50
+clearImage, clearImage_rect = alpha_image('ClearText.png', width, height)
 
 
 
@@ -47,7 +49,7 @@ def introscreen():
 
     ###이미지 로드###
     # 배경 이미지
-    alpha_back, alpha_back_rect = alpha_image('earth_bg.png', width + ALPHA_MOVE, height)
+    alpha_back, alpha_back_rect = alpha_image('intro_bg.png', width + ALPHA_MOVE, height)
     alpha_back_rect.left = -ALPHA_MOVE
     # 버튼 이미지
     r_btn_gamestart, r_btn_gamestart_rect = load_image(*resize('btn_start.png', 150, 50, -1))
@@ -272,7 +274,7 @@ def selectMode():
     btn_hardmode, btn_hardmode_rect = alpha_image('story.png', 200, 60, -1)
     r_btn_hardmode, r_btn_hardmode_rect = alpha_image(*resize('story.png', 200, 60, -1))
     # 배경 이미지
-    alpha_back, alpha_back_rect = alpha_image('earth_bg.png', width + ALPHA_MOVE, height)
+    alpha_back, alpha_back_rect = alpha_image('selectmode.png', width + ALPHA_MOVE, height)
     alpha_back_rect.left = -ALPHA_MOVE
 
 
@@ -296,7 +298,7 @@ def selectMode():
                         gameplay_rank()
 
                     if r_btn_hardmode_rect.collidepoint(x, y):
-                        ItemSelectMode()
+                        StoryRule()
 
             if event.type == pygame.VIDEORESIZE:
                 checkscrsize(event.w, event.h)
@@ -328,6 +330,28 @@ item_story4 = False
 #아이템 체크 횟수
 item_cnt=0
 
+def StoryRule():
+    global resized_screen
+    done = False
+    ruleImage, ruleImage_rect = alpha_image('storymode_rule.png', width, height, -1)
+
+    while not done:
+        for event in pygame.event.get():
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                done = True
+            if event.type == pygame.VIDEORESIZE:
+                checkscrsize(event.w, event.h)
+        screen.fill(white)
+        screen.blit(ruleImage, ruleImage_rect)
+        resized_screen.blit(
+            pygame.transform.scale(screen, (resized_screen.get_width(), resized_screen.get_height())),
+            resized_screen_centerpos)
+        pygame.display.update()
+
+        clock.tick(FPS)
+
+    ItemSelectMode()
+
 def ItemSelectMode():
     global item_story1
     global item_story2
@@ -342,7 +366,7 @@ def ItemSelectMode():
 
     # 배경 이미지
     # back_store, back_store_rect = load_image('intro_bg.png', width, height)
-    alpha_back, alpha_back_rect = alpha_image('Earth_bg.png', width + ALPHA_MOVE, height)
+    alpha_back, alpha_back_rect = alpha_image('selectitem.png', width + ALPHA_MOVE, height)
     alpha_back_rect.left = -ALPHA_MOVE
 
     # 버튼 이미지
@@ -579,7 +603,9 @@ def gameplay_rank():
 
     # BUTTON IMG LOAD
     # retbutton_image, retbutton_rect = load_image('replay_button.png', 70, 62, -1)
-    gameover_image, gameover_rect = load_image('game_over.png', 380, 22, -1)
+    gameover_image, gameover_rect = alpha_image('game_over.png', 380, 22, -1)
+    ranking_image, ranking_rect = alpha_image('ranking_bg.png', width, height, -1)
+
     
     # 1. 미사일 발사.
     space_go=False
@@ -618,6 +644,8 @@ def gameplay_rank():
                 gameQuit = True
                 gameOver = True
             else:
+                screen.blit(ranking_image, ranking_rect)
+
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
                         gameQuit = True
@@ -718,26 +746,9 @@ def gameplay_rank():
                     # print(bk)
                     mm=obj()
 
-                    # 디노의 종류에 따라 다른 총알이 나가도록 합니다.
-                    if playerDino.type == 'RED':
-                        mm.put_img("./sprites/black_bullet.png")
-                        mm.change_size(15,15)
-                    elif playerDino.type == 'YELLOW':
-                        mm.put_img("./sprites/blue_bullet.png")
-                        mm.change_size(15,15)
-                    elif playerDino.type == 'ORANGE':
-                        mm.put_img("./sprites/blue_bullet.png")
-                        mm.change_size(15,15)
-                    elif playerDino.type == 'PURPLE':
-                        mm.put_img("./sprites/pink_bullet.png")
-                        mm.change_size(15,15)
-                    elif playerDino.type == 'PINK':
-                        mm.put_img("./sprites/heart_bullet.png")
-                        mm.change_size(15,15)
-                    else:                    
-                        mm.put_img("./sprites/red_bullet.png")
-                        mm.change_size(15,15)
-                    # 
+                    mm.put_img("./sprites/fire_bullet.png")
+                    mm.change_size(15,15)
+                    #
                     
                     if playerDino.isDucking ==False:
                         mm.x = round(playerDino.rect.centerx)
@@ -1013,7 +1024,6 @@ def gameplay_rank():
                 #
 
                 if pygame.display.get_surface() != None:
-                    screen.fill(background_col)
                     new_ground.draw()
                     clouds.draw(screen)
                     scb.draw()
@@ -1160,7 +1170,7 @@ def gameplay_story1():
     Maskplus_cnt=0
 
     #배경이미지
-    back_image,back_rect = load_image('background_with_items.png',800,400,-1)
+    back_image,back_rect = load_image('dust_with_items.png',800,400,-1)
     #먼지이미지
     dust_image,dust_rect = load_image('dust.png',800,400,-1)
 
@@ -1216,8 +1226,6 @@ def gameplay_story1():
             else:
                 screen.fill(background_col)
                 screen.blit(back_image,back_rect)
-                pygame.display.update()
-
                 
 
                 for event in pygame.event.get():
@@ -1650,7 +1658,7 @@ def gameplay_story1():
 
                 counter = (counter + 1)
 
-                if playerDino.score >= 500:
+                if playerDino.score >= clearScore:
                     gameClear = True
                     break
                 
@@ -1676,6 +1684,12 @@ def gameplay_story1():
 
                     if event.type == pygame.MOUSEBUTTONDOWN:
                         gameplay_story2()
+            if pygame.display.get_surface() != None:
+                screen.blit(clearImage, clearImage_rect)
+                resized_screen.blit(
+                    pygame.transform.scale(screen, (resized_screen.get_width(), resized_screen.get_height())),
+                    resized_screen_centerpos)
+                pygame.display.update()
             break
 
 
@@ -1749,7 +1763,7 @@ def gameplay_story2(): # 지진모드
     Maskplus_cnt=0
 
     playerDino = Dino(dino_size[0], dino_size[1], type=dino_type[type_idx])
-    Background, Background_rect = load_image('new_rock_2.png', 800, 400, -1)
+    Background, Background_rect = alpha_image('rocks_with_items.png', 800, 400, -1)
     
     new_ground = Ground(-1 * gamespeed)
     s_scb = Story_Scoreboard()
@@ -2079,7 +2093,7 @@ def gameplay_story2(): # 지진모드
 
                 counter = (counter + 1)
 
-                if playerDino.score >= 500:
+                if playerDino.score >= clearScore:
                     gameClear = True
                     break
 
@@ -2106,6 +2120,12 @@ def gameplay_story2(): # 지진모드
 
                     if event.type == pygame.MOUSEBUTTONDOWN:
                         gameplay_story3()
+            if pygame.display.get_surface() != None:
+                screen.blit(clearImage, clearImage_rect)
+                resized_screen.blit(
+                    pygame.transform.scale(screen, (resized_screen.get_width(), resized_screen.get_height())),
+                    resized_screen_centerpos)
+                pygame.display.update()
             break
 
         while gameOver:
@@ -2225,7 +2245,7 @@ def gameplay_story3():
     #2단 점프
     jumpingx2=False
 
-    back_image, back_rect = load_image("story3_background.png", 800, 400, -1)
+    back_image, back_rect = alpha_image("rain_with_items.png", 800, 400, -1)
     
 
 
@@ -2334,25 +2354,8 @@ def gameplay_story3():
                     # print(bk)
                     mm=obj()
 
-                    # 디노의 종류에 따라 다른 총알이 나가도록 합니다.
-                    if playerDino.type == 'RED':
-                        mm.put_img("./sprites/black_bullet.png")
-                        mm.change_size(15,15)
-                    elif playerDino.type == 'YELLOW':
-                        mm.put_img("./sprites/blue_bullet.png")
-                        mm.change_size(15,15)
-                    elif playerDino.type == 'ORANGE':
-                        mm.put_img("./sprites/blue_bullet.png")
-                        mm.change_size(15,15)
-                    elif playerDino.type == 'PURPLE':
-                        mm.put_img("./sprites/pink_bullet.png")
-                        mm.change_size(15,15)
-                    elif playerDino.type == 'PINK':
-                        mm.put_img("./sprites/heart_bullet.png")
-                        mm.change_size(15,15)
-                    else:                    
-                        mm.put_img("./sprites/red_bullet.png")
-                        mm.change_size(15,15)
+                    mm.put_img("./sprites/fire_bullet.png")
+                    mm.change_size(15,15)
                     # 
                     
                     if playerDino.isDucking ==False:
@@ -2638,7 +2641,7 @@ def gameplay_story3():
 
                 counter = (counter + 1)
 
-                if playerDino.score >= 500:
+                if playerDino.score >= clearScore:
                     gameClear = True
                     break
 
@@ -2663,6 +2666,12 @@ def gameplay_story3():
 
                     if event.type == pygame.MOUSEBUTTONDOWN:
                         gameplay_story4()
+            if pygame.display.get_surface() != None:
+                screen.blit(clearImage, clearImage_rect)
+                resized_screen.blit(
+                    pygame.transform.scale(screen, (resized_screen.get_width(), resized_screen.get_height())),
+                    resized_screen_centerpos)
+                pygame.display.update()
             break
 
         while gameOver:
@@ -2786,14 +2795,14 @@ def gameplay_story4():
     #2단 점프
     jumpingx2=False
 
-    back_image, back_rect = load_image("story3_background.png", 800, 400, -1)
+    back_image, back_rect = alpha_image("mask_with_items.png", 800, 400, -1)
     
 
 
     while not gameQuit:
         while startMenu:
             pass
-        while not gameOver and playerDino.score <= 500:
+        while not gameOver and not gameClear:
             if pygame.display.get_surface() == None:
                 print("Couldn't load display surface")
                 gameQuit = True
@@ -2896,25 +2905,8 @@ def gameplay_story4():
                     # print(bk)
                     mm=obj()
 
-                    # 디노의 종류에 따라 다른 총알이 나가도록 합니다.
-                    if playerDino.type == 'RED':
-                        mm.put_img("./sprites/black_bullet.png")
-                        mm.change_size(15,15)
-                    elif playerDino.type == 'YELLOW':
-                        mm.put_img("./sprites/blue_bullet.png")
-                        mm.change_size(15,15)
-                    elif playerDino.type == 'ORANGE':
-                        mm.put_img("./sprites/blue_bullet.png")
-                        mm.change_size(15,15)
-                    elif playerDino.type == 'PURPLE':
-                        mm.put_img("./sprites/pink_bullet.png")
-                        mm.change_size(15,15)
-                    elif playerDino.type == 'PINK':
-                        mm.put_img("./sprites/heart_bullet.png")
-                        mm.change_size(15,15)
-                    else:                    
-                        mm.put_img("./sprites/red_bullet.png")
-                        mm.change_size(15,15)
+                    mm.put_img("./sprites/fire_bullet.png")
+                    mm.change_size(15,15)
                     # 
                     
                     if playerDino.isDucking ==False:
@@ -3197,7 +3189,7 @@ def gameplay_story4():
 
                 counter = (counter + 1)
 
-                if playerDino.score >= 500:
+                if playerDino.score >= clearScore:
                     gameClear = True
                     break
 
@@ -3223,6 +3215,12 @@ def gameplay_story4():
 
                     if event.type == pygame.MOUSEBUTTONDOWN:
                         gameplay_story5()
+            if pygame.display.get_surface() != None:
+                screen.blit(clearImage, clearImage_rect)
+                resized_screen.blit(
+                    pygame.transform.scale(screen, (resized_screen.get_width(), resized_screen.get_height())),
+                    resized_screen_centerpos)
+                pygame.display.update()
             break
 
         while gameOver:
@@ -3282,7 +3280,7 @@ def gameplay_story5():
         high_score = result['score']
     
     dust_image, dust_rect = load_image('dust.png',800,400,-1)
-    Background, Background_rect = load_image('background_with_items.png', 800, 400, -1)
+    Background, Background_rect = alpha_image('human_with_items.png', 800, 400, -1)
 
     dustnum=0
     dust_image.set_alpha(dustnum)
@@ -3466,24 +3464,8 @@ def gameplay_story5():
                 if (space_go==True) and (int(bk%100)==0):
                     mm=obj()
 
-                    if playerDino.type == 'RED':
-                        mm.put_img("./sprites/black_bullet.png")
-                        mm.change_size(15,15)
-                    elif playerDino.type == 'YELLOW':
-                        mm.put_img("./sprites/blue_bullet.png")
-                        mm.change_size(15,15)
-                    elif playerDino.type == 'ORANGE':
-                        mm.put_img("./sprites/blue_bullet.png")
-                        mm.change_size(15,15)
-                    elif playerDino.type == 'PURPLE':
-                        mm.put_img("./sprites/pink_bullet.png")
-                        mm.change_size(15,15)
-                    elif playerDino.type == 'PINK':
-                        mm.put_img("./sprites/heart_bullet.png")
-                        mm.change_size(15,15)
-                    else:                    
-                        mm.put_img("./sprites/red_bullet.png")
-                        mm.change_size(15,15)
+                    mm.put_img("./sprites/fire_bullet.png")
+                    mm.change_size(15,15)
                     
                     if playerDino.isDucking ==False:
                         mm.x = round(playerDino.rect.centerx)
