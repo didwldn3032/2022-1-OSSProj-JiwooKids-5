@@ -31,7 +31,8 @@ clearImage, clearImage_rect = alpha_image('ClearText.png', width, height)
 ## 시작 화면 ##
 def introscreen():
     # pygame.mixer.music.play(-1)  # 배경음악 실행
-    background_m.play(-1) # 배경음악 실행
+    if bgm_on:
+        background_m.play(-1) # 배경음악 실행
     global resized_screen
 
     # temp_dino를 전역변수로 설정합니다.
@@ -208,11 +209,13 @@ def option():
                         off_pushtime = pygame.time.get_ticks()
                         if off_pushtime - on_pushtime > btnpush_interval:
                             bgm_on = False
+                            background_m.stop()
 
                     if r_btn_bgm_on_rect.collidepoint(x, y) and not bgm_on:
                         on_pushtime = pygame.time.get_ticks()
                         if on_pushtime - off_pushtime > btnpush_interval:
                             bgm_on = True
+                            background_m.play(-1)
 
                     if r_init_btn_rect.collidepoint(x, y):
                         db.query_db("delete from user;")
@@ -558,7 +561,8 @@ def ItemSelectMode():
 
 def gameplay_rank():
     background_m.stop()
-    ingame_m.play(-1)
+    if bgm_on:
+        ingame_m.play(-1)
     global resized_screen
     global high_score
     
@@ -1146,7 +1150,8 @@ Shovel = False #삽
 ## 미세먼지 ##
 def gameplay_story1():
     background_m.stop()
-    ingame_m.play(-1)
+    if bgm_on:
+        ingame_m.play(-1)
     global item_story1
     Sunglass = False #선글라스
     global resized_screen
