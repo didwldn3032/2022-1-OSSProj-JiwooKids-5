@@ -4194,7 +4194,9 @@ def gamerule():
     quit()
 
 def pausing():
+    global gameOver
     global resized_screen
+    global paused
     gameQuit = False
     pause_pic, pause_pic_rect = alpha_image('Paused.png', width, height, -1)
 
@@ -4226,9 +4228,11 @@ def pausing():
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     gameQuit = True
+                    gameOver = True
 
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
+                        paused = False
                         pygame.mixer.music.unpause()  # pausing상태에서 다시 esc누르면 배경음악 일시정지 해제
                         return False
 
@@ -4236,9 +4240,14 @@ def pausing():
                     if pygame.mouse.get_pressed() == (1, 0, 0):
                         x, y = event.pos
                         if resized_retbutton_rect.collidepoint(x, y):
+                            ingame_m.stop() 
+                            gameOver = True
                             introscreen()
+                            
 
                         if resized_resume_rect.collidepoint(x, y):
+                            gameOver = False
+                            paused = False
                             pygame.mixer.music.unpause()  # pausing상태에서 오른쪽의 아이콘 클릭하면 배경음악 일시정지 해제
 
                             return False
