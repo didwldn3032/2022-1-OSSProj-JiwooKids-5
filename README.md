@@ -7,7 +7,7 @@
 ## J-Dragon Adventure
 <img width="598" alt="mainpage" src="https://user-images.githubusercontent.com/65417437/173189836-fbf49689-9323-4d12-9a79-a916166e918f.PNG">
 
-#### Chrome의 이스터에그 게임인 T-rex Rush에 다양한 모션과 공격 기능을 추가하여 즐거움을 더한 게임
+#### Chrome의 이스터에그 게임인 T-rex Rush에 다양한 모션과 공격 기능, 모드, 아이템을 추가하여 즐거움을 더한 게임
 
 ## 주요 변경 사항
 - Story모드(자연재해ver) 추가
