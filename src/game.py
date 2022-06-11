@@ -468,7 +468,7 @@ def ItemSelectMode():
                             item_story4=False
                             item_cnt-=1
                     if r_lets_btn_rect.collidepoint(x, y):
-                        gameplay_story1()
+                        gameplay_story4()
                     # if r_start_btn_rect.collidepoint(x, y):
                     #     gameplay_story1()
 
@@ -2720,6 +2720,7 @@ def gameplay_story4():
     gameQuit = False
     Maskplus = False
     Maskplus_cnt=2
+    mask_dino_time=0
     ###
     life = 5
     ###
@@ -3069,12 +3070,17 @@ def gameplay_story4():
                 CLOUD_INTERVAL = 300
                 OBJECT_REFRESH_LINE = width * 0.8
                 MAGIC_NUM = 10
-
+                mask_dino_time+=1
                 
-                if Maskplus == True: 
+                if Maskplus == True:
+                    playerDino.Mask=True
+                    mask_dino_time=0
                     playerDino.score2 = 0
                     Maskplus = False
                     Maskplus_cnt-=1
+
+                if mask_dino_time==30:
+                    playerDino.Mask=False
 
 
                 if (len(pm_list)==0):
@@ -3288,6 +3294,7 @@ def gameplay_story5():
     Umbrella = False
     Maskplus = False
     Itemtime = False
+    mask_dino_time=0
 
     if item_story1==True:
         Sunglass_cnt=2
@@ -3795,6 +3802,7 @@ def gameplay_story5():
                 OBJECT_REFRESH_LINE = width * 0.8
                 MAGIC_NUM = 10
                 MASK_INTERVAL = 50
+
                 um=obj()
                 um.put_img("./sprites/umbrella_item.png")
                 um.change_size(70,70)
@@ -3831,11 +3839,17 @@ def gameplay_story5():
                                         playerDino.isDead = True
                                     rm_list.remove(rm)
 
+                mask_dino_time+=1
 
                 if (isHumanTime) and (Itemtime == True) and (human.pattern_idx == 3) and (Maskplus == True):
+                    playerDino.Mask=True
+                    mask_dino_time=0
                     playerDino.score2 = 0
                     Maskplus = False
                     Maskplus_cnt-=1
+                
+                if mask_dino_time == 30:
+                    playerDino.Mask=False
 
                 if (isHumanAlive) and (playerDino.score> human_appearance_score):
                     isHumanTime = True
@@ -4122,7 +4136,7 @@ def board():
                 if event.type == pygame.QUIT:
                     gameQuit = True
                 if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_RETURN or event.key == pygame.K_SPACE:
+                    if event.key == pygame.K_RETURN or event.key == pygame.K_SPACE or event.key == pygame.K_ESCAPE:
                         gameQuit = True
                         introscreen()
                     if event.key == pygame.K_UP: scroll_y = min(scroll_y + 15, 0)

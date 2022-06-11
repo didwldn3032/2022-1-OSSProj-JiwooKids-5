@@ -53,7 +53,7 @@ rheight = resized_screen.get_height()
 button_offset = 0.18
 
 #2-2.게임 제목 설정
-pygame.display.set_caption("Milk Dragon's Adventure by_MilkDragon")
+pygame.display.set_caption("J-Dragon Adventure by_JiwooKids")
 
 # 3. 게임 내 필요한 설정
 # 3-1. 시계 생성(향후 FPS 생성시 활용)
