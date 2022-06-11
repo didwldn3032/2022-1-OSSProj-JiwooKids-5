@@ -1,7 +1,7 @@
 <img alt="MIT" src ="https://img.shields.io/badge/license-MIT-salmon"> <img alt="" src ="https://img.shields.io/badge/pygame-2.1.2-lightsalmon"> <img alt="" src ="https://img.shields.io/badge/OS-Window|MacOs|Linux-coral"> <img alt="" src ="https://img.shields.io/badge/IDE-VSCode-indianred"><br>
-<img alt="Python" src ="https://img.shields.io/badge/-python-skyblue?logo=python"/><br>
-<img alt="Github" src ="https://img.shields.io/badge/-github-black?logo=github"/><br>
-<img alt="Notion" src ="https://img.shields.io/badge/-notion-blue?logo=notion"/><br>
+<img alt="Python" src ="https://img.shields.io/badge/-python-skyblue?logo=python"/>
+<img alt="Github" src ="https://img.shields.io/badge/-github-black?logo=github"/>
+<img alt="Notion" src ="https://img.shields.io/badge/-notion-blue?logo=notion"/>
 
 # 2022-1-OSSProj-JiwooKids-5
 ## J-Dragon Adventure
