@@ -64,6 +64,7 @@ def introscreen():
     while not gameStart:
         if pygame.display.get_surface() == None:
             print("Couldn't load display surface")
+            gameQuit = True
             return True
         else:
             #for 문으로 동시에 일어나는 여러 이벤트를 event.get()통해 이벤트 감지, 이를 리스트에 저장하고 차례로 반환하며 처리
@@ -1680,6 +1681,7 @@ def gameplay_story1():
         while gameClear:
             if pygame.display.get_surface() == None:
                 print("Couldn't load display surface")
+                gameQuit = True
             else:
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
@@ -1708,7 +1710,7 @@ def gameplay_story1():
             if pygame.display.get_surface() == None:
                 print("Couldn't load display surface")
                 gameQuit = True
-                gameOver = False
+                # gameOver = False
 
             for event in pygame.event.get():
                     if event.type == pygame.QUIT:
@@ -2127,6 +2129,8 @@ def gameplay_story2(): # 지진모드
         while gameClear:
             if pygame.display.get_surface() == None:
                 print("Couldn't load display surface")
+                gameQuit = True
+
             else:
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
@@ -2154,7 +2158,7 @@ def gameplay_story2(): # 지진모드
             if pygame.display.get_surface() == None:
                 print("Couldn't load display surface")
                 gameQuit = True
-                gameOver = False
+                # gameOver = False
 
             for event in pygame.event.get():
                     if event.type == pygame.QUIT:
@@ -2684,6 +2688,8 @@ def gameplay_story3():
         while gameClear:
             if pygame.display.get_surface() == None:
                 print("Couldn't load display surface")
+                gameQuit = True
+
             else:
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
@@ -2711,7 +2717,7 @@ def gameplay_story3():
             if pygame.display.get_surface() == None:
                 print("Couldn't load display surface")
                 gameQuit = True
-                gameOver = False
+                # gameOver = False
 
             for event in pygame.event.get():
                     if event.type == pygame.QUIT:
@@ -3244,6 +3250,8 @@ def gameplay_story4():
         while gameClear:
             if pygame.display.get_surface() == None:
                 print("Couldn't load display surface")
+                gameQuit = True
+
             else:
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
@@ -3271,7 +3279,7 @@ def gameplay_story4():
             if pygame.display.get_surface() == None:
                 print("Couldn't load display surface")
                 gameQuit = True
-                gameOver = False
+                # gameOver = False
 
             for event in pygame.event.get():
                     if event.type == pygame.QUIT:
@@ -3631,6 +3639,8 @@ def gameplay_story5():
 
                             for c in cacti:
                                 if c.rect.right > OBJECT_REFRESH_LINE: c.kill()
+                            for f in fire_cacti:
+                                if f.rect.right > OBJECT_REFRESH_LINE: f.kill()
 
                             new_hole_right = human.rect.left - width
                             last_obstacle.add(purple_Hole(gamespeed, object_size[0], object_size[1], new_hole_right))
@@ -4049,7 +4059,7 @@ def gameplay_story5():
             if pygame.display.get_surface() == None:
                 print("Couldn't load display surface")
                 gameQuit = True
-                gameOver = False
+                # gameOver = False
             else:
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
