@@ -496,7 +496,7 @@ def ItemSelectMode():
                             item_story4=False
                             item_cnt-=1
                     if r_lets_btn_rect.collidepoint(x, y):
-                        gameplay_story1()
+                        gameplay_story5()
                     # if r_start_btn_rect.collidepoint(x, y):
                     #     gameplay_story1()
 
@@ -3634,16 +3634,17 @@ def gameplay_story5():
                             playerDino.Sovel = False
                     # 1. 보스의 임의 점프
                     JUMP_MAGIC = 50
-                    if (random.randrange(0, 100) == JUMP_MAGIC):
-                        if (human.rect.bottom == int(0.9 * height)):
+                    if (human.rect.bottom == int(0.9 * height)):
+                        if (random.randrange(0, 100) == JUMP_MAGIC):
+                        
                             
                             human.isJumping = True
                             human.movement[1] = -1 * human.jumpSpeed
 
                             for c in cacti:
-                                if c.rect.right > OBJECT_REFRESH_LINE: c.kill()
+                                if c.rect.left >= human.rect.left-100: c.kill()
                             for f in fire_cacti:
-                                if f.rect.right > OBJECT_REFRESH_LINE: f.kill()
+                                if f.rect.left >= human.rect.left-100: f.kill()
 
                             new_hole_right = human.rect.left - width
                             last_obstacle.add(purple_Hole(gamespeed, object_size[0], object_size[1], new_hole_right))
@@ -3897,9 +3898,10 @@ def gameplay_story5():
                 else:
                     isHumanTime = False
                 
+                
+
                 if len(cacti) < 2:
-                        if len(cacti) == 0:
-                            last_obstacle.empty()
+                        if len(last_obstacle) == 0:
                             last_obstacle.add(Cactus(gamespeed, object_size[0], object_size[1]))
                         else:
                             for l in last_obstacle:
