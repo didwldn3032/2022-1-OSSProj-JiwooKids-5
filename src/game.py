@@ -201,6 +201,7 @@ def option():
                 if pygame.mouse.get_pressed() == (1, 0, 0):
                     x, y = event.pos
                     if r_btn_home_rect.collidepoint(x, y):
+                        return False
                         introscreen()
 
                     if r_btn_bgm_on_rect.collidepoint(x, y) and bgm_on:
@@ -291,6 +292,8 @@ def selectMode():
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
+                    gameStart = True
+                    background_m.stop()
                     introscreen()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if pygame.mouse.get_pressed() == (1, 0, 0):
@@ -4153,6 +4156,7 @@ def board():
                     gameQuit = True
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_RETURN or event.key == pygame.K_SPACE or event.key == pygame.K_ESCAPE:
+                        background_m.stop()
                         gameQuit = True
                         introscreen()
                     if event.key == pygame.K_UP: scroll_y = min(scroll_y + 15, 0)
