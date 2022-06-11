@@ -1,8 +1,8 @@
-<img alt="MIT" src ="https://img.shields.io/badge/license-MIT-salmon"> <img alt="" src ="https://img.shields.io/badge/pygame-2.1.2-lightsalmon"> <img alt="" src ="https://img.shields.io/badge/OS-Window|MacOs|Linux-coral"> <img alt="" src ="https://img.shields.io/badge/IDE-VSCode-indianred"><img alt="Python" src ="https://img.shields.io/badge/Python-3776AB.svg?&style=for-the-badge&logo=Python&logoColor=white"/><br>
+<img alt="MIT" src ="https://img.shields.io/badge/license-MIT-salmon"> <img alt="" src ="https://img.shields.io/badge/pygame-2.1.2-lightsalmon"> <img alt="" src ="https://img.shields.io/badge/OS-Window|MacOs|Linux-coral"> <img alt="" src ="https://img.shields.io/badge/IDE-VSCode-indianred"><br>
+<img alt="Python" src ="https://img.shields.io/badge/Python-3776AB.svg?&style=for-the-badge&logo=Python&logoColor=white"/><br>
+<img alt="Github" src="https://img.shields.io/badge/GitHub-skyblue?style=뱃지모양&logo=GitHub&logoColor=white"/><br>
+<img alt="Notion" src="https://img.shields.io/badge/notion-dodgerblue?style=뱃지모양&logo=notion&logoColor=white"/><br>
 
-<img alt="" src="https://img.shields.io/badge/python-blue?style=뱃지모양&logo=Python&logoColor=white"/> 
-<img alt="" src="https://img.shields.io/badge/GitHub-skyblue?style=뱃지모양&logo=GitHub&logoColor=white"/>
-<img alt="" src="https://img.shields.io/badge/notion-dodgerblue?style=뱃지모양&logo=notion&logoColor=white"/>
 # 2022-1-OSSProj-JiwooKids-5
 ## J-Dragon Adventure
 <img width="598" alt="mainpage" src="https://user-images.githubusercontent.com/65417437/173189836-fbf49689-9323-4d12-9a79-a916166e918f.PNG">
