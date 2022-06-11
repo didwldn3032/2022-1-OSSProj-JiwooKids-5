@@ -20,8 +20,8 @@ game.py : src 하위 모듈에서 생성한 클래스를 가져와 화면과 게
 '''
 
 db = InterfDB("db/score.db")
-
-
+clear_image, clear_image_rect = alpha_image('ClearText.png', width, height)
+clearScore = 50
 
 
 
@@ -296,7 +296,8 @@ def selectMode():
                         gameplay_rank()
 
                     if r_btn_hardmode_rect.collidepoint(x, y):
-                        ItemSelectMode()
+                        screen.blit(alpha_back, alpha_back_rect)
+                        StoryRule()
 
             if event.type == pygame.VIDEORESIZE:
                 checkscrsize(event.w, event.h)
@@ -328,6 +329,28 @@ item_story4 = False
 #아이템 체크 횟수
 item_cnt=0
 
+def StoryRule():
+    global resized_screen
+    done = False
+    ruleimg, ruleimg_rect = alpha_image('storymode_rule.png', width, height, -1)
+
+    while not done:
+        for event in pygame.event.get():
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                done = True
+            if event.type == pygame.VIDEORESIZE:
+                checkscrsize(event.w, event.h)
+
+        screen.fill(white)
+        screen.blit(ruleimg, ruleimg_rect)
+        resized_screen.blit(
+            pygame.transform.scale(screen, (resized_screen.get_width(), resized_screen.get_height())),
+            resized_screen_centerpos)
+        pygame.display.update()
+
+        clock.tick(FPS)
+    ItemSelectMode()
+
 def ItemSelectMode():
     global item_story1
     global item_story2
@@ -339,6 +362,7 @@ def ItemSelectMode():
     resized_screen_center = (0, 0)
     global resized_screen
     game_start = False
+
 
     # 배경 이미지
     # back_store, back_store_rect = load_image('intro_bg.png', width, height)
@@ -468,7 +492,7 @@ def ItemSelectMode():
                             item_story4=False
                             item_cnt-=1
                     if r_lets_btn_rect.collidepoint(x, y):
-                        gameplay_story5()
+                        gameplay_story1()
 
                     # if r_start_btn_rect.collidepoint(x, y):
                     #     gameplay_story1()
@@ -1651,7 +1675,7 @@ def gameplay_story1():
 
                 counter = (counter + 1)
 
-                if playerDino.score >= 500:
+                if playerDino.score >= 50:
                     gameClear = True
                     break
                 
@@ -1663,6 +1687,7 @@ def gameplay_story1():
             if pygame.display.get_surface() == None:
                 print("Couldn't load display surface")
             else:
+
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
                         gameQuit = True
@@ -1677,6 +1702,12 @@ def gameplay_story1():
 
                     if event.type == pygame.MOUSEBUTTONDOWN:
                         gameplay_story2()
+            if pygame.display.get_surface() != None:
+                screen.blit(clear_image, clear_image_rect)
+                resized_screen.blit(
+                    pygame.transform.scale(screen, (resized_screen.get_width(), resized_screen.get_height())),
+                    resized_screen_centerpos)
+                pygame.display.update()
             break
 
 
@@ -1780,7 +1811,6 @@ def gameplay_story2(): # 지진모드
     # retbutton_image, retbutton_rect = load_image('replay_button.png', 70, 62, -1)
     
     gameover_image, gameover_rect = load_image('game_over.png', 380, 22, -1)
-    clear_image, clear_rect = load_image('intro_bg.png', width, height, -1)
 
     # 방향키 구현
     goLeft=False
@@ -2080,7 +2110,7 @@ def gameplay_story2(): # 지진모드
 
                 counter = (counter + 1)
 
-                if playerDino.score >= 500:
+                if playerDino.score >= clearScore:
                     gameClear = True
                     break
 
@@ -2107,6 +2137,12 @@ def gameplay_story2(): # 지진모드
 
                     if event.type == pygame.MOUSEBUTTONDOWN:
                         gameplay_story3()
+            if pygame.display.get_surface() != None:
+                screen.blit(clear_image, clear_image_rect)
+                resized_screen.blit(
+                    pygame.transform.scale(screen, (resized_screen.get_width(), resized_screen.get_height())),
+                    resized_screen_centerpos)
+                pygame.display.update()
             break
 
         while gameOver:
@@ -2639,7 +2675,7 @@ def gameplay_story3():
 
                 counter = (counter + 1)
 
-                if playerDino.score >= 500:
+                if playerDino.score >= clearScore:
                     gameClear = True
                     break
 
@@ -2664,6 +2700,12 @@ def gameplay_story3():
 
                     if event.type == pygame.MOUSEBUTTONDOWN:
                         gameplay_story4()
+            if pygame.display.get_surface() != None:
+                screen.blit(clear_image, clear_image_rect)
+                resized_screen.blit(
+                    pygame.transform.scale(screen, (resized_screen.get_width(), resized_screen.get_height())),
+                    resized_screen_centerpos)
+                pygame.display.update()
             break
 
         while gameOver:
@@ -3198,7 +3240,7 @@ def gameplay_story4():
 
                 counter = (counter + 1)
 
-                if playerDino.score >= 50:
+                if playerDino.score >= clearScore:
                     gameClear = True
                     break
 
@@ -3224,6 +3266,12 @@ def gameplay_story4():
 
                     if event.type == pygame.MOUSEBUTTONDOWN:
                         gameplay_story5()
+            if pygame.display.get_surface() != None:
+                screen.blit(clear_image, clear_image_rect)
+                resized_screen.blit(
+                    pygame.transform.scale(screen, (resized_screen.get_width(), resized_screen.get_height())),
+                    resized_screen_centerpos)
+                pygame.display.update()
             break
 
         while gameOver:
@@ -3283,7 +3331,7 @@ def gameplay_story5():
         high_score = result['score']
     
     dust_image, dust_rect = load_image('dust.png',800,400,-1)
-    Background, Background_rect = load_image('background_with_items.png', 800, 400, -1)
+    Background, Background_rect = alpha_image('human_with_items.png', 800, 400, -1)
 
     dustnum=0
     dust_image.set_alpha(dustnum)
