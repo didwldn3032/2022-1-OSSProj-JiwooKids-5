@@ -40,9 +40,12 @@ To run this game:
 
 ## Developed by:
 CSID-DGU - "Jiwoo-Kids"
-- didwldn3032
-- an-dhyun
-- rawfishthelgh
+<table>
+  <tr>
+    <td align="center"><a href="https://github.com/didwldn3032"><b>양지우</b></sub></td>
+    <td align="center"><a href="https://github.com/rawfishthelgh"><b>이건회</b></sub></td>
+    <td align="center"><a href="https://github.com/an-dhyun"><b>안도현</b></sub></td>
+</table>
 
 Credits:
 - Sprites : https://opengameart.org/content/industrial-parallax-background
