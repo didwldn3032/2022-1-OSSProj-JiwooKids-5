@@ -416,7 +416,7 @@ class Human(pygame.sprite.Sprite):
 
         self.isJumping=False
         self.jumpSpeed = 11.5
-        self.hp = 15
+        self.hp = 1
 
     def draw(self):
         screen.blit(self.image, self.rect)
