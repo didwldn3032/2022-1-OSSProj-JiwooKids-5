@@ -20,7 +20,7 @@ game.py : src 하위 모듈에서 생성한 클래스를 가져와 화면과 게
 '''
 
 db = InterfDB("db/score.db")
-clearScore = 50
+clearScore = 100
 clearImage, clearImage_rect = alpha_image('ClearText.png', width, height)
 
 
@@ -197,13 +197,17 @@ def option():
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
-                    return False
+                    background_m.stop()
+                    done = True
+                    introscreen()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if pygame.mouse.get_pressed() == (1, 0, 0):
                     x, y = event.pos
                     if r_btn_home_rect.collidepoint(x, y):
-                        return False
+                        background_m.stop()
+                        done = True
                         introscreen()
+                        
 
                     if r_btn_bgm_on_rect.collidepoint(x, y) and bgm_on:
                         off_pushtime = pygame.time.get_ticks()
@@ -1133,7 +1137,6 @@ def gameplay_rank():
             boss.update(pking.hp)
             if pygame.display.get_surface() != None:
                 disp_gameOver_msg(gameover_image)
-                scb.draw()
                 boss.draw()
                 resized_screen.blit(
                     pygame.transform.scale(screen, (resized_screen.get_width(), resized_screen.get_height())),
